@@ -10,7 +10,8 @@
           <div class="row form-inline distance">
             <div class="form-group col-md-3">
               <label for="taskName">任务名称</label>
-              <input type="text" class="form-control input-sm" id="taskName" placeholder="简单的说明一下" v-model="taskName">
+              <input type="text" class="form-control input-sm" id="taskName" placeholder="简单的说明一下" v-model="taskName" >
+              <label v-if='taskNameTip' class="validate">*不能为空</label>
             </div>
             <div class="form-group col-md-3">
               <label>开始时间</label>
@@ -116,9 +117,13 @@
     margin-left: 40px;
   }
 
+  .validate{
+    font-size:11px;
+    color:red;
+  }
+
 </style>
 <script>
-
   import navlist from '../components/public/navlist.vue'
     export default{
       name: 'cat',
@@ -127,6 +132,7 @@
       },
     data: function () {
       return {
+        taskNameTip:false,
         taskName: "",
         timeInterval: "",
         startTime: "",
@@ -143,6 +149,10 @@
         },
       }
     },
+    watch: {
+        taskName: function (val) {val.length===0?this.taskNameTip=true:this.taskNameTip=false;}
+    },
+
     methods: {
       showType: function () {
         this.$http({
@@ -173,6 +183,12 @@
         });
       },
       submit: function () {
+        if(this.taskName.length===0) {
+          this.taskNameTip=true;
+          return;
+        }
+
+
         this.$http({
           url: "http://10.8.85.36:8090/Cat_Api_Test/servlet/CatJobServlet",
           methods: "get",
