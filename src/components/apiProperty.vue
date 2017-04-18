@@ -1,15 +1,6 @@
 <template>
   <div class="main">
-    <div class="leftNav">
-      <ul class="nav nav-pills nav-stacked">
-        <router-link to="apiProperty">
-          <span>接口性能大盘</span>
-        </router-link>
-        <router-link to="pageProperty">
-          <span>页面性能大盘</span>
-        </router-link>
-      </ul>
-    </div>
+    <navlist-api></navlist-api>
     <div class="content">
       <div class="form-group">
         <label style="float:left;margin-top: 5px">一级类目:</label>
@@ -45,19 +36,17 @@
 </template>
 
 <script>
+  import navlistApi from '../components/public/navlistApi.vue'
   export default {
     name: 'hello',
+    components:{
+      'navlist-api':navlistApi
+    },
   }
 </script>
 
 
 <style>
-  /*.content {*/
-    /*position: absolute;*/
-    /*margin-top: 30px;*/
-    /*margin-left: 300px;*/
-  /*}*/
-
   .dis {
     margin-right: 10px;
     width:107px;

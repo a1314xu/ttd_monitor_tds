@@ -1,8 +1,8 @@
 <template>
     <!--左侧导航栏-->
     <div id="leftNav">
-        <el-menu default-active="1" v-bind:default-openeds="openeds" class="el-menu-vertical-demo leftNav"
-                   v-bind:style="{height:screenHeight+'px'}">
+        <el-menu class="el-menu-vertical-demo leftNav" default-active="1" v-bind:default-openeds="openeds"
+                 v-bind:style="{height:screenHeight+'px'}">
             <el-submenu index="1">
                 <template slot="title">
                     <router-link to="dataSource">数据源</router-link>
@@ -37,21 +37,14 @@
         name: 'navlist',
         data: function () {
             return {
-                screenHeight:  $(window).height()-105,
-                openeds:['1']
+                screenHeight: $(window).height() - 105,
+                openeds: ['1']
             }
         },
-        methods: {
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
-            }
-        }
+        methods: {}
     }
 </script>
-`
+
 <style>
     .leftNav {
         background: #e4e4e4;
