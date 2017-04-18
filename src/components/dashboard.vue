@@ -1,35 +1,7 @@
 <template>
   <div id="dashboard">
     <div class="main">
-      <div id="leftNav">
-        <el-menu default-active="1" class="el-menu-vertical-demo leftNav">
-          <el-submenu index="1">
-            <template slot="title">
-              <router-link to="dataSource">数据源</router-link>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="1-1">
-                <router-link to="cat">CAT</router-link>
-              </el-menu-item>
-              <el-menu-item index="1-2">
-                <router-link to="dashboard">Dashboard</router-link>
-              </el-menu-item>
-              <el-menu-item index="1-2">
-                <router-link to="listPage">任务列表</router-link>
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-menu-item index="2">
-            <router-link to="graphy">图表</router-link>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <router-link to="board">看板</router-link>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <router-link to="warnRule">告警规则</router-link>
-          </el-menu-item>
-        </el-menu>
-      </div>
+      <navlist></navlist>
       <div class="content">
         <form class="form" style="position:relative;top: 20px; left: 40px;">
           <div class="row form-inline distance">
@@ -136,8 +108,12 @@
 </style>
 <script>
 
+  import navlist from '../components/public/navlist.vue'
   export default{
     name: 'dashboard',
+    components:{
+      'navlist':navlist
+    },
     data:function () {
       return {
         startTime:""
