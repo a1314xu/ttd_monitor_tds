@@ -91,7 +91,7 @@
     },
     methods: {
       searchList: function () {
-        var me = this
+        var me = this;
         $.ajax({
           type: "get",
           url: "http://10.8.85.36:8090/CatAPI/GetJobList",
