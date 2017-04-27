@@ -1,5 +1,5 @@
 <template>
-  <div class="footer" >
+  <div class="footer">
     <p>技术支持</p>
   </div>
 </template>
@@ -13,12 +13,14 @@
 
 <style>
   .footer {
-    position:absolute;
-    bottom:0px;
+    position: absolute;
+    bottom: 0;
+    height: 80px;
     width:100%;
     background-color: #336699;
-    line-height: 60px;
-    clear: both;
+    line-height: 80px;
+    overflow: hidden;
+    /*clear: both;*/
 
   }
 

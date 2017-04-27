@@ -7,6 +7,7 @@ import  VueResource from 'vue-resource'
 import $ from 'jquery'
 import './assets/css/bootstrap.css'
 import './assets/js/bootstrap'
+// import vueValidator from 'vue-validator'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 Vue.use(VueResource)
@@ -15,7 +16,7 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+window.app=new Vue({
   el: '#app',
   router,
   template: '<App/>',

@@ -1,7 +1,7 @@
 <template>
   <div id="dataSource">
     <div class="main">
-      <navlist></navlist>
+      <v-navList></v-navList>
       <div class="content">
         <div class="firstContent">
           <h1>开始配置一个数据源任务</h1><br>
@@ -10,10 +10,10 @@
         <div class="col-md-12">
           <div class="pic">
             <div class="left">
-              <router-link to="/cat"><span>CAT</span></router-link>
+              <router-link to="/CAT"><span>CAT</span></router-link>
             </div>
             <div class="right">
-              <router-link to="/dashboard"><span>Dashboard</span></router-link>
+              <router-link to="/Dashboard"><span>Dashboard</span></router-link>
             </div>
           </div>
         </div>
@@ -74,37 +74,20 @@
     font-size: 28px;
   }
 
-  .leftNav {
-    background: #e4e4e4;
-    width: 13%;
-    height: 730px;
-    float: left;
-  }
 
-  .leftNav a {
-    display: block;
-    text-decoration: none;
-    color: rgba(51, 102, 153, 1);
-    font-size: 20px;
-    margin: 0 auto;
-  }
-
-  .leftNav a:link {
-    text-decoration: none;
-  }
 
   .content {
     float: left;
     width: 87%;
-    height: 100%;
+    height:100%
   }
 </style>
 <script>
-  import navlist from '../components/public/navlist.vue'
+  import navList from '../components/sidebar/navList.vue'
   export default{
     name: 'dataSource',
     components:{
-      'navlist':navlist
+      'v-navList':navList,
     },
     methods: {
 

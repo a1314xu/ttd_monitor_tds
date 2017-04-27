@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import  dataSource from '@/components/dataSource'
-import graphy from '@/components/graphy'
-import  warnRule from '@/components/warnRule'
-import board from '@/components/board'
-import cat from '@/components/cat'
-import dashboard from '@/components/dashboard'
-import listPage from '@/components/listPage'
-import home from '@/components/home'
-import apiProperty from '@/components/apiProperty'
-import pageProperty from '@/components/pageProperty'
+import dataSource from '@/pages/dataSource'
+import graphy from '@/pages/graphy'
+import  warnRule from '@/pages/warnRule'
+import board from '@/pages/board'
+import cat from '@/pages/cat'
+import dashboard from '@/pages/dashboard'
+import listPage from '@/pages/listPage'
+import home from '@/pages/home'
+import apiProperty from '@/pages/apiProperty'
+import pageProperty from '@/pages/pageProperty'
 
 
 Vue.use(Router)
@@ -48,12 +48,12 @@ export default new Router({
       component: warnRule
     },
     {
-      path: '/cat',
+      path: '/CAT',
       name: 'cat',
       component: cat
     },
     {
-      path: '/dashboard',
+      path: '/Dashboard',
       name: 'dashboard',
       component: dashboard
     },
