@@ -130,7 +130,7 @@
           </div>
           <div class="foot">
             <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="submit">保存</button>
-            <button type="button" class="btn btn-primary btn-sm ">取消</button>
+            <button type="button" class="btn btn-primary btn-sm " @click="gotodatasource">取消</button>
           </div>
         </form>
       </div>
@@ -230,6 +230,10 @@
       },
     },
     methods: {
+      gotodatasource:function () {
+        app.$router.push("dataSource")
+      },
+
       showType: function () {
         var me = this;
         $.ajax({

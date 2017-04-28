@@ -83,7 +83,7 @@
           </div>
           <div class="footDashboard" style=" margin-top:80px;">
             <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="submit">保存</button>
-            <button type="button" class="btn btn-primary btn-sm ">取消</button>
+           <button type="button" class="btn btn-primary btn-sm " @click="todatasource">取消</button>
           </div>
         </form>
       </div>
@@ -157,6 +157,11 @@
       },
     },
     methods: {
+
+      todatasource:function () {
+        app.$router.push("dataSource")
+      },
+
       submit: function () {
         var me = this
         if (me.info.taskName.length === 0) {

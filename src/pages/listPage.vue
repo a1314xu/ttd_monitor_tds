@@ -125,7 +125,7 @@
               },
               dataType: "jsonp",
               success: function (data) {
-                if (data.code == 0) {
+                if (data[0].code == 0) {
                   if (item.isplay == 1) {
                     me.$message({
                       type: 'success',
@@ -210,7 +210,7 @@
               },
               dataType: "jsonp",
               success: function (data) {
-                if (data.message.code == 0) {
+                if (data[0].code == 0) {
                   me.$message({
                     type: 'success',
                     message: '删除成功!'
