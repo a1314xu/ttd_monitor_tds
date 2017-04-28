@@ -38,13 +38,13 @@
               <label for="appId">APP &nbsp;&nbsp; ID</label>
               <input type="text" class="form-control input-sm" id="appId" placeholder="100000445" v-model="appId"
                      @blur="showType">
-              <div class="search-select">
-                <ul>
-                  <li v-for="(item,index) in searchList" :key="item.label">
-                    {{item.label}}
-                  </li>
-                </ul>
-              </div>
+              <!--<div class="search-select">-->
+                <!--<ul>-->
+                  <!--<li v-for="(item,index) in searchList" :key="item.label">-->
+                    <!--{{item.label}}22-->
+                  <!--</li>-->
+                <!--</ul>-->
+              <!--</div>-->
               <label v-if='tips.appIdTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
             </div>
           </div>
@@ -127,7 +127,6 @@
               </div>
             </div>
             <label v-if='tips.checkedNamesTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
-
           </div>
           <div class="foot">
             <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="submit">保存</button>
@@ -185,7 +184,6 @@
         timeInterval: "1",
         startTime: "",
         appId: "",
-
         jobId: "",//修改的时候需要加上
         checkedTags: [],//选中的tag
         checkedTypes: [],//选中的type
@@ -194,7 +192,6 @@
         tabsData: [],//接收返回的name,变量
         selectedList: [],//选中的type对应name
         dialogVisible:false,
-        testCode:"",
         tips:{
           taskNameTip: false,//验证用
           checkedTagsTip: false,
@@ -205,10 +202,7 @@
         visible: false,
         showTab: false,
         selectedData: [],//联想功能的数据
-
-
         currentView: "",
-        testCode: "",
         pickerOptions0: {
           disabledDate(time) {
             return time.getTime() < Date.now() - 8.64e7 - 7 * 24 * 60 * 60 * 1000;
@@ -237,7 +231,7 @@
     },
     methods: {
       showType: function () {
-        var me = this
+        var me = this;
         $.ajax({
           type: "get",
           url: "http://10.8.85.36:8090/CatAPI/GetCatType",
@@ -246,13 +240,13 @@
           },
           dataType: "jsonp",
           success: function (data) {
-            me.typeList = data[0].typeValue
+            me.typeList = data[0].typeValue;
             me.visible = true
           }
         });
       },
       showName: function () {
-        var me = this
+        var me = this;
         $.ajax({
           type: "get",
           url: "http://10.8.85.36:8090/CatAPI/GetCatType",
@@ -263,17 +257,16 @@
           traditional: true,
           dataType: "jsonp",
           success: function (data) {
-            me.tabsData = data
+            me.tabsData = data;
             me.showTab = true
           }
         })
       },
       checkAll:function () {
-//          debugger
         $("input[name='chk_list']").attr("checked",$(this).attr("checked"))
       },
       submit: function () {
-        var me = this
+        var me = this;
         if (me.taskName.length === 0) {
           me.tips.taskNameTip = true;
         }
@@ -305,9 +298,7 @@
             traditional: true,
             dataType: "jsonp",
             success: function (data) {
-              debugger
-              me.testCode = data.message.code
-              if(me.testCode == 0) {
+              if(data[0].code == 0) {
                 me.dialogVisible = true
               }else{
                 me.$alert('信息填写有误，保存失败', '提示', {
@@ -319,22 +310,19 @@
                     });
                   }
                 });
-
               }
             }
           })
         }
       },
       goList: function () {
-        $("#myModal").modal('hide')
+        $("#myModal").modal('hide');
         app.$router.push("listPage")
       },
       continueAdd: function () {
-        $("#myModal").modal('hide')
+        $("#myModal").modal('hide');
         app.$router.push("dataSource")
       }
-
-
     }
 
   }

@@ -85,9 +85,8 @@
       }
     },
     created: function () {
-      this.searchList()
+      this.searchList();
       this.pageList = this.dataList.slice((this.currentPage - 1) * 15, this.currentPage * 15 - 1)
-
     },
     methods: {
       searchList: function () {
@@ -99,13 +98,18 @@
           traditional: true,
           dataType: "jsonp",
           success: function (data) {
-            me.dataList = data
+            me.dataList = data;
             me.pageList = me.dataList.slice((me.currentPage - 1) * 15, me.currentPage * 15 - 1)
           }
         })
       },
+
+      /**
+       * 列表的开启暂停操作
+       * @param item
+       */
       playOrPauseJob: function (item) {
-        var me = this
+        var me = this;
         this.$confirm(item.isplay==1?'此操作将暂停该job':'此操作将启动该job', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -114,27 +118,26 @@
           if (item.sourcedata == "Cat") {
             $.ajax({
               type: "post",
-              url: "http://10.8.85.36:8090/DashboardAPI/servlet/PauseDashboard",//todo
+              url: "http://10.8.85.36:8090/CatAPI/OperateCatJob",
               data: {
-                jobId: item.id,
-                isPlay: item.isplay == 1 ? 0 : 1
+                id: item.id,
+                option:item.isplay==1?'pause':'start'
               },
               dataType: "jsonp",
               success: function (data) {
-//              debugger;
                 if (data.code == 0) {
                   if (item.isplay == 1) {
                     me.$message({
                       type: 'success',
                       message: '暂停成功!'
-                    }) ,
-                      item.isplay = 0
+                    }) ;
+                    item.isplay = 0
                   } else if (item.isplay == 0) {
                     me.$message({
                       type: 'success',
                       message: '启动成功!'
-                    }) ,
-                      item.isplay = 1
+                    }) ;
+                    item.isplay = 1
                   }
                 } else {
                   me.$message({
@@ -149,24 +152,23 @@
               type: "post",
               url: "http://10.8.85.36:8090/DashboardAPI/servlet/PauseDashboard",
               data: {
-                jobId: item.id,
+               id: item.id,
                 isPlay: item.isplay == 1 ? 0 : 1
               },
               dataType: "jsonp",
               success: function (data) {
-//              debugger;
                 if (data.code == 0) {
                   if (item.isplay == 1) {
                     me.$message({
                       type: 'success',
                       message: '暂停成功!'
-                    })
+                    });
                     item.isplay = 0
                   } else if (item.isplay == 0) {
                     me.$message({
                       type: 'success',
                       message: '启动成功!'
-                    })
+                    });
                     item.isplay = 1
                   }
                 } else {
@@ -186,6 +188,11 @@
           });
         });
       },
+
+      /**
+       * 删除操作
+       * @param item
+       */
       delJob: function (item) {
         var me = this;
         me.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -196,16 +203,18 @@
           if (item.sourcedata == 'Cat') {
             $.ajax({
               type: "post",
-              url: "http://10.8.85.36:8090/DashboardAPI/servlet/RemoveDashboard",//todo
-              data: {jobId: item.id},
+              url: "http://10.8.85.36:8090/CatAPI/OperateCatJob",
+              data: {
+                  id: item.id,
+                  option:'delete'
+              },
               dataType: "jsonp",
               success: function (data) {
-//                debugger
                 if (data.message.code == 0) {
                   me.$message({
                     type: 'success',
                     message: '删除成功!'
-                  })
+                  });
                   me.searchList()
                 } else {
                   me.$message({
@@ -245,6 +254,7 @@
         });
 
       },
+
       handleCurrentChange: function (currentPage) {
         //当前页面变换
         this.currentPage = currentPage
