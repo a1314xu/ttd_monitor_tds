@@ -238,7 +238,7 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.8.85.36:8090/CatAPI/GetCatType",
+          url: "http://10.8.85.36:8086/CatAPI/GetCatType",
           data: {
             appid: me.appId
           },
@@ -253,7 +253,7 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.8.85.36:8090/CatAPI/GetCatType",
+          url: "http://10.8.85.36:8086/CatAPI/GetCatType",
           data: {
             appid: me.appId,
             checkedTypes: me.checkedTypes
@@ -290,7 +290,7 @@
           //当判断元素不为空时，提交请求
           $.ajax({
             type: "get",
-            url: "http://10.8.85.36:8090/CatAPI/AddCatJob",
+            url: "http://10.8.85.36:8086/CatAPI/AddCatJob",
             data: {
               taskName: me.taskName,
               timeInterval: me.timeInterval,

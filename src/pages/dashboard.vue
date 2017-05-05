@@ -179,7 +179,7 @@
         if (me.info.groupBy.length !== 0 && me.info.metricName.length !== 0 && me.info.taskName.length !== 0) {
           $.ajax({
             type: "post",
-            url: "http://10.8.85.36:8090/DashboardAPI/servlet/SaveDashboard",
+            url: "http://10.8.85.36:8086/DashboardAPI/servlet/SaveDashboard",
             data: me.info,
             dataType: "jsonp",
             success: function (data) {

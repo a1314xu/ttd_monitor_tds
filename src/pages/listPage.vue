@@ -93,7 +93,7 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.8.85.36:8090/CatAPI/GetJobList",
+          url: "http://10.8.85.36:8086/CatAPI/GetJobList",
           data: {},
           traditional: true,
           dataType: "jsonp",
@@ -118,7 +118,7 @@
           if (item.sourcedata == "Cat") {
             $.ajax({
               type: "post",
-              url: "http://10.8.85.36:8090/CatAPI/OperateCatJob",
+              url: "http://10.8.85.36:8086/CatAPI/OperateCatJob",
               data: {
                 id: item.id,
                 option:item.isplay==1?'pause':'start'
@@ -150,7 +150,7 @@
           } else if (item.sourcedata == "dashboard") {
             $.ajax({
               type: "post",
-              url: "http://10.8.85.36:8090/DashboardAPI/servlet/PauseDashboard",
+              url: "http://10.8.85.36:8086/DashboardAPI/servlet/PauseDashboard",
               data: {
                id: item.id,
                 isPlay: item.isplay == 1 ? 0 : 1
@@ -203,7 +203,7 @@
           if (item.sourcedata == 'Cat') {
             $.ajax({
               type: "post",
-              url: "http://10.8.85.36:8090/CatAPI/OperateCatJob",
+              url: "http://10.8.85.36:8086/CatAPI/OperateCatJob",
               data: {
                   id: item.id,
                   option:'delete'
@@ -227,7 +227,7 @@
           } else if (item.sourcedata == 'dashboard') {
             $.ajax({
               type: "post",
-              url: "http://10.8.85.36:8090/DashboardAPI/servlet/RemoveDashboard",
+              url: "http://10.8.85.36:8086/DashboardAPI/servlet/RemoveDashboard",
               data: {jobId: item.id},
               dataType: "jsonp",
               success: function (data) {
