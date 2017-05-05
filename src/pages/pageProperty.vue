@@ -1,4 +1,5 @@
 <template>
+  <div id="pageProperty">
   <div class="main">
     <v-navListApi></v-navListApi>
     <div class="content">
@@ -64,6 +65,11 @@
           </div>
         </div>
       </div>
+      <!--同比环比-->
+      <div style="position: absolute;bottom: 110px;left: 300px;">
+        <router-link to="loopRatio">查看环比</router-link>&nbsp;&nbsp;
+        <router-link to="sameRatio">查看同比</router-link>
+      </div>
       <div style="position: absolute;bottom: 110px;right: 110px;">
         <el-pagination
           @current-change="handleCurrentChange"
@@ -74,6 +80,7 @@
         </el-pagination>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -442,4 +449,7 @@
 
 
 <style>
+  #pageProperty{
+    overflow: hidden;
+  }
 </style>

@@ -33,8 +33,7 @@
                 <td>
                   <a><span class="glyphicon" :class="{'glyphicon-play':item.isplay==0,'glyphicon-pause':item.isplay==1}"
                            @click="playOrPauseJob(item)"></span></a>
-                  <!--<router-link :to="item.sourcedata"><span class="glyphicon glyphicon-pencil"-->
-                  <!--style="margin-left: 10px;"></span></router-link>-->
+                  <a><span class="glyphicon glyphicon-eye-open" style="margin-left: 10px;" @click="showDetail(item)"></span></a>
                   <a><span class="glyphicon glyphicon-remove" style="margin-left: 10px;"
                            @click="delJob(item)"></span></a>
                 </td>
@@ -103,7 +102,13 @@
           }
         })
       },
-
+      /**
+       * 列表的查看详情操作
+       * @param item
+       */
+      showDetail:function (item) {
+        
+      },
       /**
        * 列表的开启暂停操作
        * @param item
@@ -195,7 +200,7 @@
        */
       delJob: function (item) {
         var me = this;
-        me.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        me.$confirm('此操作将删除该job, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

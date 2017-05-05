@@ -1,13 +1,13 @@
 <template>
   <div id="home">
-    <div class="mainbody">
+    <div class="mainbody" >
       <div>
         <div class="title">
           <p>TDS &nbsp;&nbsp;PLATFORM </p>
           <P>玩乐研发支持平台</P>
         </div>
       </div>
-      <div class="container">
+      <div class="container" v-bind:style="{ height: screenHeight +'px'}">
         <div class="row">
           <div class="mainPanel">
             <div class="col-md-3 col-sm-6">
@@ -51,7 +51,7 @@
                 <h2>报表平台</h2>
                 <router-link to="apiProperty" style="width: 100%;" >接口性能大盘</router-link>
                 <router-link to="pageProperty" style="width: 100%;">页面性能大盘</router-link>
-                <router-link to="pageProperty" style="width: 100%;">玩乐日报</router-link>
+                <router-link to="playDailyReport" style="width: 100%;">玩乐日报</router-link>
               </div>
             </div>
           </div>
@@ -67,8 +67,9 @@
     background-image: url("../assets/home.png");
     background-repeat: no-repeat;
     width: 100%;
-    height: 800px;
-    background-size: 100%,100%
+    /*height:890px;!*高度自适应问题??*!*/
+    background-size: 100% 100%;
+    /*overflow: hidden;*/
   }
 
   .panel {
@@ -108,8 +109,13 @@
   }
 </style>
 <script>
-  console.log(222);
   export default {
     name: 'home',
+    data:function () {
+        return{
+          screenHeight:$(window).height()-410
+
+        }
+    }
   }
 </script>

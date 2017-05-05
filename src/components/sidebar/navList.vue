@@ -35,7 +35,7 @@
     name: 'navList',
     data: function () {
         return {
-          screenHeight:$(window).height()-160,
+          screenHeight:$(window).height()-150,
           openeds:['1']
         }
     }
@@ -47,7 +47,6 @@
   .leftNav {
     background: #e4e4e4;
     width: 13%;
-    height: 780px;
     float: left;
   }
 

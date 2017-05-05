@@ -31,7 +31,10 @@
 
 <style>
   .top {
+    position: relative;
+    top:0px;
     height: 80px;
+    width:100%;
     text-align: left;
     background-color: #336699;
     line-height: 80px;
