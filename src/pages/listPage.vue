@@ -33,7 +33,8 @@
                 <td>
                   <a><span class="glyphicon" :class="{'glyphicon-play':item.isplay==0,'glyphicon-pause':item.isplay==1}"
                            @click="playOrPauseJob(item)"></span></a>
-                  <a><span class="glyphicon glyphicon-eye-open" style="margin-left: 10px;" @click="showDetail(item)"></span></a>
+                  <a><span class="glyphicon glyphicon-eye-open" style="margin-left: 10px;"
+                           @click="showDetail(item)"></span></a>
                   <a><span class="glyphicon glyphicon-remove" style="margin-left: 10px;"
                            @click="delJob(item)"></span></a>
                 </td>
@@ -44,6 +45,7 @@
           </div>
         </div>
       </div>
+      <!--分页-->
       <div style="position: absolute;bottom: 110px;right: 110px;">
         <el-pagination
           @current-change="handleCurrentChange"
@@ -53,13 +55,15 @@
           :total="dataList.length"><!--total是总的数据条数-->
         </el-pagination>
       </div>
+      <v-listPage_d :dialog-form-visible="isShow"></v-listPage_d>
     </div>
   </div>
 </template>
 <style>
-  #listPage{
+  #listPage {
     overflow: hidden;
   }
+
   table tr th {
     text-align: center;
   }
@@ -70,17 +74,20 @@
 </style>
 <script>
   import navList from '../components/sidebar/navList.vue'
+  import listPage_d from './listPage_d.vue'
   export default{
     name: 'listPage',
     components: {
       'v-navList': navList,
+      'v-listPage_d':listPage_d
     },
     data: function () {
       return {
         isPlay: "",
         currentPage: 1,//当前页
         pageList: [],//每页存放的列表数据,15条
-        dataList: []
+        dataList: [],
+        isShow:false
       }
     },
     created: function () {
@@ -106,8 +113,9 @@
        * 列表的查看详情操作
        * @param item
        */
-      showDetail:function (item) {
-        
+      showDetail: function (item) {
+        var me = this
+        this.isShow = true
       },
       /**
        * 列表的开启暂停操作
@@ -115,7 +123,7 @@
        */
       playOrPauseJob: function (item) {
         var me = this;
-        this.$confirm(item.isplay==1?'此操作将暂停该job':'此操作将启动该job', '提示', {
+        this.$confirm(item.isplay == 1 ? '此操作将暂停该job' : '此操作将启动该job', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
@@ -126,7 +134,7 @@
               url: "http://10.8.85.36:8086/CatAPI/OperateCatJob",
               data: {
                 id: item.id,
-                option:item.isplay==1?'pause':'start'
+                option: item.isplay == 1 ? 'pause' : 'start'
               },
               dataType: "jsonp",
               success: function (data) {
@@ -135,13 +143,13 @@
                     me.$message({
                       type: 'success',
                       message: '暂停成功!'
-                    }) ;
+                    });
                     item.isplay = 0
                   } else if (item.isplay == 0) {
                     me.$message({
                       type: 'success',
                       message: '启动成功!'
-                    }) ;
+                    });
                     item.isplay = 1
                   }
                 } else {
@@ -157,7 +165,7 @@
               type: "post",
               url: "http://10.8.85.36:8086/DashboardAPI/servlet/PauseDashboard",
               data: {
-               id: item.id,
+                id: item.id,
                 isPlay: item.isplay == 1 ? 0 : 1
               },
               dataType: "jsonp",
@@ -210,8 +218,8 @@
               type: "post",
               url: "http://10.8.85.36:8086/CatAPI/OperateCatJob",
               data: {
-                  id: item.id,
-                  option:'delete'
+                id: item.id,
+                option: 'delete'
               },
               dataType: "jsonp",
               success: function (data) {
