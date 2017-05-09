@@ -2,7 +2,7 @@
   <div id="cat">
     <div class="main">
       <!--左侧导航栏-->
-      <v-navList></v-navList>
+      <v-navList index="1"></v-navList>
       <!--内容区域-->
       <div class="content">
         <form class="form" style="position:relative;top: 20px; left: 40px;">
@@ -108,8 +108,7 @@
                       <table class="table table-bordered table-hover">
                         <thead>
                         <tr role="row" class="row-header">
-                          <!--<th><input type="checkbox" id="check_all" @click="checkAll"></th>-->
-                          <th></th>
+                          <th><input type="checkbox" id="check_all" @click="checkAll"></th>
                           <th>Name</th>
                         </tr>
                         </thead>
@@ -128,12 +127,42 @@
             </div>
             <label v-if='tips.checkedNamesTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
           </div>
+
+
+          <el-table
+            ref="multipleTable"
+            :data="tableData3"
+            border
+            tooltip-effect="dark"
+            style="width: 100%"
+            @selection-change="handleSelectionChange">
+            <el-table-column
+              type="selection"
+              width="55">
+            </el-table-column>
+            <el-table-column
+              label="日期"
+              width="120">
+              <template scope="scope">{{ scope.row.date }}</template>
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="姓名"
+              width="120">
+            </el-table-column>
+            <el-table-column
+              prop="address"
+              label="地址"
+              show-overflow-tooltip>
+            </el-table-column>
+          </el-table>
           <div class="foot">
             <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="submit">保存</button>
             <button type="button" class="btn btn-primary btn-sm " @click="gotodatasource">取消</button>
           </div>
         </form>
       </div>
+      <!--保存成功后提示页面-->
       <el-dialog title="提示" v-model="dialogVisible" size="tiny"  style="text-align: center;">
         <h3>保存成功，你可以继续：</h3>
         <div @click="goList"><h4><a>去列表页查看</a></h4></div>

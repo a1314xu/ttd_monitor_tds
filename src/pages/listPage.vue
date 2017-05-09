@@ -2,6 +2,8 @@
   <div id="listPage">
     <div class="main">
       <v-navList></v-navList>
+
+      <!--列表-->
       <div class="content">
         <div class="row">
           <div class="col-md-11">
@@ -41,11 +43,11 @@
               </tr>
               </tbody>
             </table>
-
           </div>
         </div>
       </div>
-      <!--分页-->
+
+      <!--分页处理-->
       <div style="position: absolute;bottom: 110px;right: 110px;">
         <el-pagination
           @current-change="handleCurrentChange"
@@ -55,8 +57,86 @@
           :total="dataList.length"><!--total是总的数据条数-->
         </el-pagination>
       </div>
-      <!--弹框-->
-      <v-listPage_d :dialog-visible="isShow"></v-listPage_d>
+
+      <!--Dashboard详情页面-->
+      <el-dialog title="Dashboard详情" :visible.sync="dialogDashboardVisible">
+        <form class="form" style="position:relative;top: 20px; left: 40px;">
+          <div class="row form-inline distance">
+            <div class="form-group col-md-3">
+              <label for="taskName">任务名称</label>
+              <input type="text" class="form-control input-sm" id="taskName" placeholder="简单的说明一下"
+                     v-model="info.taskName">
+            </div>
+            <div class="form-group col-md-3">
+              <label>间隔时间</label>
+              <select class=" input-sm" v-model="info.timeInterval">
+                <option value="1" selected>1分钟</option>
+                <option value="10">10分钟</option>
+                <option value="60">1小时</option>
+                <option value="1440">1天</option>
+                <option value="10080">1周</option>
+              </select>
+            </div>
+          </div>
+          <div class="row form-inline distance">
+            <div class="form-group col-md-3 ">
+              <label>环境</label>
+              <select class=" input-sm" v-model="info.environment">
+                <option value="PROD">PROD</option>
+                <option value="FWS">FWS</option>
+                <option value="UAT">UAT</option>
+                <option value="LPT">LPT</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3 ">
+              <label>聚合方式</label>
+              <select class=" input-sm" v-model="info.gatherMethod">
+                <option value="SUM">SUM</option>
+                <option value="AVG">AVG</option>
+                <option value="COUNT">COUNT</option>
+                <option value="MAX">MAX</option>
+                <option value="MIN">MIN</option>
+              </select>
+            </div>
+          </div>
+          <!--联想功能-->
+          <label for="metricName">Metric Name：</label>
+          <div class="row form-inline">
+            <div class="form-group col-md-9">
+              <input type="text" class="form-control input-sm" id="metricName" placeholder="" v-model="info.metricName"
+                     list="metricNameList" style="width: 500px;">
+              <datalist class=" input-sm" id="metricNameList">
+                <option value="fx.ubt.pv.count"></option>
+                <option value="fx.ubt.mobile.pv.count"></option>
+                <option value="fx.ubt.jserror.count"></option>
+                <option value="fx.ubt.perf.domready"></option>
+                <option value="js.lizard.ajaxready"></option>
+                <option value="thingstodo.framework.servicestack.latency">
+                </option>
+                <option value="thingstodo.framework.servicestack.count">
+                </option>
+              </datalist>
+            </div>
+          </div>
+          <label for="tag">Tag</label>
+          <div class="row form-inline">
+            <div class="form-group col-md-9">
+              <input type="text" class="form-control input-sm col-md-6" style="width: 500px" id="tag"
+                     placeholder="appid=1000000444" v-model.trim="info.tag">
+            </div>
+          </div>
+          <label for="groupBy">Group By：</label>
+          <div class="row form-inline">
+            <div class="form-group col-md-9">
+              <input type="text" class="form-control input-sm" id="groupBy" placeholder="appid;name"
+                     v-model.trim="info.groupBy" style="width: 500px;">
+            </div>
+          </div>
+        </form>
+      </el-dialog>
+      <!--CAT详情页面-->
+      <el-dialog title="CAT详情" :visible.sync="dialogCatVisible">
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -75,17 +155,25 @@
 </style>
 <script>
   import navList from '../components/sidebar/navList.vue'
-  import listPage_d from './listPage_d.vue'
   export default{
     name: 'listPage',
     components: {
       'v-navList': navList,
-      'v-listPage_d':listPage_d
     },
     data: function () {
       return {
         isPlay: "",
-        isShow:false,
+        dialogDashboardVisible:false,
+        dialogCatVisible:false,
+        info: {
+          taskName: "",
+          timeInterval: "1",
+          environment: "PROD",
+          gatherMethod: "SUM",
+          metricName: "",
+          tag: "",//输入的tag
+          groupBy: "",//输入的group by
+        },
         currentPage: 1,//当前页
         pageList: [],//每页存放的列表数据,15条
         dataList: [],
@@ -116,7 +204,9 @@
        */
       showDetail: function (item) {
         var me = this
-        this.isShow = true
+        me.dialogDashboardVisible=true
+//        me.dialogCatVisible=true
+        me.info.taskName=item.taskname
       },
       /**
        * 列表的开启暂停操作
@@ -268,9 +358,11 @@
         });
 
       },
-
+      /**
+       * 分页处理
+       * @param item
+       */
       handleCurrentChange: function (currentPage) {
-        //当前页面变换
         this.currentPage = currentPage
         this.pageList = this.dataList.slice((this.currentPage - 1) * 15, this.currentPage * 15 - 1)
       }

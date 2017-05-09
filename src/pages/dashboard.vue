@@ -87,6 +87,7 @@
           </div>
         </form>
       </div>
+      <!--保存成功后提示页面-->
       <el-dialog title="提示" v-model="dialogVisible" size="tiny"  style="text-align: center;">
         <h3>保存成功，你可以继续：</h3>
         <div @click="goList"><h4><a>去列表页查看</a></h4></div>
