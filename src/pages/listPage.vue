@@ -55,7 +55,8 @@
           :total="dataList.length"><!--total是总的数据条数-->
         </el-pagination>
       </div>
-      <v-listPage_d :dialog-form-visible="isShow"></v-listPage_d>
+      <!--弹框-->
+      <v-listPage_d :dialog-visible="isShow"></v-listPage_d>
     </div>
   </div>
 </template>
@@ -84,10 +85,10 @@
     data: function () {
       return {
         isPlay: "",
+        isShow:false,
         currentPage: 1,//当前页
         pageList: [],//每页存放的列表数据,15条
         dataList: [],
-        isShow:false
       }
     },
     created: function () {

@@ -22,7 +22,7 @@
 <script>
     export default {
       name: '',
-      props: ['dialogFormVisible'],
+      props: ['dialogVisible'],
       data:function () {
         return {
           form: {
