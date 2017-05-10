@@ -83,7 +83,6 @@
             <div class="form-group col-md-9">
               <input type="text" class="form-control input-sm" id="groupBy" placeholder="appid;name(注意区分大小写)"
                      v-model.trim="info.groupBy" style="width: 500px;">
-
             </div>
           </div>
           <div class="footDashboard" style=" margin-top:80px;">
@@ -281,20 +280,16 @@
         this.multipleSelection = val;
       },
       search:function () {
-//        var me = this
-//        var searchContext=me.form.channelName+me.form.group
-//        var searchBox=[]
-//        searchBox.length=me.pageIdList.length
-//        for(var i=0;i<me.pageIdList.length;i++){
-//             searchBox[i]=pageIdList[i].pageId+pageIdList[i].pageName+pageIdList[i].type+pageIdList[i].team +pageIdList[i].owner
-//            if(searchBox[i].indexOf(searchContext)!==-1){
-//                me.pageIdData.push(pageIdList[i])
-//            }
-//        }
-
+        var me = this
+       me.pageIdList.forEach(function (item) {
+         if(item.type==me.form.channelName&&item.team==me.form.group){
+             me.pageIdList=[]//置空
+             me.pageIdList.push(item)
+             me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+         }
+       })
       },
       handleCurrentChange: function (currentPage) {
-        //当前页面变换
         this.currentPage = currentPage
         this.pageIdData = this.pageIdList.slice((this.currentPage - 1) * 11, this.currentPage * 11 - 1)
       },
