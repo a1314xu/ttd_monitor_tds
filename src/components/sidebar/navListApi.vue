@@ -1,12 +1,15 @@
 <template>
   <div id="leftNav">
-    <el-menu default-active="apiProperty" class="el-menu-vertical-demo leftNav" v-bind:style="{ height: screenHeight +'px'}" >
-      <el-menu-item index="apiProperty">接口性能大盘
+    <el-menu default-active="1" class="el-menu-vertical-demo leftNav" v-bind:style="{ height: screenHeight +'px'}" >
+      <el-menu-item index="1">
+        <router-link to="apiProperty">接口性能大盘</router-link>
       </el-menu-item>
-      <el-menu-item index="pageProperty" >页面性能大盘
+      <el-menu-item index="2" >
+        <router-link to="pageProperty">页面性能大盘</router-link>
       </el-menu-item>
-      <el-menu-item index="playDailyReport">玩乐日报
-      </el-menu-item>
+      <!--<el-menu-item index="3">-->
+        <!--<router-link to="">玩乐日报</router-link>-->
+      <!--</el-menu-item>-->
     </el-menu>
   </div>
 </template>

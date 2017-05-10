@@ -127,35 +127,6 @@
             </div>
             <label v-if='tips.checkedNamesTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
           </div>
-
-
-          <el-table
-            ref="multipleTable"
-            :data="tableData3"
-            border
-            tooltip-effect="dark"
-            style="width: 100%"
-            @selection-change="handleSelectionChange">
-            <el-table-column
-              type="selection"
-              width="55">
-            </el-table-column>
-            <el-table-column
-              label="日期"
-              width="120">
-              <template scope="scope">{{ scope.row.date }}</template>
-            </el-table-column>
-            <el-table-column
-              prop="name"
-              label="姓名"
-              width="120">
-            </el-table-column>
-            <el-table-column
-              prop="address"
-              label="地址"
-              show-overflow-tooltip>
-            </el-table-column>
-          </el-table>
           <div class="foot">
             <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="submit">保存</button>
             <button type="button" class="btn btn-primary btn-sm " @click="gotodatasource">取消</button>
@@ -232,11 +203,6 @@
         showTab: false,
         selectedData: [],//联想功能的数据
         currentView: "",
-        pickerOptions0: {
-          disabledDate(time) {
-            return time.getTime() < Date.now() - 8.64e7 - 7 * 24 * 60 * 60 * 1000;
-          }
-        },
       }
     },
 

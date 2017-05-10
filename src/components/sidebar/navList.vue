@@ -1,23 +1,30 @@
 <template>
   <div id="leftNav" >
-    <el-menu default-active="cat" class="el-menu-vertical-demo leftNav " v-bind:style="{ height: screenHeight +'px'}" :default-openeds=openeds  router>
-      <el-submenu index="dataSource">
-        <template slot="title">数据源
+    <el-menu default-active="1" class="el-menu-vertical-demo leftNav " v-bind:style="{ height: screenHeight +'px'}" :default-openeds=openeds  router>
+      <el-submenu index="1">
+        <template slot="title">
+          <router-link to="dataSource">数据源</router-link>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="cat">CAT
+          <el-menu-item index="1-1">
+            <router-link to="CAT">CAT</router-link>
           </el-menu-item>
-          <el-menu-item index="dashboard">Dashboard
+          <el-menu-item index="1-2">
+            <router-link to="Dashboard">Dashboard</router-link>
           </el-menu-item>
-          <el-menu-item index="listPage">任务列表
+          <el-menu-item index="1-3">
+            <router-link to="listPage">任务列表</router-link>
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="2">图表
+      <el-menu-item index="2">
+        <router-link to="">图表</router-link>
       </el-menu-item>
-      <el-menu-item index="3">看板
+      <el-menu-item index="3">
+        <router-link to="">看板</router-link>
       </el-menu-item>
-      <el-menu-item index="4">告警规则
+      <el-menu-item index="4">
+        <router-link to="">告警规则</router-link>
       </el-menu-item>
     </el-menu>
   </div>
