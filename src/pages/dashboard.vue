@@ -70,7 +70,8 @@
                      placeholder="appid=1000000444(注意区分大小写)" v-model.trim="info.tag">
             </div>
             <div class="form-group col-md-1 ">
-              <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="showPageIdDialog">批量PageID
+              <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="showPageIdDialog">
+                批量PageID
               </button>
             </div>
             <div class="form-group col-md-1">
@@ -100,7 +101,7 @@
       <!--批量PageId 弹框-->
       <el-dialog title="批量PageID选择" :visible.sync="dialogPageIdVisible" size="small">
         <!--表单区-->
-        <el-form :inline="true" >
+        <el-form :inline="true">
           <el-form-item label="渠道名称">
             <el-select v-model="form.channelName" placeholder="请选择">
               <el-option label="不限" value="all"></el-option>
@@ -142,19 +143,20 @@
             <el-button type="primary" v-on:click="search">查询</el-button>
           </el-form-item>
         </el-form>
-       <!--表格区-->
-        <el-table  highlight-current-row ref="multipleTable" :data="pageIdData" border  style="width: 100%" @selection-change="handleSelectionChange">
-          <el-table-column  type="selection" width="50">
+        <!--表格区-->
+        <el-table highlight-current-row ref="multipleTable" :data="pageIdData" border style="width: 100%"
+                  @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="50">
           </el-table-column>
-          <el-table-column prop="pageId"  label="PageId" width="130" align="center" resizable>
+          <el-table-column prop="pageId" label="PageId" width="130" align="center" resizable>
           </el-table-column>
           <el-table-column prop="pageName" label="PageName" width="240" align="center" resizable>
           </el-table-column>
-          <el-table-column prop="type" label="Type"  width="235" align="center" resizable>
+          <el-table-column prop="type" label="Type" width="235" align="center" resizable>
           </el-table-column>
-          <el-table-column prop="team" label="Team"  width="130" align="center" resizable>
+          <el-table-column prop="team" label="Team" width="130" align="center" resizable>
           </el-table-column>
-          <el-table-column prop="owner" label="Owner" width="130" align="center"resizable>
+          <el-table-column prop="owner" label="Owner" width="130" align="center" resizable>
           </el-table-column>
         </el-table>
         <!--分页-->
@@ -217,22 +219,22 @@
           tag: "",//输入的tag
           groupBy: "",//输入的group by
         },
-        form:{
-          channelName:"",
-          group:""
+        form: {
+          channelName: "",
+          group: ""
         },
 
-        pageIdList:[],//pageId所有数据
-        pageIdData:[],//pageId每页数据
+        pageIdList: [],//pageId所有数据
+        pageIdData: [],//pageId每页数据
         currentPage: 1,//当前页
-        dialogPageIdVisible:false,
+        dialogPageIdVisible: false,
         dialogVisible: false,
 
         taskNameTip: false,
         metricNameTip: false,
         groupByTip: false,
         testCode: "",//验证失败成功的代码
-        multipleSelection:[]//pageid列表选中哪几列
+        multipleSelection: []//pageid列表选中哪几列
       }
     },
     watch: {
@@ -249,7 +251,7 @@
         val.length == 0 ? this.groupByTip = true : this.groupByTip = false
       },
     },
-    created:function () {
+    created: function () {
       var me = this
 
 
@@ -259,9 +261,9 @@
         app.$router.push("dataSource")
       },
 //      以下弹框里的方法
-      showPageIdDialog:function () {
+      showPageIdDialog: function () {
         var me = this
-        me.dialogPageIdVisible=true
+        me.dialogPageIdVisible = true
         $.ajax({
           type: "post",
           url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
@@ -272,31 +274,47 @@
           }
         });
       },
-      showAppIdDialog:function () {
+      showAppIdDialog: function () {
         var me = this
 
       },
-      handleSelectionChange:function (val) {
-        this.multipleSelection = val;
-      },
-      search:function () {
+      handleSelectionChange: function (val) {
         var me = this
-       me.pageIdList.forEach(function (item) {
-         if(item.type==me.form.channelName&&item.team==me.form.group){
-             me.pageIdList=[]//置空
-             me.pageIdList.push(item)
-             me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-         }
-       })
+        me.multipleSelection = val;
       },
+      /**
+       * pageId弹框搜索功能
+       */
+      search: function () {
+        var me = this
+        var temp = []//存放匹配到的每行
+        var searchText = me.form.channelName + me.form.group//输入框的文字
+        if (searchText == 'allall') {
+          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+        } else {
+          me.pageIdList.forEach(function (item) {
+            if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+              temp.push(item)
+            }
+          })
+          me.pageIdList = temp
+          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+        }
+      },
+      /**
+       * 处理弹框里分页
+       * @param currentPage
+       */
       handleCurrentChange: function (currentPage) {
         this.currentPage = currentPage
         this.pageIdData = this.pageIdList.slice((this.currentPage - 1) * 11, this.currentPage * 11 - 1)
       },
-      submitPageId:function () {
+      submitPageId: function () {
         var me = this
         me.dialogPageIdVisible = false
-
+        me.multipleSelection.forEach(function (item) {
+          me.info.tag += "pid=" + item.pageId + ";"
+        })
       },
       // 以上弹框里的方法
 
