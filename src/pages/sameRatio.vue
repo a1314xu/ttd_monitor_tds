@@ -12,9 +12,9 @@
               <tr role="row" class="row-header">
                 <th>业务名称</th>
                 <th>接口名</th>
+                <th>基准值</th>
                 <th>上上周均值</th>
-                <th>上周均值</th>
-                <th>环比率</th>
+                <th>同比率</th>
                 <th>开发组</th>
               </tr>
               </thead>

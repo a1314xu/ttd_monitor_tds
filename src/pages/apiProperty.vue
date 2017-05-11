@@ -52,6 +52,8 @@
                   <th>接口名</th>
                   <th>AVG</th>
                   <th>开发组</th>
+                  <th>是否核心接口</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -61,6 +63,8 @@
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.AVG}}</td>
                   <td>{{item.developGroup}}</td>
+                  <td>{{item.developGroup}}</td>
+
                 </tr>
                 </tbody>
               </table>

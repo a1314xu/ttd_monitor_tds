@@ -177,6 +177,87 @@
       </el-dialog>
 
       <!--批量AppId 弹框-->
+      <el-dialog title="批量AppID选择" :visible.sync="dialogAppIdVisible" size="small">
+        <!--表单区-->
+        <el-form :inline="true">
+          <el-form-item label="小组">
+            <el-select v-model="form.group2" placeholder="请选择">
+              <el-option label="不限" value="all"></el-option>
+              <el-option label="玩乐_03_订单" value="玩乐_03_订单"></el-option>
+              <el-option label="玩乐_04_公共" value="玩乐_04_公共"></el-option>
+              <el-option label="玩乐_05_监控" value="玩乐_05_监控"></el-option>
+              <el-option label="玩乐_06_BI" value="玩乐_06_BI"></el-option>
+              <el-option label="玩乐_07_搜索" value="玩乐_07_搜索"></el-option>
+              <el-option label="玩乐_08_营销" value="玩乐_08_营销"></el-option>
+              <el-option label="玩乐_09_供应商" value="玩乐_09_供应商"></el-option>
+              <el-option label="玩乐_10_对接" value="玩乐_10_对接"></el-option>
+              <el-option label="玩乐_11_商品" value="玩乐_11_商品"></el-option>
+              <el-option label="玩乐_12_预定" value="玩乐_12_预定"></el-option>
+              <el-option label="玩乐_13_Online" value="玩乐_13_Online"></el-option>
+              <el-option label="玩乐_14_无线" value="玩乐_14_无线"></el-option>
+              <el-option label="玩乐_15_架构" value="玩乐_15_架构"></el-option>
+              <el-option label="玩乐_16_结算" value="玩乐_16_结算"></el-option>
+              <el-option label="玩乐_17_分销" value="玩乐_17_分销"></el-option>
+              <el-option label="玩乐_18_UGC" value="玩乐_18_UGC"></el-option>
+              <el-option label="玩乐_20_收益管理" value="玩乐_20_收益管理"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="负责人">
+            <el-select v-model="form.responsible" placeholder="请选择">
+              <el-option label="不限" value="all"></el-option>
+              <el-option label="cxhuang" value="cxhuang"></el-option>
+              <el-option label="eeyang" value="eeyang"></el-option>
+              <el-option label="huxj" value="huxj"></el-option>
+              <el-option label="kcke" value="kcke"></el-option>
+              <el-option label="liu.liang" value="liu.liang"></el-option>
+              <el-option label="ll_xing" value="ll_xing"></el-option>
+              <el-option label="maxq" value="maxq"></el-option>
+              <el-option label="mfwei" value="mfwei"></el-option>
+              <el-option label="prye" value="prye"></el-option>
+              <el-option label="wbyang" value="wbyang"></el-option>
+              <el-option label="weiqiwang" value="weiqiwang"></el-option>
+              <el-option label="yan.zhou" value="yan.zhou"></el-option>
+              <el-option label="yczheng" value="yczheng"></el-option>
+              <el-option label="zwguo" value="zwguo"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" v-on:click="search2">查询</el-button>
+          </el-form-item>
+        </el-form>
+        <!--表格区-->
+        <el-table highlight-current-row ref="multipleTable" :data="appIdData" border style="width: 100%"
+                  @selection-change="handleSelectionChange2">
+          <el-table-column type="selection" width="50">
+          </el-table-column>
+          <el-table-column prop="pageId" label="AppID" width="130" align="center" resizable>
+          </el-table-column>
+          <el-table-column prop="pageName" label="AppEname" width="240" align="center" resizable>
+          </el-table-column>
+          <el-table-column prop="type" label="AppCname" width="235" align="center" resizable>
+          </el-table-column>
+          <el-table-column prop="team" label="Team" width="130" align="center" resizable>
+          </el-table-column>
+          <el-table-column prop="owner" label="Owner" width="130" align="center" resizable>
+          </el-table-column>
+        </el-table>
+        <!--分页-->
+        <div style="position: absolute;bottom: 20px;">
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="11"
+            layout="total, prev, pager, next"
+            :total="appIdList.length"><!--total是总的数据条数-->
+          </el-pagination>
+        </div>
+        <!--按钮区-->
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="submitAppId">确 定</el-button>
+          <el-button @click="dialogAppIdVisible = false">取 消</el-button>
+        </div>
+      </el-dialog>
+
     </div>
   </div>
 </template>
@@ -221,20 +302,26 @@
         },
         form: {
           channelName: "",
-          group: ""
+          group: "",
+          group2:"",
+          responsible:"",
         },
 
         pageIdList: [],//pageId所有数据
         pageIdData: [],//pageId每页数据
+        appIdData: [],//appId每页数据
+        appIdList:[],//appId所有数据
         currentPage: 1,//当前页
         dialogPageIdVisible: false,
+        dialogAppIdVisible:false,
         dialogVisible: false,
 
         taskNameTip: false,
         metricNameTip: false,
         groupByTip: false,
         testCode: "",//验证失败成功的代码
-        multipleSelection: []//pageid列表选中哪几列
+        multipleSelection: [],//pageid列表选中哪几列
+        multipleSelection2:[]
       }
     },
     watch: {
@@ -256,115 +343,175 @@
 
 
     },
-    methods: {
-      todatasource: function () {
-        app.$router.push("dataSource")
-      },
-//      以下弹框里的方法
-      showPageIdDialog: function () {
-        var me = this
-        me.dialogPageIdVisible = true
-        $.ajax({
-          type: "post",
-          url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
-          data: {},
-          success: function (data) {
-            me.pageIdList = data.pageIds
-            me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-          }
-        });
-      },
-      showAppIdDialog: function () {
-        var me = this
+      methods: {
+        todatasource: function () {
+          app.$router.push("dataSource")
+        },
+  //      以下弹框里的方法
 
-      },
-      handleSelectionChange: function (val) {
-        var me = this
-        me.multipleSelection = val;
-      },
-      /**
-       * pageId弹框搜索功能
-       */
-      search: function () {
-        var me = this
-        var temp = []//存放匹配到的每行
-        var searchText = me.form.channelName + me.form.group//输入框的文字
-        if (searchText == 'allall') {
-          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-        } else {
-          me.pageIdList.forEach(function (item) {
-            if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
-              temp.push(item)
-            }
-          })
-          me.pageIdList = temp
-          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-        }
-      },
-      /**
-       * 处理弹框里分页
-       * @param currentPage
-       */
-      handleCurrentChange: function (currentPage) {
-        this.currentPage = currentPage
-        this.pageIdData = this.pageIdList.slice((this.currentPage - 1) * 11, this.currentPage * 11 - 1)
-      },
-      submitPageId: function () {
-        var me = this
-        me.dialogPageIdVisible = false
-        me.multipleSelection.forEach(function (item) {
-          me.info.tag += "pid=" + item.pageId + ";"
-        })
-      },
-      // 以上弹框里的方法
-
-      submit: function () {
-        var me = this
-        if (me.info.taskName.length === 0) {
-          me.taskNameTip = true;
-        }
-        if (me.info.metricName.length === 0) {
-          me.metricNameTip = true;
-        }
-        if (me.info.groupBy.length === 0) {
-          me.groupByTip = true;
-        }
-        if (me.info.groupBy.length !== 0 && me.info.metricName.length !== 0 && me.info.taskName.length !== 0) {
+        /**
+         * pageId弹框显示功能
+         */
+        showPageIdDialog: function () {
+          var me = this
+          me.dialogPageIdVisible = true
           $.ajax({
             type: "post",
-            url: "http://10.8.85.36:8086/DashboardAPI/servlet/SaveDashboard",
-            data: me.info,
+            url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
+            data: {},
+            success: function (data) {
+              me.pageIdList = data.pageIds
+              me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+            }
+          });
+        },
+        /**
+         * appId弹框显示功能
+         */
+        showAppIdDialog: function () {
+          var me = this
+          me.dialogAppIdVisible = true
+          $.ajax({
+            type: "get",
+            url: "http://10.8.85.36:8086/CatAPI/GetAppId",
+            data: {},
             dataType: "jsonp",
             success: function (data) {
-//              debugger;
-              me.testCode = data.message.code
-              if (me.testCode == 0) {
-                me.dialogVisible = true
-              } else {
-                me.$alert('信息填写有误，保存失败', '提示', {
-                  confirmButtonText: '确定',
-                  callback: action => {
-                    me.$message({
-                      type: 'info',
-//                      message: `action: ${ action }`
-                    });
-                  }
-                });
+                debugger
+              me.pageIdList = data.pageIds
+              me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+            }
+          });
+        },
+        /**
+         * 表格复选框功能
+         */
+        handleSelectionChange: function (val) {
+          var me = this
+          me.multipleSelection = val;
+        },
+        /**
+         * 表格复选框功能2
+         */
+        handleSelectionChange2: function (val) {
+          var me = this
+          me.multipleSelection2 = val;
+        },
+        /**
+         * pageId弹框搜索功能
+         */
+        search: function () {
+          var me = this
+          var temp = []//存放匹配到的每行
+          var searchText = me.form.channelName + me.form.group//输入框的文字
+          if (searchText == 'allall') {
+            me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          } else {
+            me.pageIdList.forEach(function (item) {
+              if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                temp.push(item)
               }
-            },
+            })
+            me.pageIdList = temp
+            me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          }
+        },
+        /**
+         * appId弹框搜索功能
+         */
+        search2:function () {
+          var me = this
+          var temp = []//存放匹配到的每行
+          var searchText = me.form.responsible + me.form.group2//输入框的文字
+          if (searchText == 'allall') {
+            me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          } else {
+            me.appIdList.forEach(function (item) {
+              if ((item.team + item.owner).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                temp.push(item)
+              }
+            })
+            me.appIdList = temp
+            me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          }
+        },
+        /**
+         * 处理弹框里分页
+         * @param currentPage
+         */
+        handleCurrentChange: function (currentPage) {
+          this.currentPage = currentPage
+          this.pageIdData = this.pageIdList.slice((this.currentPage - 1) * 11, this.currentPage * 11 - 1)
+        },
+        /**
+         * 弹框里保存pageId
+         */
+        submitPageId: function () {
+          var me = this
+          me.dialogPageIdVisible = false
+          me.multipleSelection.forEach(function (item) {
+            me.info.tag += "pid=" + item.pageId + ";"
           })
-        }
-      },
-      goList: function () {
-        $("#myModal").modal('hide')
-        app.$router.push("listPage")
-      },
-      continueAdd: function () {
-        $("#myModal").modal('hide')
-        app.$router.push("dataSource")
-      }
+        },
+        submitAppId:function () {
+          var me=this
+          me.dialogAppIdVisible=false
+          me.multipleSelection2.forEach(function (item) {
+            me.info.tag+="appid="+item.appid+";"
+          })
 
-    }
+        },
+        // 以上弹框里的方法
+        /**
+         * Dashboard页面保存功能
+         */
+        submit: function () {
+          var me = this
+          if (me.info.taskName.length === 0) {
+            me.taskNameTip = true;
+          }
+          if (me.info.metricName.length === 0) {
+            me.metricNameTip = true;
+          }
+          if (me.info.groupBy.length === 0) {
+            me.groupByTip = true;
+          }
+          if (me.info.groupBy.length !== 0 && me.info.metricName.length !== 0 && me.info.taskName.length !== 0) {
+            $.ajax({
+              type: "post",
+              url: "http://10.8.85.36:8086/DashboardAPI/servlet/SaveDashboard",
+              data: me.info,
+              dataType: "jsonp",
+              success: function (data) {
+  //              debugger;
+                me.testCode = data.message.code
+                if (me.testCode == 0) {
+                  me.dialogVisible = true
+                } else {
+                  me.$alert('信息填写有误，保存失败', '提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                      me.$message({
+                        type: 'info',
+  //                      message: `action: ${ action }`
+                      });
+                    }
+                  });
+                }
+              },
+            })
+          }
+        },
+        goList: function () {
+          $("#myModal").modal('hide')
+          app.$router.push("listPage")
+        },
+        continueAdd: function () {
+          $("#myModal").modal('hide')
+          app.$router.push("dataSource")
+        }
+
+      }
 
 
   }

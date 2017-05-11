@@ -46,7 +46,6 @@
           </div>
         </div>
       </div>
-
       <!--分页处理-->
       <div style="position: absolute;bottom: 110px;right: 110px;">
         <el-pagination
@@ -58,19 +57,125 @@
         </el-pagination>
       </div>
 
-      <!--Dashboard详情页面-->
-      <el-dialog title="Dashboard详情" :visible.sync="dialogDashboardVisible">
-        <form class="form" style="position:relative;top: 20px; left: 40px;">
+      <!--cat查看详情弹框页-->
+      <el-dialog title="cat详情" :visible.sync="dialogCatVisible">
+        <form class="form" style="position:relative;top: 0px; left: 40px;">
           <div class="row form-inline distance">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-6">
+              <label for="taskName2">任务名称</label>
+              <input type="text" class="form-control input-sm" id="taskName2" placeholder="" v-model="catInfo.taskName"
+                     disabled>
+            </div>
+            <div class="form-group col-md-6">
+              <label>间隔时间</label>
+              <select class=" input-sm" v-model="catInfo.timeInterval" disabled>
+                <option value="1">1分钟</option>
+                <option value="10">10分钟</option>
+                <option value="60">1小时</option>
+                <option value="1440 ">1天</option>
+                <option value="10080">1周</option>
+              </select>
+            </div>
+          </div>
+          <div class="row form-inline distance">
+            <div class="form-group col-md-12">
+              <label for="appId">APP &nbsp;&nbsp; ID</label>
+              <input type="text" class="form-control input-sm" id="appId" placeholder="" v-model="catInfo.appId"
+                     disabled
+                     @blur="showType">
+            </div>
+          </div>
+          <!--TAG区域-->
+          <div class="row form-inline distance col-md-12">
+            <label style="float: left;">TAG:</label>
+            <div style="float: left">
+              <input type="checkbox" id="Total" value="Total" v-model="catInfo.checkedTags">
+              <label for="Total">Total</label>
+              <input type="checkbox" id="Failure" value="Failure" v-model="catInfo.checkedTags">
+              <label for="Failure">Failure</label>
+              <input type="checkbox" id="Failure%" value="Failure%" v-model="catInfo.checkedTags">
+              <label for="Failure%">Failure%</label>
+              <input type="checkbox" id="Min(ms)" value="Min(ms)" v-model="catInfo.checkedTags">
+              <label for="Min(ms)">Min(ms) </label>
+              <input type="checkbox" id="Max(ms)" value="Max(ms)" v-model="catInfo.checkedTags">
+              <label for="Max(ms)">Max(ms)</label><br>
+              <input type="checkbox" id="Avg(ms)" value="Avg(ms)" v-model="catInfo.checkedTags">
+              <label for="Avg(ms)">Avg(ms)</label>
+              <input type="checkbox" id="95Line(ms)" value="95Line(ms)" v-model="catInfo.checkedTags">
+              <label for="95Line(ms)">95Line(ms)</label>
+              <input type="checkbox" id="99.9Line(ms)" value="99.9Line(ms)" v-model="catInfo.checkedTags">
+              <label for="99.9Line(ms)">99.9Line(ms)</label>
+              <input type="checkbox" id="Std(ms)" value="Std(ms)" v-model="catInfo.checkedTags">
+              <label for="Std(ms)">Std(ms)</label>
+              <input type="checkbox" id="QPS" value="QPS" v-model="catInfo.checkedTags">
+              <label for="QPS">QPS</label>
+            </div>
+          </div>
+          <!--Type区域-->
+          <div class="row form-inline distance col-md-12">
+            <div style="border: 1px solid ;width: 85%;float: left;">
+              <label style="position:absolute;top: 0px;">Type:</label>
+              <div class="checkbox" style="margin-top: 0px;margin-left: 50px">
+                <div v-for="(type,index) in typeList" v-if="type!='System'&&type!='all'" style="float: left">
+                  <input type="checkbox" :id="type" :value="type" v-model="catInfo.checkedTypes">
+                  <label :for="type">{{type}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--tab表格区-->
+          <div class="tab" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs " role="tablist" id="docTabs">
+              <li role="presentation" v-for="(item,index) in tabsData" :class="index==0?'active':''">
+                <a :href="'#'+index" :aria-controls="item.type" role="tab" data-toggle="tab">{{item.type}} </a>
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" v-for="(item,index) in tabsData" class="tab-pane fade in"
+                   :class=" index==0?'active':'' " :id="index">
+                <div class="content_list">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr role="row" class="row-header">
+                          <th><input type="checkbox" id="check_all" @click="checkAll"></th>
+                          <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(typeValueItem,row) in item.typeValue">
+                          <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
+                                     name="chk_list"
+                                     v-model="catInfo.checkedNames"></td>
+                          <td><label :for="index+'_'+row">{{typeValueItem}}</label></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </el-dialog>
+
+      <!--Dashboard查看详情弹框页-->
+      <el-dialog title="Dashboard详情" :visible.sync="dialogDashboardVisible">
+        <form class="form" style="position:relative;top:0px; left: 40px;">
+          <div class="row form-inline distance">
+            <div class="form-group col-md-6">
               <label for="taskName">任务名称</label>
-              <input type="text" class="form-control input-sm" id="taskName" placeholder="简单的说明一下"
-                     v-model="info.taskName">
+              <input type="text" class="form-control input-sm" id="taskName" placeholder="" disabled
+                     v-model="dashboardInfo.taskName">
             </div>
             <div class="form-group col-md-3">
               <label>间隔时间</label>
-              <select class=" input-sm" v-model="info.timeInterval">
-                <option value="1" selected>1分钟</option>
+              <select class=" input-sm" v-model="dashboardInfo.timeInterval" disabled>
+                <option value="1">1分钟</option>
                 <option value="10">10分钟</option>
                 <option value="60">1小时</option>
                 <option value="1440">1天</option>
@@ -79,9 +184,9 @@
             </div>
           </div>
           <div class="row form-inline distance">
-            <div class="form-group col-md-3 ">
+            <div class="form-group col-md-6 ">
               <label>环境</label>
-              <select class=" input-sm" v-model="info.environment">
+              <select class=" input-sm" v-model="dashboardInfo.environment" disabled>
                 <option value="PROD">PROD</option>
                 <option value="FWS">FWS</option>
                 <option value="UAT">UAT</option>
@@ -90,7 +195,7 @@
             </div>
             <div class="form-group col-md-3 ">
               <label>聚合方式</label>
-              <select class=" input-sm" v-model="info.gatherMethod">
+              <select class=" input-sm" v-model="dashboardInfo.gatherMethod" disabled>
                 <option value="SUM">SUM</option>
                 <option value="AVG">AVG</option>
                 <option value="COUNT">COUNT</option>
@@ -99,12 +204,12 @@
               </select>
             </div>
           </div>
-          <!--联想功能-->
-          <label for="metricName">Metric Name：</label>
-          <div class="row form-inline">
-            <div class="form-group col-md-9">
-              <input type="text" class="form-control input-sm" id="metricName" placeholder="" v-model="info.metricName"
-                     list="metricNameList" style="width: 500px;">
+          <div class="row form-inline distance">
+            <div class="form-group col-md-12">
+              <label for="metricName">Metric Name:</label>
+              <input type="text" class="form-control input-sm" id="metricName" placeholder=""
+                     v-model="dashboardInfo.metricName" disabled
+                     list="metricNameList" style="width: 500px">
               <datalist class=" input-sm" id="metricNameList">
                 <option value="fx.ubt.pv.count"></option>
                 <option value="fx.ubt.mobile.pv.count"></option>
@@ -118,24 +223,21 @@
               </datalist>
             </div>
           </div>
-          <label for="tag">Tag</label>
-          <div class="row form-inline">
-            <div class="form-group col-md-9">
-              <input type="text" class="form-control input-sm col-md-6" style="width: 500px" id="tag"
-                     placeholder="appid=1000000444" v-model.trim="info.tag">
+          <div class="row form-inline distance">
+            <div class="form-group col-md-12">
+              <label for="tag">Tag:</label>
+              <input type="text" class="form-control input-sm" id="tag"
+                     placeholder="" v-model.trim="dashboardInfo.tag" style="width: 500px" disabled>
             </div>
           </div>
-          <label for="groupBy">Group By：</label>
-          <div class="row form-inline">
-            <div class="form-group col-md-9">
-              <input type="text" class="form-control input-sm" id="groupBy" placeholder="appid;name"
-                     v-model.trim="info.groupBy" style="width: 500px;">
+          <div class="row form-inline distance">
+            <div class="form-group col-md-12">
+              <label for="groupBy">Group By:</label>
+              <input type="text" class="form-control input-sm " id="groupBy" placeholder=""
+                     v-model.trim="dashboardInfo.groupBy" style="width: 500px" disabled>
             </div>
           </div>
         </form>
-      </el-dialog>
-      <!--CAT详情页面-->
-      <el-dialog title="CAT详情" :visible.sync="dialogCatVisible">
       </el-dialog>
     </div>
   </div>
@@ -163,8 +265,26 @@
     data: function () {
       return {
         isPlay: "",
-        dialogDashboardVisible:false,
-        dialogCatVisible:false,
+        dashboardInfo: {
+          taskName: "",
+          timeInterval: "",
+          environment: "",
+          gatherMethod: "",
+          metricName: "",
+          tag: "",
+          groupBy: ""
+        },
+        catInfo: {
+          taskName: "",
+          timeInterval: "",
+          appId: "",
+          checkedTags: [],
+          checkedTypes: [],
+          checkedNames: []
+
+        },
+        dialogDashboardVisible: false,
+        dialogCatVisible: false,
         info: {
           taskName: "",
           timeInterval: "1",
@@ -204,9 +324,26 @@
        */
       showDetail: function (item) {
         var me = this
-        me.dialogDashboardVisible=true
-//        me.dialogCatVisible=true
-        me.info.taskName=item.taskname
+        if (item.sourcedata == 'Cat') {
+          me.dialogCatVisible = true
+        } else if (item.sourcedata == 'dashboard') {
+          me.dialogDashboardVisible = true
+          $.ajax({
+            type: "get",
+            url: "http://10.8.85.36:8086/tds-web/info/getDashboardJobInfo",
+            data: {jobId: item.id},
+            success: function (data) {
+              me.dashboardInfo.taskName = data.jobInfo.taskName
+              me.dashboardInfo.timeInterval = data.jobInfo.timeInterval
+              me.dashboardInfo.gatherMethod = data.jobInfo.gatherMethod
+              me.dashboardInfo.environment = data.jobInfo.environment
+              me.dashboardInfo.metricName = data.jobInfo.metricName
+              me.dashboardInfo.groupBy = data.jobInfo.groupBy
+//              me.dashboardInfo.tag = data.jobInfo.tag没显示
+              debugger
+            }
+          });
+        }
       },
       /**
        * 列表的开启暂停操作

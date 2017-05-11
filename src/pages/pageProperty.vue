@@ -47,6 +47,7 @@
                 <th>JSError</th>
                 <th>JSError/PV</th>
                 <th>开发组</th>
+                <th>是否核心页面</th>
               </tr>
               </thead>
               <tbody>
@@ -59,6 +60,8 @@
                 <td>{{item.JSError}}</td>
                 <td>{{item.JSError/PV}}</td>
                 <td>{{item.developGroup}}</td>
+                <td>{{item.developGroup}}</td>
+
               </tr>
               </tbody>
             </table>

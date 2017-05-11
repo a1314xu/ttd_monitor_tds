@@ -7,9 +7,9 @@
       <el-menu-item index="2" >
         <router-link to="pageProperty">页面性能大盘</router-link>
       </el-menu-item>
-      <!--<el-menu-item index="3">-->
-        <!--<router-link to="">玩乐日报</router-link>-->
-      <!--</el-menu-item>-->
+      <el-menu-item index="3">
+        <router-link to="playDailyReport">玩乐日报</router-link>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

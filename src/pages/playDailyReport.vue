@@ -15,33 +15,8 @@
               :picker-options="pickerOptions0">
             </el-date-picker>
             </div>
-            <div class="tag">
-              <div class="btn btn-primary " type="button" value="OpenAPI">SQA</div>
-            </div>
           </div>
 
-          <div class="form-group">
-            <label class="level">一级类目:</label>
-            <div class="tag">
-              <div class="btn btn-primary dis" type="button" value="OpenAPI">接口性能</div>
-              <div class="btn btn-default dis" type="button" value="Restful">页面性能</div>
-            </div>
-          </div>
-          <div class="form-group ">
-            <label class="level">二级类目:</label>
-            <div class="tag">
-              <div class="btn btn-primary dis" type="button" value="OpenAPI">OpenAPI</div>
-              <div class="btn btn-default dis" type="button" value="Restful">Restful</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="level">三级类目:</label>
-            <div class="tag">
-              <div class="btn btn-primary dis" type="button" value="AVG">AVG</div>
-              <div class="btn btn-default dis" type="button" value="95line">95line</div>
-              <div class="btn btn-default dis" type="button" value="Failure%">Failure%</div>
-            </div>
-          </div>
         </div>
         <div>
           <div class="row">
