@@ -62,104 +62,60 @@
         <form class="form" style="position:relative;top: 0px; left: 40px;">
           <div class="row form-inline distance">
             <div class="form-group col-md-6">
-              <label for="taskName2">任务名称</label>
-              <input type="text" class="form-control input-sm" id="taskName2" placeholder="" v-model="catInfo.taskName"
-                     disabled>
+              <label>任务名称</label>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="catInfo.taskName">
             </div>
             <div class="form-group col-md-6">
               <label>间隔时间</label>
-              <select class=" input-sm" v-model="catInfo.timeInterval" disabled>
-                <option value="1">1分钟</option>
-                <option value="10">10分钟</option>
-                <option value="60">1小时</option>
-                <option value="1440 ">1天</option>
-                <option value="10080">1周</option>
-              </select>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="catInfo.timeInterval">
             </div>
           </div>
           <div class="row form-inline distance">
             <div class="form-group col-md-12">
-              <label for="appId">APP &nbsp;&nbsp; ID</label>
-              <input type="text" class="form-control input-sm" id="appId" placeholder="" v-model="catInfo.appId"
-                     disabled
-                     @blur="showType">
+              <label>APPID</label>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="catInfo.appId">
             </div>
           </div>
-          <!--TAG区域-->
-          <div class="row form-inline distance col-md-12">
-            <label style="float: left;">TAG:</label>
-            <div style="float: left">
-              <input type="checkbox" id="Total" value="Total" v-model="catInfo.checkedTags">
-              <label for="Total">Total</label>
-              <input type="checkbox" id="Failure" value="Failure" v-model="catInfo.checkedTags">
-              <label for="Failure">Failure</label>
-              <input type="checkbox" id="Failure%" value="Failure%" v-model="catInfo.checkedTags">
-              <label for="Failure%">Failure%</label>
-              <input type="checkbox" id="Min(ms)" value="Min(ms)" v-model="catInfo.checkedTags">
-              <label for="Min(ms)">Min(ms) </label>
-              <input type="checkbox" id="Max(ms)" value="Max(ms)" v-model="catInfo.checkedTags">
-              <label for="Max(ms)">Max(ms)</label><br>
-              <input type="checkbox" id="Avg(ms)" value="Avg(ms)" v-model="catInfo.checkedTags">
-              <label for="Avg(ms)">Avg(ms)</label>
-              <input type="checkbox" id="95Line(ms)" value="95Line(ms)" v-model="catInfo.checkedTags">
-              <label for="95Line(ms)">95Line(ms)</label>
-              <input type="checkbox" id="99.9Line(ms)" value="99.9Line(ms)" v-model="catInfo.checkedTags">
-              <label for="99.9Line(ms)">99.9Line(ms)</label>
-              <input type="checkbox" id="Std(ms)" value="Std(ms)" v-model="catInfo.checkedTags">
-              <label for="Std(ms)">Std(ms)</label>
-              <input type="checkbox" id="QPS" value="QPS" v-model="catInfo.checkedTags">
-              <label for="QPS">QPS</label>
+          <div class="row form-inline distance">
+            <div class="form-group col-md-12">
+              <label>TAG</label>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="catInfo.checkedTags" style="width: 570px">
             </div>
           </div>
-          <!--Type区域-->
-          <div class="row form-inline distance col-md-12">
-            <div style="border: 1px solid ;width: 85%;float: left;">
-              <label style="position:absolute;top: 0px;">Type:</label>
-              <div class="checkbox" style="margin-top: 0px;margin-left: 50px">
-                <div v-for="(type,index) in typeList" v-if="type!='System'&&type!='all'" style="float: left">
-                  <input type="checkbox" :id="type" :value="type" v-model="catInfo.checkedTypes">
-                  <label :for="type">{{type}}</label>
-                </div>
-              </div>
+          <div class="row form-inline distance">
+            <div class="form-group col-md-12">
+              <label>Type</label>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="catInfo.checkedTypes" style="width: 570px">
             </div>
           </div>
-          <!--tab表格区-->
-          <div class="tab" role="tabpanel">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs " role="tablist" id="docTabs">
-              <li role="presentation" v-for="(item,index) in tabsData" :class="index==0?'active':''">
-                <a :href="'#'+index" :aria-controls="item.type" role="tab" data-toggle="tab">{{item.type}} </a>
-              </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <div role="tabpanel" v-for="(item,index) in tabsData" class="tab-pane fade in"
-                   :class=" index==0?'active':'' " :id="index">
-                <div class="content_list">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr role="row" class="row-header">
-                          <th><input type="checkbox" id="check_all" @click="checkAll"></th>
-                          <th>Name</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(typeValueItem,row) in item.typeValue">
-                          <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
-                                     name="chk_list"
-                                     v-model="catInfo.checkedNames"></td>
-                          <td><label :for="index+'_'+row">{{typeValueItem}}</label></td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <template v-for="(item,index) in catInfo.checkedTypes">
+            <el-tabs v-model="activeName" type="card" style="margin-top: 20px">
+              <el-tab-pane :label="item" :name="index">
+                <el-table
+                  ref="multipleTable"
+                  :data="catInfo.checkedNames"
+                  style="width: 100%"
+                >
+                  <el-table-column
+                    type="selection"
+                    width="55"
+                    align="center">
+                  </el-table-column>
+                  <el-table-column
+                    props="name"
+                    label="Name"
+                    width="300"
+                    align="center">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+            </el-tabs>
+          </template>
         </form>
       </el-dialog>
 
@@ -168,73 +124,46 @@
         <form class="form" style="position:relative;top:0px; left: 40px;">
           <div class="row form-inline distance">
             <div class="form-group col-md-6">
-              <label for="taskName">任务名称</label>
-              <input type="text" class="form-control input-sm" id="taskName" placeholder="" disabled
+              <label>任务名称</label>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
                      v-model="dashboardInfo.taskName">
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-6">
               <label>间隔时间</label>
-              <select class=" input-sm" v-model="dashboardInfo.timeInterval" disabled>
-                <option value="1">1分钟</option>
-                <option value="10">10分钟</option>
-                <option value="60">1小时</option>
-                <option value="1440">1天</option>
-                <option value="10080">1周</option>
-              </select>
+              <input type="text" class="form-control input-sm" v-model="dashboardInfo.timeInterval" disabled>
             </div>
           </div>
           <div class="row form-inline distance">
             <div class="form-group col-md-6 ">
               <label>环境</label>
-              <select class=" input-sm" v-model="dashboardInfo.environment" disabled>
-                <option value="PROD">PROD</option>
-                <option value="FWS">FWS</option>
-                <option value="UAT">UAT</option>
-                <option value="LPT">LPT</option>
-              </select>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="dashboardInfo.environment">
             </div>
-            <div class="form-group col-md-3 ">
+            <div class="form-group col-md-6 ">
               <label>聚合方式</label>
-              <select class=" input-sm" v-model="dashboardInfo.gatherMethod" disabled>
-                <option value="SUM">SUM</option>
-                <option value="AVG">AVG</option>
-                <option value="COUNT">COUNT</option>
-                <option value="MAX">MAX</option>
-                <option value="MIN">MIN</option>
-              </select>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="dashboardInfo.gatherMethod">
             </div>
           </div>
           <div class="row form-inline distance">
             <div class="form-group col-md-12">
-              <label for="metricName">Metric Name:</label>
-              <input type="text" class="form-control input-sm" id="metricName" placeholder=""
-                     v-model="dashboardInfo.metricName" disabled
-                     list="metricNameList" style="width: 500px">
-              <datalist class=" input-sm" id="metricNameList">
-                <option value="fx.ubt.pv.count"></option>
-                <option value="fx.ubt.mobile.pv.count"></option>
-                <option value="fx.ubt.jserror.count"></option>
-                <option value="fx.ubt.perf.domready"></option>
-                <option value="js.lizard.ajaxready"></option>
-                <option value="thingstodo.framework.servicestack.latency">
-                </option>
-                <option value="thingstodo.framework.servicestack.count">
-                </option>
-              </datalist>
-            </div>
-          </div>
-          <div class="row form-inline distance">
-            <div class="form-group col-md-12">
-              <label for="tag">Tag:</label>
+              <label>Metric Name:</label>
               <input type="text" class="form-control input-sm" id="tag"
-                     placeholder="" v-model.trim="dashboardInfo.tag" style="width: 500px" disabled>
+                     placeholder="" v-model.trim="dashboardInfo.metricName" style="width: 590px" disabled>
             </div>
           </div>
           <div class="row form-inline distance">
             <div class="form-group col-md-12">
-              <label for="groupBy">Group By:</label>
-              <input type="text" class="form-control input-sm " id="groupBy" placeholder=""
-                     v-model.trim="dashboardInfo.groupBy" style="width: 500px" disabled>
+              <label>Tag:</label>
+              <input type="text" class="form-control input-sm"
+                     placeholder="" v-model.trim="dashboardInfo.tag" style="width: 590px" disabled>
+            </div>
+          </div>
+          <div class="row form-inline distance">
+            <div class="form-group col-md-12">
+              <label>Group By:</label>
+              <input type="text" class="form-control input-sm " placeholder=""
+                     v-model.trim="dashboardInfo.groupBy" style="width: 590px" disabled>
             </div>
           </div>
         </form>
@@ -254,6 +183,10 @@
   table tr td {
     text-align: center;
   }
+
+  label {
+    width: 100px;
+  }
 </style>
 <script>
   import navList from '../components/sidebar/navList.vue'
@@ -264,6 +197,7 @@
     },
     data: function () {
       return {
+        activeName: "0",
         isPlay: "",
         dashboardInfo: {
           taskName: "",
@@ -326,6 +260,19 @@
         var me = this
         if (item.sourcedata == 'Cat') {
           me.dialogCatVisible = true
+          $.ajax({
+            type: "get",
+            url: "http://10.32.212.22:9999/info/getCatJobInfo",
+            data: {jobId: "60"},
+            success: function (data) {
+              me.catInfo.taskName = data.jobInfo.taskName
+              me.catInfo.timeInterval = data.jobInfo.timeInterval
+              me.catInfo.appId = data.jobInfo.appId
+              me.catInfo.checkedTags = data.jobInfo.checkedTags
+              me.catInfo.checkedTypes = data.jobInfo.checkedTypes
+              me.catInfo.checkedNames = data.jobInfo.checkedNames
+            }
+          });
         } else if (item.sourcedata == 'dashboard') {
           me.dialogDashboardVisible = true
           $.ajax({
@@ -340,7 +287,6 @@
               me.dashboardInfo.metricName = data.jobInfo.metricName
               me.dashboardInfo.groupBy = data.jobInfo.groupBy
 //              me.dashboardInfo.tag = data.jobInfo.tag没显示
-              debugger
             }
           });
         }

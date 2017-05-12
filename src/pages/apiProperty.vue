@@ -6,9 +6,9 @@
         <div class="content-top">
           <div class="form-group">
             <label class="level">一级类目:</label>
-            <div class="tag" >
-              <div class="btn btn-primary dis" type="button" value="OpenAPI">OpenAPI</div>
-              <div class="btn btn-default dis" type="button" value="Restful">Restful</div>
+            <div class="tag"  >
+              <div class="btn btn-primary dis" type="button" value="1">OpenAPI</div>
+              <div class="btn btn-default dis" type="button" value="2">Restful</div>
             </div>
           </div>
           <div class="form-group ">
@@ -377,12 +377,19 @@
     },
     methods: {
       searchList: function () {
-        this.$http.get(
-          '',
-          {}
-        ).then(response => {
-
-        }, response => {
+        var me = this;
+        $.ajax({
+          type: "get",
+          url: "http://10.32.212.27:9999/reportApi/getInterfacePerformanceV2",
+          data: {
+            interfaceType:1 ,
+            reportType:0
+          },
+          success: function (data) {
+              debugger
+            me.typeList = data.interfacePerformanceList;
+            me.visible = true
+          }
         });
       },
       handleCurrentChange: function (currentPage) {

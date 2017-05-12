@@ -39,11 +39,11 @@
               <input type="text" class="form-control input-sm" id="appId" placeholder="100000445" v-model="appId"
                      @blur="showType">
               <!--<div class="search-select">-->
-                <!--<ul>-->
-                  <!--<li v-for="(item,index) in searchList" :key="item.label">-->
-                    <!--{{item.label}}22-->
-                  <!--</li>-->
-                <!--</ul>-->
+              <!--<ul>-->
+              <!--<li v-for="(item,index) in searchList" :key="item.label">-->
+              <!--{{item.label}}22-->
+              <!--</li>-->
+              <!--</ul>-->
               <!--</div>-->
               <label v-if='tips.appIdTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
             </div>
@@ -114,7 +114,8 @@
                         </thead>
                         <tbody>
                         <tr v-for="(typeValueItem,row) in item.typeValue">
-                          <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem" name="chk_list"
+                          <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
+                                     name="chk_list"
                                      v-model="checkedNames"></td>
                           <td><label :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
@@ -134,7 +135,7 @@
         </form>
       </div>
       <!--保存成功后提示页面-->
-      <el-dialog title="提示" v-model="dialogVisible" size="tiny"  style="text-align: center;">
+      <el-dialog title="提示" v-model="dialogVisible" size="tiny" style="text-align: center;">
         <h3>保存成功，你可以继续：</h3>
         <div @click="goList"><h4><a>去列表页查看</a></h4></div>
         <div @click="continueAdd"><h4><a>继续添加数据源</a></h4></div>
@@ -143,9 +144,10 @@
   </div>
 </template>
 <style>
-  #cat{
+  #cat {
     overflow: hidden;
   }
+
   .checkbox label {
     display: inline-block;
     width: 200px;
@@ -180,6 +182,7 @@
     },
     data: function () {
       return {
+        activeName: "0",
         taskName: "",
         timeInterval: "1",
         startTime: "",
@@ -191,13 +194,13 @@
         typeList: [],//接收返回的type
         tabsData: [],//接收返回的name,变量
         selectedList: [],//选中的type对应name
-        dialogVisible:false,
-        tips:{
+        dialogVisible: false,
+        tips: {
           taskNameTip: false,//验证用
           checkedTagsTip: false,
           appIdTip: false,
           checkedTypesTip: false,
-          checkedNamesTip:false
+          checkedNamesTip: false
         },
         visible: false,
         showTab: false,
@@ -225,7 +228,7 @@
       },
     },
     methods: {
-      gotodatasource:function () {
+      gotodatasource: function () {
         app.$router.push("dataSource")
       },
 
@@ -261,8 +264,8 @@
           }
         })
       },
-      checkAll:function () {
-        $("input[name='chk_list']").attr("checked",$(this).attr("checked"))
+      checkAll: function () {
+        $("input[name='chk_list']").attr("checked", $(this).attr("checked"))
       },
       submit: function () {
         var me = this;
@@ -281,7 +284,7 @@
         if (me.checkedNames.length === 0) {
           me.tips.checkedNamesTip = true;
         }
-        if (me.taskName.length !== 0 && me.appId.length !== 0 && me.checkedTags.length !== 0 && me.checkedTypes.length !== 0&&me.checkedNames.length !== 0) {
+        if (me.taskName.length !== 0 && me.appId.length !== 0 && me.checkedTags.length !== 0 && me.checkedTypes.length !== 0 && me.checkedNames.length !== 0) {
           //当判断元素不为空时，提交请求
           $.ajax({
             type: "get",
@@ -297,9 +300,9 @@
             traditional: true,
             dataType: "jsonp",
             success: function (data) {
-              if(data[0].code == 0) {
+              if (data[0].code == 0) {
                 me.dialogVisible = true
-              }else{
+              } else {
                 me.$alert('信息填写有误，保存失败', '提示', {
                   confirmButtonText: '确定',
                   callback: action => {

@@ -104,7 +104,7 @@
         <el-form :inline="true">
           <el-form-item label="渠道名称">
             <el-select v-model="form.channelName" placeholder="请选择">
-              <el-option label="不限" value="all"></el-option>
+              <el-option label="不限" value="0"></el-option>
               <el-option label="玩乐BU_当地玩乐_H5" value="玩乐BU_当地玩乐_H5"></el-option>
               <el-option label="玩乐BU_当地玩乐_Hybrid" value="玩乐BU_当地玩乐_Hybrid"></el-option>
               <el-option label="玩乐BU_当地玩乐_Online" value="玩乐BU_当地玩乐_Online"></el-option>
@@ -130,7 +130,7 @@
           </el-form-item>
           <el-form-item label="小组">
             <el-select v-model="form.group" placeholder="请选择">
-              <el-option label="不限" value="all"></el-option>
+              <el-option label="不限" value="0"></el-option>
               <el-option label="无线二组" value="无线二组"></el-option>
               <el-option label="无线三组" value="无线三组"></el-option>
               <el-option label="营销网站组" value="营销网站组"></el-option>
@@ -182,7 +182,7 @@
         <el-form :inline="true">
           <el-form-item label="小组">
             <el-select v-model="form.group2" placeholder="请选择">
-              <el-option label="不限" value="all"></el-option>
+              <el-option label="不限" value="0"></el-option>
               <el-option label="玩乐_03_订单" value="玩乐_03_订单"></el-option>
               <el-option label="玩乐_04_公共" value="玩乐_04_公共"></el-option>
               <el-option label="玩乐_05_监控" value="玩乐_05_监控"></el-option>
@@ -203,8 +203,8 @@
             </el-select>
           </el-form-item>
           <el-form-item label="负责人">
-            <el-select v-model="form.responsible" placeholder="请选择">
-              <el-option label="不限" value="all"></el-option>
+            <el-select v-model="form.owner2" placeholder="请选择">
+              <el-option label="不限" value="0"></el-option>
               <el-option label="cxhuang" value="cxhuang"></el-option>
               <el-option label="eeyang" value="eeyang"></el-option>
               <el-option label="huxj" value="huxj"></el-option>
@@ -230,21 +230,21 @@
                   @selection-change="handleSelectionChange2">
           <el-table-column type="selection" width="50">
           </el-table-column>
-          <el-table-column prop="pageId" label="AppID" width="130" align="center" resizable>
+          <el-table-column prop="appId" label="AppID" width="120" align="center" resizable>
           </el-table-column>
-          <el-table-column prop="pageName" label="AppEname" width="240" align="center" resizable>
+          <el-table-column prop="appEname" label="AppEname" width="320" align="center" resizable>
           </el-table-column>
-          <el-table-column prop="type" label="AppCname" width="235" align="center" resizable>
+          <el-table-column prop="appCname" label="AppCname" width="275" align="center" resizable>
           </el-table-column>
-          <el-table-column prop="team" label="Team" width="130" align="center" resizable>
+          <el-table-column prop="team" label="Team" width="140" align="center" resizable>
           </el-table-column>
-          <el-table-column prop="owner" label="Owner" width="130" align="center" resizable>
+          <el-table-column prop="owner" label="Owner" width="100" align="center" resizable>
           </el-table-column>
         </el-table>
         <!--分页-->
         <div style="position: absolute;bottom: 20px;">
           <el-pagination
-            @current-change="handleCurrentChange"
+            @current-change="handleCurrentChange2"
             :current-page="currentPage"
             :page-size="11"
             layout="total, prev, pager, next"
@@ -301,19 +301,19 @@
           groupBy: "",//输入的group by
         },
         form: {
-          channelName: "",
-          group: "",
-          group2:"",
-          responsible:"",
+          channelName: "0",
+          group: "0",
+          group2: "0",
+          owner2: "0",
         },
 
         pageIdList: [],//pageId所有数据
         pageIdData: [],//pageId每页数据
         appIdData: [],//appId每页数据
-        appIdList:[],//appId所有数据
+        appIdList: [],//appId所有数据
         currentPage: 1,//当前页
         dialogPageIdVisible: false,
-        dialogAppIdVisible:false,
+        dialogAppIdVisible: false,
         dialogVisible: false,
 
         taskNameTip: false,
@@ -321,7 +321,7 @@
         groupByTip: false,
         testCode: "",//验证失败成功的代码
         multipleSelection: [],//pageid列表选中哪几列
-        multipleSelection2:[]
+        multipleSelection2: []
       }
     },
     watch: {
@@ -343,175 +343,184 @@
 
 
     },
-      methods: {
-        todatasource: function () {
-          app.$router.push("dataSource")
-        },
-  //      以下弹框里的方法
+    methods: {
+      todatasource: function () {
+        app.$router.push("dataSource")
+      },
+      //      以下弹框里的方法
 
-        /**
-         * pageId弹框显示功能
-         */
-        showPageIdDialog: function () {
-          var me = this
-          me.dialogPageIdVisible = true
+      /**
+       * pageId弹框显示功能
+       */
+      showPageIdDialog: function () {
+        var me = this
+        me.dialogPageIdVisible = true
+        me.form.channelName="0"
+        me.form.group="0"
+        $.ajax({
+          type: "post",
+          url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
+          data: {},
+          success: function (data) {
+            me.pageIdList = data.pageIds
+            me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          }
+        });
+      },
+      /**
+       * appId弹框显示功能
+       */
+      showAppIdDialog: function () {
+        var me = this
+        me.dialogAppIdVisible = true
+        me.form.group2="0"
+        me.form.owner2="0"
+        $.ajax({
+          type: "post",
+          url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
+          data: {},
+          success: function (data) {
+            me.appIdList = data.appIds
+            me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          }
+        });
+      },
+      /**
+       * 表格复选框功能
+       */
+      handleSelectionChange: function (val) {
+        var me = this
+        me.multipleSelection = val;
+      },
+      /**
+       * 表格复选框功能2
+       */
+      handleSelectionChange2: function (val) {
+        var me = this
+        me.multipleSelection2 = val;
+      },
+      /**
+       * pageId弹框搜索功能
+       */
+      search: function () {
+        var me = this
+        var temp = []//存放匹配到的每行
+        var searchText = me.form.channelName + me.form.group//输入框的文字
+        if (searchText == '00') {
+          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+        } else {
+          me.pageIdList.forEach(function (item) {
+            if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+              temp.push(item)
+            }
+          })
+          me.pageIdList = temp
+          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+        }
+      },
+      /**
+       * appId弹框搜索功能
+       */
+      search2: function () {
+        var me = this
+        var temp = []//存放匹配到的每行
+        var searchText = me.form.owner2 + me.form.group2//输入框的文字
+        if (searchText == '00') {
+          me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+        } else {
+          me.appIdList.forEach(function (item) {
+            if (( item.owner + item.team ).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+              temp.push(item)
+            }
+          })
+          me.appIdList = temp
+          me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+        }
+      },
+      /**
+       * 处理弹框里分页
+       * @param currentPage
+       */
+      handleCurrentChange: function (currentPage) {
+        this.currentPage = currentPage
+        this.pageIdData = this.pageIdList.slice((this.currentPage - 1) * 11, this.currentPage * 11 - 1)
+      },
+      /**
+       * 处理弹框里分页
+       * @param currentPage
+       */
+      handleCurrentChange2: function (currentPage) {
+        this.currentPage = currentPage
+        this.appIdData = this.appIdList.slice((this.currentPage - 1) * 11, this.currentPage * 11 - 1)
+      },
+      /**
+       * 弹框里保存pageId
+       */
+      submitPageId: function () {
+        var me = this
+        me.dialogPageIdVisible = false
+        me.multipleSelection.forEach(function (item) {
+          me.info.tag += "pid=" + item.pageId + ";"
+        })
+      },
+      submitAppId: function () {
+        var me = this
+        me.dialogAppIdVisible = false
+        me.multipleSelection2.forEach(function (item) {
+          me.info.tag += "appid=" + item.appId + ";"
+        })
+      },
+      // 以上弹框里的方法
+      /**
+       * Dashboard页面保存功能
+       */
+      submit: function () {
+        var me = this
+        if (me.info.taskName.length === 0) {
+          me.taskNameTip = true;
+        }
+        if (me.info.metricName.length === 0) {
+          me.metricNameTip = true;
+        }
+        if (me.info.groupBy.length === 0) {
+          me.groupByTip = true;
+        }
+        if (me.info.groupBy.length !== 0 && me.info.metricName.length !== 0 && me.info.taskName.length !== 0) {
           $.ajax({
             type: "post",
-            url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
-            data: {},
-            success: function (data) {
-              me.pageIdList = data.pageIds
-              me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-            }
-          });
-        },
-        /**
-         * appId弹框显示功能
-         */
-        showAppIdDialog: function () {
-          var me = this
-          me.dialogAppIdVisible = true
-          $.ajax({
-            type: "get",
-            url: "http://10.8.85.36:8086/CatAPI/GetAppId",
-            data: {},
+            url: "http://10.8.85.36:8086/DashboardAPI/servlet/SaveDashboard",
+            data: me.info,
             dataType: "jsonp",
             success: function (data) {
-                debugger
-              me.pageIdList = data.pageIds
-              me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-            }
-          });
-        },
-        /**
-         * 表格复选框功能
-         */
-        handleSelectionChange: function (val) {
-          var me = this
-          me.multipleSelection = val;
-        },
-        /**
-         * 表格复选框功能2
-         */
-        handleSelectionChange2: function (val) {
-          var me = this
-          me.multipleSelection2 = val;
-        },
-        /**
-         * pageId弹框搜索功能
-         */
-        search: function () {
-          var me = this
-          var temp = []//存放匹配到的每行
-          var searchText = me.form.channelName + me.form.group//输入框的文字
-          if (searchText == 'allall') {
-            me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-          } else {
-            me.pageIdList.forEach(function (item) {
-              if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
-                temp.push(item)
+              //              debugger;
+              me.testCode = data.message.code
+              if (me.testCode == 0) {
+                me.dialogVisible = true
+              } else {
+                me.$alert('信息填写有误，保存失败', '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    me.$message({
+                      type: 'info',
+                      //                      message: `action: ${ action }`
+                    });
+                  }
+                });
               }
-            })
-            me.pageIdList = temp
-            me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-          }
-        },
-        /**
-         * appId弹框搜索功能
-         */
-        search2:function () {
-          var me = this
-          var temp = []//存放匹配到的每行
-          var searchText = me.form.responsible + me.form.group2//输入框的文字
-          if (searchText == 'allall') {
-            me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-          } else {
-            me.appIdList.forEach(function (item) {
-              if ((item.team + item.owner).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
-                temp.push(item)
-              }
-            })
-            me.appIdList = temp
-            me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-          }
-        },
-        /**
-         * 处理弹框里分页
-         * @param currentPage
-         */
-        handleCurrentChange: function (currentPage) {
-          this.currentPage = currentPage
-          this.pageIdData = this.pageIdList.slice((this.currentPage - 1) * 11, this.currentPage * 11 - 1)
-        },
-        /**
-         * 弹框里保存pageId
-         */
-        submitPageId: function () {
-          var me = this
-          me.dialogPageIdVisible = false
-          me.multipleSelection.forEach(function (item) {
-            me.info.tag += "pid=" + item.pageId + ";"
+            },
           })
-        },
-        submitAppId:function () {
-          var me=this
-          me.dialogAppIdVisible=false
-          me.multipleSelection2.forEach(function (item) {
-            me.info.tag+="appid="+item.appid+";"
-          })
-
-        },
-        // 以上弹框里的方法
-        /**
-         * Dashboard页面保存功能
-         */
-        submit: function () {
-          var me = this
-          if (me.info.taskName.length === 0) {
-            me.taskNameTip = true;
-          }
-          if (me.info.metricName.length === 0) {
-            me.metricNameTip = true;
-          }
-          if (me.info.groupBy.length === 0) {
-            me.groupByTip = true;
-          }
-          if (me.info.groupBy.length !== 0 && me.info.metricName.length !== 0 && me.info.taskName.length !== 0) {
-            $.ajax({
-              type: "post",
-              url: "http://10.8.85.36:8086/DashboardAPI/servlet/SaveDashboard",
-              data: me.info,
-              dataType: "jsonp",
-              success: function (data) {
-  //              debugger;
-                me.testCode = data.message.code
-                if (me.testCode == 0) {
-                  me.dialogVisible = true
-                } else {
-                  me.$alert('信息填写有误，保存失败', '提示', {
-                    confirmButtonText: '确定',
-                    callback: action => {
-                      me.$message({
-                        type: 'info',
-  //                      message: `action: ${ action }`
-                      });
-                    }
-                  });
-                }
-              },
-            })
-          }
-        },
-        goList: function () {
-          $("#myModal").modal('hide')
-          app.$router.push("listPage")
-        },
-        continueAdd: function () {
-          $("#myModal").modal('hide')
-          app.$router.push("dataSource")
         }
-
+      },
+      goList: function () {
+        $("#myModal").modal('hide')
+        app.$router.push("listPage")
+      },
+      continueAdd: function () {
+        $("#myModal").modal('hide')
+        app.$router.push("dataSource")
       }
+
+    }
 
 
   }
