@@ -14,7 +14,8 @@
             <div class="form-group col-md-3">
               <label>间隔时间</label>
               <select class=" input-sm" v-model="info.timeInterval">
-                <option value="1" selected>1分钟</option>
+                <option value="1">1分钟</option>
+                <option value="5" >5分钟</option>
                 <option value="10">10分钟</option>
                 <option value="60">1小时</option>
                 <option value="1440">1天</option>

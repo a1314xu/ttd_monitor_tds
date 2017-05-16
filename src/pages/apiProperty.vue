@@ -6,30 +6,30 @@
         <div class="content-top">
           <div class="form-group">
             <label class="level">一级类目:</label>
-            <div class="tag"  >
-              <div class="btn btn-primary dis" type="button" value="1">OpenAPI</div>
-              <div class="btn btn-default dis" type="button" value="2">Restful</div>
+            <div class="tag">
+              <div class="btn btn-default dis level1 blue" type="button" value="1">OpenAPI</div>
+              <div class="btn btn-default dis level1" type="button" value="2">Restful</div>
             </div>
           </div>
           <div class="form-group ">
             <label class="level">二级类目:</label>
             <div class="tag">
-              <div class="btn btn-primary dis" type="button" value="AVG">AVG</div>
-              <div class="btn btn-default dis" type="button" value="95line">95line</div>
-              <div class="btn btn-default dis" type="button" value="Failure%">Failure%</div>
+              <div class="btn btn-default dis level2 blue" type="button" value="AVG">AVG</div>
+              <div class="btn btn-default dis level2" type="button" value="95line">95line</div>
+              <div class="btn btn-default dis level2" type="button" value="Failure%">Failure%</div>
             </div>
           </div>
           <div class="form-group">
             <label class="level">三级类目:</label>
             <div class="tag">
-              <div class="btn btn-primary dis" type="button" value="不限">不限</div>
-              <div class="btn btn-default dis" type="button" value="无线服务组">无线服务组</div>
-              <div class="btn btn-default dis" type="button" value="商品组">商品组</div>
-              <div class="btn btn-default dis" type="button" value="订单组">订单组</div>
-              <div class="btn btn-default dis" type="button" value="结算组">结算组</div>
-              <div class="btn btn-default dis" type="button" value="对接组">对接组</div>
-              <div class="btn btn-default dis" type="button" value="搜索组">搜索组</div>
-              <div class="btn btn-default dis" type="button" value="供应商系统组">供应商系统组</div>
+              <div class="btn btn-default dis level3 blue" type="button" value="不限">不限</div>
+              <div class="btn btn-default dis level3" type="button" value="无线服务组">无线服务组</div>
+              <div class="btn btn-default dis level3" type="button" value="商品组">商品组</div>
+              <div class="btn btn-default dis level3" type="button" value="订单组">订单组</div>
+              <div class="btn btn-default dis level3" type="button" value="结算组">结算组</div>
+              <div class="btn btn-default dis level3" type="button" value="对接组">对接组</div>
+              <div class="btn btn-default dis level3" type="button" value="搜索组">搜索组</div>
+              <div class="btn btn-default dis level3" type="button" value="供应商系统组">供应商系统组</div>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
                       <option>top20</option>
                       <option>全部</option>
                     </select>
-                    </th>
+                  </th>
                   <th>业务名称</th>
                   <th>接口名</th>
                   <th>AVG</th>
@@ -74,8 +74,8 @@
       </div>
       <!--同比环比-->
       <div style="position: absolute;bottom: 110px;left: 300px;">
-      <router-link to="loopRatio">查看环比</router-link>&nbsp;&nbsp;
-      <router-link to="sameRatio">查看同比</router-link>
+        <router-link to="loopRatio">查看环比</router-link>&nbsp;&nbsp;
+        <router-link to="sameRatio">查看同比</router-link>
       </div>
       <!--分页-->
       <div style="position: absolute;bottom: 110px;right: 110px;">
@@ -102,6 +102,8 @@
       return {
         currentPage: 1,//当前页
         pageList: [],//每页存放的列表数据,14条
+        interfaceType:1,
+        reportType:0,
         dataList: [
           {
             "id": "1",
@@ -367,28 +369,55 @@
             "AVG": 186,
             "developGroup": "商品组"
           },],
-
       }
     },
     created: function () {
-      this.searchList()
-      this.pageList = this.dataList.slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+      var me = this
 
     },
+    mounted: function () {
+      var me = this
+      me.buttonToggle()
+      me.searchList()
+      me.pageList = this.dataList.slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+    },
     methods: {
+      buttonToggle: function () {
+        var me = this;
+        $("div.level1").click(function (e) {
+          $("div .level1 ").removeClass('blue')
+          $(e.target).addClass('blue')
+          e.target.innerHTML=="OpenAPI"?me.interfaceType=1:me.interfaceType=2
+          me.searchList()
+        })
+
+
+        $("div.level2").click(function (e) {
+          $("div .level2 ").removeClass('blue')
+          $(e.target).addClass('blue')
+          var tag = e.target.innerHTML
+        })
+
+          $("div.level3").click(function (e) {
+            $("div .level3 ").removeClass('blue')
+            $(e.target).addClass('blue')
+            var tag = e.target.innerHTML
+
+        })
+      },
+
       searchList: function () {
         var me = this;
         $.ajax({
           type: "get",
           url: "http://10.32.212.27:9999/reportApi/getInterfacePerformanceV2",
           data: {
-            interfaceType:1 ,
-            reportType:0
+            interfaceType: me.interfaceType,
+            reportType: me.reportType
           },
           success: function (data) {
-              debugger
+            debugger
             me.typeList = data.interfacePerformanceList;
-            me.visible = true
           }
         });
       },
@@ -411,6 +440,7 @@
     border-radius: 20px;
     outline: none;
   }
+
   .dis {
     margin-right: 10px;
   }
@@ -421,9 +451,14 @@
     margin-top: 5px;
 
   }
+
   .content-top {
     position: relative;
     top: 20px;
     left: 40px;
+  }
+
+  .blue {
+    background-color: dodgerblue !important;
   }
 </style>

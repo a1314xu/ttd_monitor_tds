@@ -128,6 +128,29 @@
             </div>
             <label v-if='tips.checkedNamesTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
           </div>
+
+          <!--tab表格区-->
+          <!--<el-tabs  type="card" v-for="(item,index) in tabsData" :key="index" v-model="activeName=item.type">-->
+            <!--<el-tab-pane :label="item.type" :name="item.type" >-->
+              <!--<el-table-->
+                <!--ref="multipleTable"-->
+                <!--:data="item.typeValue"-->
+                <!--style="width: 100%"-->
+                <!--@selection-change="handleSelectionChange">-->
+                <!--<el-table-column-->
+                  <!--type="selection"-->
+                  <!--width="55">-->
+                <!--</el-table-column>-->
+
+                <!--<el-table-column-->
+                  <!--prop="index"-->
+                  <!--label="name"-->
+                  <!--width="120">-->
+                <!--</el-table-column>-->
+                <!--</el-table-column>-->
+              <!--</el-table>-->
+            <!--</el-tab-pane>-->
+          <!--</el-tabs>-->
           <div class="foot">
             <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="submit">保存</button>
             <button type="button" class="btn btn-primary btn-sm " @click="gotodatasource">取消</button>
@@ -182,7 +205,6 @@
     },
     data: function () {
       return {
-        activeName: "0",
         taskName: "",
         timeInterval: "1",
         startTime: "",
@@ -259,14 +281,15 @@
           traditional: true,
           dataType: "jsonp",
           success: function (data) {
+              debugger
             me.tabsData = data;
             me.showTab = true
           }
         })
       },
-      checkAll: function () {
-        $("input[name='chk_list']").attr("checked", $(this).attr("checked"))
-      },
+//      checkAll: function () {
+//        $("input[name='chk_list']").attr("checked", $(this).attr("checked"))
+//      },
       submit: function () {
         var me = this;
         if (me.taskName.length === 0) {

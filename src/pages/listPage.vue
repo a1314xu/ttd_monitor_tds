@@ -93,29 +93,35 @@
                      v-model="catInfo.checkedTypes" style="width: 570px">
             </div>
           </div>
-          <template v-for="(item,index) in catInfo.checkedTypes">
-            <el-tabs v-model="activeName" type="card" style="margin-top: 20px">
-              <el-tab-pane :label="item" :name="index">
-                <el-table
-                  ref="multipleTable"
-                  :data="catInfo.checkedNames"
-                  style="width: 100%"
-                >
-                  <el-table-column
-                    type="selection"
-                    width="55"
-                    align="center">
-                  </el-table-column>
-                  <el-table-column
-                    props="name"
-                    label="Name"
-                    width="300"
-                    align="center">
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-            </el-tabs>
-          </template>
+          <!--tab区域-->
+          <ul class="nav nav-tabs" role="tablist" style="margin-top: 20px">
+            <li role="presentation" v-for="(item,index) in catInfo.checkedTypes"  :class="index==0?'active':''">
+              <a :href="'#'+index" :aria-controls="item" role="tab" data-toggle="tab">{{item}}</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane" v-for="(item,index) in catInfo.checkedNames"  :class="index==0?'active':''" :id="index">
+              <div class="row">
+                <div class="col-sm-11">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr role="row" class="row-header">
+                      <th><input type="checkbox"></th>
+                      <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item,index) in item.name">
+                      <td><input type="checkbox"></td>
+                      <td style="text-align: left;"><label>{{item}}</label></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </form>
       </el-dialog>
 
@@ -197,7 +203,6 @@
     },
     data: function () {
       return {
-        activeName: "0",
         isPlay: "",
         dashboardInfo: {
           taskName: "",
@@ -262,8 +267,8 @@
           me.dialogCatVisible = true
           $.ajax({
             type: "get",
-            url: "http://10.32.212.22:9999/info/getCatJobInfo",
-            data: {jobId: "60"},
+            url: "http://10.8.85.36:8086/tds-web/info/getCatJobInfo",
+            data: {jobId: item.id},
             success: function (data) {
               me.catInfo.taskName = data.jobInfo.taskName
               me.catInfo.timeInterval = data.jobInfo.timeInterval

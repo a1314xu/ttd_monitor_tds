@@ -80,7 +80,7 @@
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
   export default {
-    name: 'playDailyReport',
+    name: 'qualifyDailyReport',
     components: {
       'v-navListApi': navListApi
     },

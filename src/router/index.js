@@ -10,9 +10,10 @@ import listPage from '@/pages/listPage'
 import home from '@/pages/home'
 import apiProperty from '@/pages/apiProperty'
 import pageProperty from '@/pages/pageProperty'
-import playDailyReport from '@/pages/playDailyReport'
 import loopRatio from '@/pages/loopRatio'
 import sameRatio from '@/pages/sameRatio'
+import locationDailyReport from '@/pages/locationDailyReport'
+import qualifyDailyReport from '@/pages/qualifyDailyReport'
 
 
 Vue.use(Router)
@@ -76,11 +77,6 @@ export default new Router({
       component: pageProperty
     },
     {
-      path: '/playDailyReport',
-      name: 'playDailyReport',
-      component: playDailyReport
-    },
-    {
       path: '/loopRatio',
       name: 'loopRatio',
       component: loopRatio
@@ -89,6 +85,16 @@ export default new Router({
       path: '/sameRatio',
       name: 'sameRatio',
       component: sameRatio
+    },
+    {
+      path: '/qualifyDailyReport',
+      name: 'qualifyDailyReport',
+      component: qualifyDailyReport
+    },
+    {
+      path: '/locationDailyReport',
+      name: 'locationDailyReport',
+      component: locationDailyReport
     }
   ]
 })
