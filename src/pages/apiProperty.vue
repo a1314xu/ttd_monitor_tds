@@ -59,22 +59,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in avgList"  v-if="tag2=='AVG'">
-                  <td>{{item.businessName}}</td>
+                <tr v-for="(item,index) in pageList"  v-if="tag2=='AVG'">
+                  <th>{{item.id}}</th>
+                  <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.avg}}</td>
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in avgList"  v-if="tag2=='95line'">
-                  <td>{{item.businessName}}</td>
+                <tr v-for="(item,index) in pageList"  v-if="tag2=='95line'">
+                  <th>{{item.id}}</th>
+                  <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.ninetyfiveLine}}</td>
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in avgList"  v-if="tag2=='Failure%'">
-                  <td>{{item.businessName}}</td>
+                <tr v-for="(item,index) in pageList"  v-if="tag2=='Failure%'">
+                  <th>{{item.id}}</th>
+                  <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.failPercent}}</td>
                   <td>{{item.devGroup}}</td>
@@ -120,279 +123,15 @@
         tag1: "OpenAPI",//一级类目选中的值
         tag2: "AVG",//二级类目选中的值
         tag3: "",//三级类目选中的值
-        dataList: [
-          {
-            "id": "1",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "2",
-            "businessName": "玩乐-可选项价格日历",
-            "interfaceName": "optioncalendarinfo",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "3",
-            "businessName": "玩乐-下单接口(JAVA)",
-            "interfaceName": "CreateOrde",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "4",
-            "businessName": "门票-下单接口",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "订单组"
-          },
-          {
-            "id": "5",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "6",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "7",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "8",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "9",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "10",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "11",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "12",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "13",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          }, {
-            "id": "14",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "15",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          }, {
-            "id": "16",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "17",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "18",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "19",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "20",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "21",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "22",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "23",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "24",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "25",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "26",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "27",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "28",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "29",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "30",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "31",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "32",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "33",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "34",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "35",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "36",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "37",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },
-          {
-            "id": "38",
-            "businessName": "玩乐-下单接口(.NET)",
-            "interfaceName": "createorder",
-            "AVG": 186,
-            "developGroup": "商品组"
-          },],
+        dataList: [],
         //表格内容
         avgList: [],
         ninetyFiveLineList: [],
         failurePercentList: [],
         //三级目录
-        avgDevGroupList: ["无线二组", "无线三组"],
-        failureDevGroupList: ["营销活动组", "商品组", "停车组"],
-        nineFiveDevGroupList: ["开发组", "设计组"]
+        avgDevGroupList: [],
+        failureDevGroupList: [],
+        nineFiveDevGroupList: []
       }
     },
     created: function () {
@@ -403,7 +142,6 @@
       var me = this
       me.searchList()
       me.buttonToggle()
-      me.pageList = this.dataList.slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
     },
     methods: {
       /**
@@ -412,6 +150,7 @@
        */
       buttonToggle: function () {
         var me = this;
+        //点击一级类目
         $("div.level1").click(function (e) {
           $("div .level1 ").removeClass('blue')
           $(e.target).addClass('blue')
@@ -419,20 +158,20 @@
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
           me.searchList()
         })
-
+        //点击二级类目
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
         })
-
+        //点击三级类目
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML
-          debugger
 
         })
+
       },
 
       searchList: function () {
@@ -447,13 +186,29 @@
             me.avgList = data.interfacePerformanceList.avgList;
             me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
             me.failurePercentList = data.interfacePerformanceList.failurePercentList
-//            me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
-//            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
-//            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
-//            debugger
+            me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
+            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
+            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
+            me.dealData()
+
 
           }
         });
+      },
+      dealData: function () {
+        /**
+         * 处理表格数据
+         */
+        var me=this
+        if (me.tag2 == 'AVG') {
+          me.dataList = me.avgList
+        } else if (me.tag2 == '95line') {
+          me.dataList = me.ninetyFiveLineList
+        } else {
+          me.dataList = me.failurePercentList
+        }
+        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+
       },
       handleCurrentChange: function (currentPage) {
         //当前页面变换

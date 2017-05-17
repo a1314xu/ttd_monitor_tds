@@ -291,7 +291,7 @@
               me.dashboardInfo.environment = data.jobInfo.environment
               me.dashboardInfo.metricName = data.jobInfo.metricName
               me.dashboardInfo.groupBy = data.jobInfo.groupBy
-//              me.dashboardInfo.tag = data.jobInfo.tag没显示
+              me.dashboardInfo.tag = data.jobInfo.tag
             }
           });
         }
