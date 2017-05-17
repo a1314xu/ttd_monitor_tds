@@ -13,7 +13,7 @@
           </div>
           <div class="form-group ">
             <label class="level">二级类目:</label>
-            <div class="tag">
+            <div class="tag secondContainer">
               <div class="btn btn-default dis level2 blue" type="button" value="AVG">AVG</div>
               <div class="btn btn-default dis level2" type="button" value="95line">95line</div>
               <div class="btn btn-default dis level2" type="button" value="Failure%">Failure%</div>
@@ -21,15 +21,16 @@
           </div>
           <div class="form-group">
             <label class="level">三级类目:</label>
-            <div class="tag">
-              <div class="btn btn-default dis level3 blue" type="button" value="不限">不限</div>
-              <div class="btn btn-default dis level3" type="button" value="无线服务组">无线服务组</div>
-              <div class="btn btn-default dis level3" type="button" value="商品组">商品组</div>
-              <div class="btn btn-default dis level3" type="button" value="订单组">订单组</div>
-              <div class="btn btn-default dis level3" type="button" value="结算组">结算组</div>
-              <div class="btn btn-default dis level3" type="button" value="对接组">对接组</div>
-              <div class="btn btn-default dis level3" type="button" value="搜索组">搜索组</div>
-              <div class="btn btn-default dis level3" type="button" value="供应商系统组">供应商系统组</div>
+            <div class="tag thirdContainer">
+              <div class="btn btn-default dis level3 " v-for="(item,index) in avgDevGroupList" type="button"
+                   :class="index==0?'blue':''" :value="item" v-if="tag2=='AVG'">{{item}}
+              </div>
+              <div class="btn btn-default dis level3 " v-for="(item,index) in nineFiveDevGroupList" type="button"
+                   :class="index==0?'blue':''" :value="item" v-if="tag2=='95line'">{{item}}
+              </div>
+              <div class="btn btn-default dis level3 " v-for="(item,index) in failureDevGroupList" type="button"
+                   :class="index==0?'blue':''" :value="item" v-if="tag2=='Failure%'">{{item}}
+              </div>
             </div>
           </div>
         </div>
@@ -50,21 +51,34 @@
                   </th>
                   <th>业务名称</th>
                   <th>接口名</th>
-                  <th>AVG</th>
+                  <th v-if="tag2=='AVG'">AVG</th>
+                  <th v-if="tag2=='95line'">95line</th>
+                  <th v-if="tag2=='Failure%'">Failure%</th>
                   <th>开发组</th>
                   <th>是否核心接口</th>
-
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in pageList">
-                  <td>{{item.id}}</td>
+                <tr v-for="(item,index) in avgList"  v-if="tag2=='AVG'">
                   <td>{{item.businessName}}</td>
                   <td>{{item.interfaceName}}</td>
-                  <td>{{item.AVG}}</td>
-                  <td>{{item.developGroup}}</td>
-                  <td>{{item.developGroup}}</td>
-
+                  <td>{{item.avg}}</td>
+                  <td>{{item.devGroup}}</td>
+                  <td>{{item.critical}}</td>
+                </tr>
+                <tr v-for="(item,index) in avgList"  v-if="tag2=='95line'">
+                  <td>{{item.businessName}}</td>
+                  <td>{{item.interfaceName}}</td>
+                  <td>{{item.ninetyfiveLine}}</td>
+                  <td>{{item.devGroup}}</td>
+                  <td>{{item.critical}}</td>
+                </tr>
+                <tr v-for="(item,index) in avgList"  v-if="tag2=='Failure%'">
+                  <td>{{item.businessName}}</td>
+                  <td>{{item.interfaceName}}</td>
+                  <td>{{item.failPercent}}</td>
+                  <td>{{item.devGroup}}</td>
+                  <td>{{item.critical}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -102,8 +116,10 @@
       return {
         currentPage: 1,//当前页
         pageList: [],//每页存放的列表数据,14条
-        interfaceType:1,
-        reportType:0,
+        interfaceType: 1,
+        tag1: "OpenAPI",//一级类目选中的值
+        tag2: "AVG",//二级类目选中的值
+        tag3: "",//三级类目选中的值
         dataList: [
           {
             "id": "1",
@@ -369,6 +385,14 @@
             "AVG": 186,
             "developGroup": "商品组"
           },],
+        //表格内容
+        avgList: [],
+        ninetyFiveLineList: [],
+        failurePercentList: [],
+        //三级目录
+        avgDevGroupList: ["无线二组", "无线三组"],
+        failureDevGroupList: ["营销活动组", "商品组", "停车组"],
+        nineFiveDevGroupList: ["开发组", "设计组"]
       }
     },
     created: function () {
@@ -377,31 +401,36 @@
     },
     mounted: function () {
       var me = this
-      me.buttonToggle()
       me.searchList()
+      me.buttonToggle()
       me.pageList = this.dataList.slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
     },
     methods: {
+      /**
+       * 按钮切换，样式控制
+       *
+       */
       buttonToggle: function () {
         var me = this;
         $("div.level1").click(function (e) {
           $("div .level1 ").removeClass('blue')
           $(e.target).addClass('blue')
-          e.target.innerHTML=="OpenAPI"?me.interfaceType=1:me.interfaceType=2
+          me.tag1 = e.target.innerHTML
+          me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
           me.searchList()
         })
-
 
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
-          var tag = e.target.innerHTML
+          me.tag2 = e.target.innerHTML
         })
 
-          $("div.level3").click(function (e) {
-            $("div .level3 ").removeClass('blue')
-            $(e.target).addClass('blue')
-            var tag = e.target.innerHTML
+        $("div.level3").click(function (e) {
+          $("div .level3 ").removeClass('blue')
+          $(e.target).addClass('blue')
+          me.tag3 = e.target.innerHTML
+          debugger
 
         })
       },
@@ -410,14 +439,19 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.32.212.27:9999/reportApi/getInterfacePerformanceV2",
+          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
           data: {
             interfaceType: me.interfaceType,
-            reportType: me.reportType
           },
           success: function (data) {
-            debugger
-            me.typeList = data.interfacePerformanceList;
+            me.avgList = data.interfacePerformanceList.avgList;
+            me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
+            me.failurePercentList = data.interfacePerformanceList.failurePercentList
+//            me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
+//            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
+//            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
+//            debugger
+
           }
         });
       },

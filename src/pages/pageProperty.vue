@@ -465,7 +465,7 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.32.212.27:9999/reportApi/getPagePerformanceV2",
+          url: "http://10.8.85.36:8086/tds-web/reportApi/getPagePerformanceV2",
           data: {
             pageType: 1,
             reportType: 0,
