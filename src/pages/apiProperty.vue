@@ -191,6 +191,7 @@
             me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
 //            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
 //            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
+            debugger
             me.dealData()
             me.clickThirdLevel()
           }
@@ -201,14 +202,13 @@
         var me=this
         var temp=[]
         me.dataList.forEach(function (item) {
-            debugger
             if((item.devGroup)==(me.tag3)){
                 temp.push(item)
             }
             console.log(temp)
         })
         me.dataList=temp
-        debugger
+//        debugger
       },
       /** 处理表格数据*/
       dealData: function () {

@@ -193,6 +193,8 @@
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML
+          //筛选三级类目
+          me.search()
         })
       },
       /**页面一进来搜索所有数据*/
@@ -215,6 +217,18 @@
             me.clickThirdLevel()
           }
         });
+      },
+      search:function () {
+        var me=this
+        var temp=[]
+        me.dataList.forEach(function (item) {
+          if((item.devGroup)==(me.tag3)){
+            temp.push(item)
+          }
+          console.log(temp)
+        })
+        me.dataList=temp
+//        debugger
       },
       /** 处理表格数据*/
       dealData: function () {
