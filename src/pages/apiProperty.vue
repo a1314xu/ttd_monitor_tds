@@ -155,23 +155,24 @@
           me.tag1 = e.target.innerHTML
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
         })
+        me.searchList()
         /**点击二级类目*/
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
         })
-
-
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
        * 把点击三级事件放到这个方法，表格和三级目录可同时出现*/
       clickThirdLevel: function () {
+        var me=this
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML
-
+          //根据tag3筛选开发组，匹配三级目录
+          me.search()
         })
       },
       /**页面一进来搜索所有数据*/
@@ -191,10 +192,23 @@
 //            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
 //            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
             me.dealData()
-
-
+            me.clickThirdLevel()
           }
         });
+
+      },
+      search:function () {
+        var me=this
+        var temp=[]
+        me.dataList.forEach(function (item) {
+            debugger
+            if((item.devGroup)==(me.tag3)){
+                temp.push(item)
+            }
+            console.log(temp)
+        })
+        me.dataList=temp
+        debugger
       },
       /** 处理表格数据*/
       dealData: function () {

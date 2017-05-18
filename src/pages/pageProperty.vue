@@ -128,7 +128,7 @@
     data: function () {
       return {
         currentPage: 1,//当前页
-        selectedNumber:"all",
+        selectedNumber: "all",
         pageList: [],//每页存放的列表数据,14条
         pageType: 1,
         tag1: "",
@@ -176,6 +176,8 @@
           }
           me.searchList()
         })
+        me.searchList()
+
         /**点击二级类目*/
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
@@ -185,12 +187,12 @@
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
        * 把点击三级事件放到这个方法，表格和三级目录可同时出现*/
-      clickThirdLevel:function () {
+      clickThirdLevel: function () {
+        var me = this
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML
-
         })
       },
       /**页面一进来搜索所有数据*/
@@ -209,14 +211,14 @@
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
-
             me.dealData()
+            me.clickThirdLevel()
           }
         });
       },
       /** 处理表格数据*/
       dealData: function () {
-        var me=this
+        var me = this
         if (me.tag2 == 'DOMready') {
           me.dataList = me.DomReadyList
         } else if (me.tag2 == 'JSError / PV') {
