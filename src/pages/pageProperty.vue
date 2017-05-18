@@ -151,6 +151,7 @@
       me.buttonToggle()
 
 
+
     },
 
     methods: {
@@ -177,12 +178,7 @@
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
         })
-        //点击三级类目
-        $("div.level3").click(function (e) {
-          $("div .level3 ").removeClass('blue')
-          $(e.target).addClass('blue')
-          me.tag3 = e.target.innerHTML
-        })
+
 
 
       },
@@ -195,23 +191,27 @@
             pageType: me.pageType,
           },
           success: function (data) {
-//            me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
+//          me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
             me.jserrorDevGroupList = data.pagePerformanceList.jserrorDevGroupList
             me.restfulDevGroupList = data.pagePerformanceList.restfulDevGroupList
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
-            me.dealData()
 
-
+            //点击三级类目
+            $("div.level3").click(function (e) {
+              debugger;
+              $("div .level3 ").removeClass('blue')
+              $(e.target).addClass('blue')
+              me.tag3 = e.target.innerHTML
+            })
           }
         });
       },
+      /**
+       * 处理表格数据
+       */
       dealData: function () {
-        /**
-         * 处理表格数据
-         */
-        debugger
         var me=this
         if (me.tag2 == 'DOMready') {
           me.dataList = me.DomReadyList

@@ -1,4 +1,6 @@
 <template>
+  <div id="locationDailyReport">
+    <v-navListApi></v-navListApi>
   <div class="content">
     <div class="row">
       <div class="col-md-11">
@@ -31,12 +33,16 @@
       </div>
     </div>
   </div>
-
+  </div>
 </template>
 
 <script>
+    import navListApi from '../components/sidebar/navListApi.vue'
     export default {
         name: 'locationDailyReport',
+        components:{
+          'v-navListApi': navListApi
+        }
     }
 </script>
 
