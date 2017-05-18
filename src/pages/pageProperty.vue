@@ -45,7 +45,13 @@
                      style="position: relative;left: 40px;top: 20px;">
                 <thead>
                 <tr role="row" class="row-header">
-                  <th>top10</th>
+                  <th>
+                    <select v-model="selectedNumber" @change="sort">
+                      <option value=10>top10</option>
+                      <option value=20>top20</option>
+                      <option value="all">全部</option>
+                    </select>
+                  </th>
                   <th>渠道名称</th>
                   <th>页面名称</th>
                   <th>Page ID</th>
@@ -60,7 +66,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in pageList" v-if="tag2='DOMready'">
-                  <td>{{item.id}}</td>
+                  <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
                   <td>{{item.pageId}}</td>
@@ -69,7 +75,7 @@
                   <td>{{item.critical}}</td>
                 </tr>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='JSError / PV'">
-                  <td>{{item.id}}</td>
+                  <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
                   <td>{{item.pageId}}</td>
@@ -80,7 +86,7 @@
                   <td>{{item.critical}}</td>
                 </tr>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='Restful Failed'">
-                  <td>{{item.id}}</td>
+                  <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
                   <td>{{item.pageId}}</td>
@@ -122,6 +128,7 @@
     data: function () {
       return {
         currentPage: 1,//当前页
+        selectedNumber:"all",
         pageList: [],//每页存放的列表数据,14条
         pageType: 1,
         tag1: "",
@@ -132,7 +139,7 @@
         jsErrorAndPVList: [],
         restfulFailedList: [],
         //按钮组
-        domreadyDevGroupList: ["xxx", "xx"],
+        domreadyDevGroupList: [],
         jserrorDevGroupList: [],
         restfulDevGroupList: [],
 
@@ -142,22 +149,20 @@
 
     created: function () {
       var me = this
-      /**一进来调用，取得所有数据*/
+      me.searchList()
 
     },
     mounted: function () {
       var me = this
-      me.searchList()
+      /**在mounted触发，因为created还没有渲染DOM*/
       me.buttonToggle()
-
-
 
     },
 
     methods: {
       buttonToggle: function () {
         var me = this;
-        //点击一级类目
+        /**点击一级类目*/
         $("div.level1").click(function (e) {
           $("div .level1 ").removeClass('blue')
           $(e.target).addClass('blue')
@@ -171,17 +176,24 @@
           }
           me.searchList()
         })
-        //点击二级类目
+        /**点击二级类目*/
         $("div.level2").click(function (e) {
-
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
         })
-
-
-
       },
+      /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
+       * 把点击三级事件放到这个方法，表格和三级目录可同时出现*/
+      clickThirdLevel:function () {
+        $("div.level3").click(function (e) {
+          $("div .level3 ").removeClass('blue')
+          $(e.target).addClass('blue')
+          me.tag3 = e.target.innerHTML
+
+        })
+      },
+      /**页面一进来搜索所有数据*/
       searchList: function () {
         var me = this;
         $.ajax({
@@ -191,26 +203,18 @@
             pageType: me.pageType,
           },
           success: function (data) {
-//          me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
+            me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
             me.jserrorDevGroupList = data.pagePerformanceList.jserrorDevGroupList
             me.restfulDevGroupList = data.pagePerformanceList.restfulDevGroupList
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
 
-            //点击三级类目
-            $("div.level3").click(function (e) {
-              debugger;
-              $("div .level3 ").removeClass('blue')
-              $(e.target).addClass('blue')
-              me.tag3 = e.target.innerHTML
-            })
+            me.dealData()
           }
         });
       },
-      /**
-       * 处理表格数据
-       */
+      /** 处理表格数据*/
       dealData: function () {
         var me=this
         if (me.tag2 == 'DOMready') {
@@ -222,8 +226,23 @@
         }
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
+      /**排序查找前10条，前20条,调用dealData将dataList赋值*/
+      sort: function () {
+        var me = this
+        if (me.selectedNumber == 10) {
+          me.dataList = me.dataList.slice(0, 10)
+          me.pageList = me.dataList
+        } else if (me.selectedNumber == 20) {
+          me.dealData()
+          me.dataList = me.dataList.slice(0, 20)
+          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        } else {
+          me.dealData()
+          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        }
+      },
+      /**分页*/
       handleCurrentChange: function (currentPage) {
-        //当前页面变换
         var me = this
         me.currentPage = currentPage
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)

@@ -43,10 +43,10 @@
                 <thead>
                 <tr role="row" class="row-header">
                   <th>
-                    <select>
-                      <option>top10</option>
-                      <option>top20</option>
-                      <option>全部</option>
+                    <select v-model="selectedNumber" @change="sort">
+                      <option value=10>top10</option>
+                      <option value=20>top20</option>
+                      <option value="all">全部</option>
                     </select>
                   </th>
                   <th>业务名称</th>
@@ -59,24 +59,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in pageList"  v-if="tag2=='AVG'">
-                  <th>{{item.id}}</th>
+                <tr v-for="(item,index) in pageList" v-if="tag2=='AVG'">
+                  <th>{{index+1}}</th>
                   <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.avg}}</td>
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in pageList"  v-if="tag2=='95line'">
-                  <th>{{item.id}}</th>
+                <tr v-for="(item,index) in pageList" v-if="tag2=='95line'">
+                  <th>{{index+1}}</th>
                   <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.ninetyfiveLine}}</td>
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in pageList"  v-if="tag2=='Failure%'">
-                  <th>{{item.id}}</th>
+                <tr v-for="(item,index) in pageList" v-if="tag2=='Failure%'">
+                  <th>{{index+1}}</th>
                   <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.failPercent}}</td>
@@ -124,56 +124,57 @@
         tag2: "AVG",//二级类目选中的值
         tag3: "",//三级类目选中的值
         dataList: [],
+        selectedNumber: "all",//显示的条数
         //表格内容
         avgList: [],
         ninetyFiveLineList: [],
         failurePercentList: [],
         //三级目录
         avgDevGroupList: [],
-        failureDevGroupList: [],
-        nineFiveDevGroupList: []
+        failureDevGroupList: ["xx", "xxx"],
+        nineFiveDevGroupList: ["cc", "cccc"]
       }
     },
     created: function () {
       var me = this
+      me.searchList()
 
     },
     mounted: function () {
       var me = this
-      me.searchList()
+      /**在mounted触发，因为created还没有渲染DOM*/
       me.buttonToggle()
     },
     methods: {
-      /**
-       * 按钮切换，样式控制
-       *
-       */
       buttonToggle: function () {
         var me = this;
-        //点击一级类目
+        /**点击一级类目*/
         $("div.level1").click(function (e) {
           $("div .level1 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag1 = e.target.innerHTML
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
-          me.searchList()
         })
-        //点击二级类目
+        /**点击二级类目*/
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
         })
-        //点击三级类目
+
+
+      },
+      /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
+       * 把点击三级事件放到这个方法，表格和三级目录可同时出现*/
+      clickThirdLevel: function () {
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML
 
         })
-
       },
-
+      /**页面一进来搜索所有数据*/
       searchList: function () {
         var me = this;
         $.ajax({
@@ -187,19 +188,17 @@
             me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
             me.failurePercentList = data.interfacePerformanceList.failurePercentList
             me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
-            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
-            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
+//            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
+//            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
             me.dealData()
 
 
           }
         });
       },
+      /** 处理表格数据*/
       dealData: function () {
-        /**
-         * 处理表格数据
-         */
-        var me=this
+        var me = this
         if (me.tag2 == 'AVG') {
           me.dataList = me.avgList
         } else if (me.tag2 == '95line') {
@@ -210,6 +209,22 @@
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
 
       },
+      /**排序查找前10条，前20条,调用dealData将dataList赋值*/
+      sort: function () {
+        var me = this
+        if (me.selectedNumber == 10) {
+          me.dataList = me.dataList.slice(0, 10)
+          me.pageList = me.dataList
+        } else if (me.selectedNumber == 20) {
+          me.dealData()
+          me.dataList = me.dataList.slice(0, 20)
+          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        } else {
+          me.dealData()
+          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        }
+      },
+      /**分页*/
       handleCurrentChange: function (currentPage) {
         //当前页面变换
         this.currentPage = currentPage
