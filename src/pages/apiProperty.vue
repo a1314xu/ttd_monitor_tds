@@ -14,8 +14,8 @@
           <div class="form-group ">
             <label class="level">二级类目:</label>
             <div class="tag secondContainer">
-              <div class="btn btn-default dis level2 blue" type="button" value="AVG">AVG</div>
-              <div class="btn btn-default dis level2" type="button" value="95line">95line</div>
+              <div class="btn btn-default dis level2 " type="button" value="AVG">AVG</div>
+              <div class="btn btn-default dis level2 blue" type="button" value="95line">95line</div>
               <div class="btn btn-default dis level2" type="button" value="Failure%">Failure%</div>
             </div>
           </div>
@@ -121,7 +121,7 @@
         pageList: [],//每页存放的列表数据,14条
         interfaceType: 1,
         tag1: "OpenAPI",//一级类目选中的值
-        tag2: "AVG",//二级类目选中的值
+        tag2: "95line",//二级类目选中的值
         tag3: "",//三级类目选中的值
         dataList: [],
         selectedNumber: "all",//显示的条数
@@ -131,8 +131,8 @@
         failurePercentList: [],
         //三级目录
         avgDevGroupList: [],
-        failureDevGroupList: ["xx", "xxx"],
-        nineFiveDevGroupList: ["cc", "cccc"]
+        failureDevGroupList: [],
+        nineFiveDevGroupList: []
       }
     },
     created: function () {
@@ -173,6 +173,7 @@
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           //根据tag3筛选开发组，匹配三级目录
           me.search()
+          debugger
         })
       },
       /**页面一进来搜索所有数据*/
@@ -180,19 +181,21 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
+//          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
+          url:" http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
           data: {
             interfaceType: me.interfaceType,
           },
           success: function (data) {
-            me.avgList = data.interfacePerformanceList.avgList;
+//            me.avgList = data.interfacePerformanceList.avgList;
             me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
             me.failurePercentList = data.interfacePerformanceList.failurePercentList
-            me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
-//            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
-//            me.ninefiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
+//            me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
+            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
+            me.nineFiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
             me.dealData()
             me.clickThirdLevel()
+            debugger
           }
         });
 
@@ -208,7 +211,6 @@
           }
         })
         me.dataList = temp
-        debugger
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
       /** 处理表格数据，给dataList重新赋值*/
@@ -222,7 +224,6 @@
           me.dataList = me.failurePercentList
         }
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
-
       },
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
       sort: function () {

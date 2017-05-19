@@ -15,7 +15,7 @@
             </thead>
             <tbody>
             <tr v-for="item in homeList">
-              <td>{{item.date}}</td>
+              <td>{{item.date.substr(0,10)}}</td>
               <td>{{item.unOpenPositioningRate}}</td>
 
               <td>{{item.baseFailureRate}}</td>
@@ -39,7 +39,7 @@
             </thead>
             <tbody>
             <tr v-for="item in abroadList">
-              <td>{{item.date}}</td>
+              <td>{{item.date.substr(0,10)}}</td>
               <td>{{item.unOpenPositioningRate}}</td>
               <td>{{item.baseFailureRate}}</td>
               <td>{{item.abandonPositioningRate}}</td>
@@ -50,20 +50,6 @@
             </tr>
             </tbody>
           </table>
-          <!--<table class="table table-bordered table-hover table-responsive "-->
-                 <!--style="position: relative;left: 40px;top: 20px;">-->
-            <!--<thead>-->
-            <!--<tr role="row" class="row-header">-->
-              <!--<th>国内</th>-->
-              <!--<th v-for="item in homeList">{{item.date}}</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr>-->
-              <!--<td v-for="item in dataList">{{item}}</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-          <!--</table>-->
         </div>
       </div>
     </div>
@@ -113,7 +99,6 @@
           },
           success: function (data) {
             me.abroadList=data.positionDataList
-            debugger
           }
         });
       }
