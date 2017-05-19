@@ -174,10 +174,8 @@
           } else {
             me.pageType = 3
           }
-          me.searchList()
         })
         me.searchList()
-
         /**点击二级类目*/
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
@@ -192,7 +190,7 @@
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
-          me.tag3 = e.target.innerHTML
+          me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           //筛选三级类目
           me.search()
         })
@@ -218,19 +216,21 @@
           }
         });
       },
-      search:function () {
-        var me=this
-        var temp=[]
+      /**主要用于筛选三级类目*/
+      search: function () {
+        var me = this
+        var temp = []
+        me.dealData()
         me.dataList.forEach(function (item) {
-          if((item.devGroup)==(me.tag3)){
+          if ((item.devGroup) == (me.tag3)) {
             temp.push(item)
           }
-          console.log(temp)
         })
-        me.dataList=temp
-//        debugger
+        me.dataList = temp
+        debugger
+        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
-      /** 处理表格数据*/
+      /** 处理表格数据，给dataList重新赋值*/
       dealData: function () {
         var me = this
         if (me.tag2 == 'DOMready') {
