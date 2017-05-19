@@ -32,17 +32,38 @@
           <table class="table table-bordered table-hover table-responsive "
                  style="position: relative;left: 40px;top: 20px;">
             <thead>
-            <tr role="row" class="row-header">
-              <th>国内</th>
-              <th v-for="item in homeList">{{item.date}}</th>
+            <tr>
+              <th>国外</th>
+              <th v-for="item in dataList">{{item}}</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in dataList">
-              <td>{{item}}</td>
+            <tr v-for="item in abroadList">
+              <td>{{item.date}}</td>
+              <td>{{item.unOpenPositioningRate}}</td>
+              <td>{{item.baseFailureRate}}</td>
+              <td>{{item.abandonPositioningRate}}</td>
+              <td>{{item.drlExceptionRate}}</td>
+              <td>{{item.drNullRate}}</td>
+              <td>{{item.totalFailRate}}</td>
+              <td>{{item.totalSuccessRate}}</td>
             </tr>
             </tbody>
           </table>
+          <!--<table class="table table-bordered table-hover table-responsive "-->
+                 <!--style="position: relative;left: 40px;top: 20px;">-->
+            <!--<thead>-->
+            <!--<tr role="row" class="row-header">-->
+              <!--<th>国内</th>-->
+              <!--<th v-for="item in homeList">{{item.date}}</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+              <!--<td v-for="item in dataList">{{item}}</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+          <!--</table>-->
         </div>
       </div>
     </div>
@@ -66,6 +87,7 @@
     created: function () {
       var me = this
       me.searchList()
+      me.searchAbroadList()
     },
     methods: {
       searchList: function () {
@@ -78,6 +100,19 @@
           },
           success: function (data) {
             me.homeList = data.positionDataList
+          }
+        });
+      },
+      searchAbroadList: function () {
+        var me = this;
+        $.ajax({
+          type: "get",
+          url: "http://10.8.85.36:8086/tds-web/reportApi/getPositionDailyReport",
+          data: {
+            area: 1,
+          },
+          success: function (data) {
+            me.abroadList=data.positionDataList
             debugger
           }
         });
