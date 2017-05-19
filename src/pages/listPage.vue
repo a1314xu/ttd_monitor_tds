@@ -62,18 +62,24 @@
         <form class="form" style="position:relative;top: 0px; left: 40px;">
           <div class="row form-inline distance">
             <div class="form-group col-md-6">
+              <label>jobId</label>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="catInfo.id">
+            </div>
+            <div class="form-group col-md-6">
               <label>任务名称</label>
               <input type="text" class="form-control input-sm" placeholder="" disabled
                      v-model="catInfo.taskName">
             </div>
+          </div>
+          <div class="row form-inline distance">
             <div class="form-group col-md-6">
               <label>间隔时间</label>
               <input type="text" class="form-control input-sm" placeholder="" disabled
                      v-model="catInfo.timeInterval">
             </div>
-          </div>
-          <div class="row form-inline distance">
-            <div class="form-group col-md-12">
+
+            <div class="form-group col-md-6">
               <label>APPID</label>
               <input type="text" class="form-control input-sm" placeholder="" disabled
                      v-model="catInfo.appId">
@@ -95,12 +101,13 @@
           </div>
           <!--tab区域-->
           <ul class="nav nav-tabs" role="tablist" style="margin-top: 20px">
-            <li role="presentation" v-for="(item,index) in catInfo.checkedTypes"  :class="index==0?'active':''">
+            <li role="presentation" v-for="(item,index) in catInfo.checkedTypes" :class="index==0?'active':''">
               <a :href="'#'+index" :aria-controls="item" role="tab" data-toggle="tab">{{item}}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane" v-for="(item,index) in catInfo.checkedNames"  :class="index==0?'active':''" :id="index">
+            <div role="tabpanel" class="tab-pane" v-for="(item,index) in catInfo.checkedNames"
+                 :class="index==0?'active':''" :id="index">
               <div class="row">
                 <div class="col-sm-11">
                   <table class="table table-bordered table-hover">
@@ -130,21 +137,28 @@
         <form class="form" style="position:relative;top:0px; left: 40px;">
           <div class="row form-inline distance">
             <div class="form-group col-md-6">
+              <label>jobId</label>
+              <input type="text" class="form-control input-sm" placeholder="" disabled
+                     v-model="dashboardInfo.id">
+            </div>
+            <div class="form-group col-md-6">
               <label>任务名称</label>
               <input type="text" class="form-control input-sm" placeholder="" disabled
                      v-model="dashboardInfo.taskName">
             </div>
+          </div>
+          <div class="row form-inline distance">
             <div class="form-group col-md-6">
               <label>间隔时间</label>
               <input type="text" class="form-control input-sm" v-model="dashboardInfo.timeInterval" disabled>
             </div>
-          </div>
-          <div class="row form-inline distance">
             <div class="form-group col-md-6 ">
               <label>环境</label>
               <input type="text" class="form-control input-sm" placeholder="" disabled
                      v-model="dashboardInfo.environment">
             </div>
+          </div>
+          <div class="row form-inline distance">
             <div class="form-group col-md-6 ">
               <label>聚合方式</label>
               <input type="text" class="form-control input-sm" placeholder="" disabled
@@ -211,7 +225,8 @@
           gatherMethod: "",
           metricName: "",
           tag: "",
-          groupBy: ""
+          groupBy: "",
+          id: ""
         },
         catInfo: {
           taskName: "",
@@ -219,7 +234,8 @@
           appId: "",
           checkedTags: [],
           checkedTypes: [],
-          checkedNames: []
+          checkedNames: [],
+          id: "",
 
         },
         dialogDashboardVisible: false,
@@ -276,6 +292,7 @@
               me.catInfo.checkedTags = data.jobInfo.checkedTags
               me.catInfo.checkedTypes = data.jobInfo.checkedTypes
               me.catInfo.checkedNames = data.jobInfo.checkedNames
+              me.catInfo.id = data.jobInfo.id
             }
           });
         } else if (item.sourcedata == 'dashboard') {
@@ -292,6 +309,7 @@
               me.dashboardInfo.metricName = data.jobInfo.metricName
               me.dashboardInfo.groupBy = data.jobInfo.groupBy
               me.dashboardInfo.tag = data.jobInfo.tag
+              me.dashboardInfo.id = data.jobInfo.id
             }
           });
         }

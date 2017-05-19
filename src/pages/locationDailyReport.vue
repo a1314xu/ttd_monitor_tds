@@ -8,15 +8,6 @@
                  style="position: relative;left: 40px;top: 20px;">
             <caption style="text-align: left;font-size: 30px">7天定位数据</caption>
             <thead>
-            <!--<tr role="row" class="row-header">-->
-            <!--<th>国内</th>-->
-            <!--<th v-for="item in homeList">{{item.date}}</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr v-for="item in dataList" >-->
-            <!--<td>{{item}}</td>-->
-            <!--</tr>-->
             <tr>
               <th>国内</th>
               <th v-for="item in dataList">{{item}}</th>
@@ -42,13 +33,13 @@
                  style="position: relative;left: 40px;top: 20px;">
             <thead>
             <tr role="row" class="row-header">
-            <th>国内</th>
-            <th v-for="item in homeList">{{item.date}}</th>
+              <th>国内</th>
+              <th v-for="item in homeList">{{item.date}}</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in dataList" >
-            <td>{{item}}</td>
+            <tr v-for="item in dataList">
+              <td>{{item}}</td>
             </tr>
             </tbody>
           </table>
