@@ -161,7 +161,10 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
+          me.searchList()
+          debugger
         })
+
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
        * 把点击三级事件放到这个方法，表格和三级目录可同时出现*/
@@ -173,7 +176,6 @@
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           //根据tag3筛选开发组，匹配三级目录
           me.search()
-          debugger
         })
       },
       /**页面一进来搜索所有数据*/
@@ -195,7 +197,6 @@
             me.nineFiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
             me.dealData()
             me.clickThirdLevel()
-            debugger
           }
         });
 
@@ -224,6 +225,7 @@
           me.dataList = me.failurePercentList
         }
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        debugger
       },
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
       sort: function () {
