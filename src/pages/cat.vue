@@ -91,7 +91,7 @@
           </div>
 
           <!--tab表格区-->
-          <div class="tab" role="tabpanel" v-if="showTab">
+          <div class="tab col-md-11" role="tabpanel" v-if="showTab" style="margin-top: 20px;left:-15px">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs " role="tablist" id="docTabs">
               <li role="presentation" v-for="(item,index) in tabsData" :class="index==0?'active':''">
@@ -116,7 +116,7 @@
                         <tr v-for="(typeValueItem,row) in item.typeValue">
                           <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
                                      name="chk_list"
-                                     v-model="checkedNames"></td>
+                                     v-model="checkedNames" checked></td>
                           <td><label :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
                         </tbody>
@@ -128,29 +128,6 @@
             </div>
             <label v-if='tips.checkedNamesTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
           </div>
-
-          <!--tab表格区-->
-          <!--<el-tabs  type="card" v-for="(item,index) in tabsData" :key="index" v-model="activeName=item.type">-->
-            <!--<el-tab-pane :label="item.type" :name="item.type" >-->
-              <!--<el-table-->
-                <!--ref="multipleTable"-->
-                <!--:data="item.typeValue"-->
-                <!--style="width: 100%"-->
-                <!--@selection-change="handleSelectionChange">-->
-                <!--<el-table-column-->
-                  <!--type="selection"-->
-                  <!--width="55">-->
-                <!--</el-table-column>-->
-
-                <!--<el-table-column-->
-                  <!--prop="index"-->
-                  <!--label="name"-->
-                  <!--width="120">-->
-                <!--</el-table-column>-->
-                <!--</el-table-column>-->
-              <!--</el-table>-->
-            <!--</el-tab-pane>-->
-          <!--</el-tabs>-->
           <div class="foot">
             <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" @click="submit">保存</button>
             <button type="button" class="btn btn-primary btn-sm " @click="gotodatasource">取消</button>
@@ -216,6 +193,7 @@
         typeList: [],//接收返回的type
         tabsData: [],//接收返回的name,变量
         selectedList: [],//选中的type对应name
+        obj:{},
         dialogVisible: false,
         tips: {
           taskNameTip: false,//验证用
@@ -228,6 +206,7 @@
         showTab: false,
         selectedData: [],//联想功能的数据
         currentView: "",
+        nameData:[]
       }
     },
 
@@ -281,15 +260,15 @@
           traditional: true,
           dataType: "jsonp",
           success: function (data) {
-              debugger
-            me.tabsData = data;
+            me.tabsData = data
             me.showTab = true
           }
         })
       },
-//      checkAll: function () {
-//        $("input[name='chk_list']").attr("checked", $(this).attr("checked"))
-//      },
+      checkAll: function () {
+          debugger
+        $("input[name='chk_list']").attr("checked", $(this).attr("checked"))
+      },
       submit: function () {
         var me = this;
         if (me.taskName.length === 0) {
