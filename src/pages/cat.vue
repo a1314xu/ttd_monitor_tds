@@ -116,7 +116,7 @@
                         <tr v-for="(typeValueItem,row) in item.typeValue">
                           <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
                                      name="chk_list"
-                                     v-model="checkedNames" checked></td>
+                                     v-model="checkedNames" ></td>
                           <td><label :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
                         </tbody>
@@ -266,8 +266,12 @@
         })
       },
       checkAll: function () {
-          debugger
-        $("input[name='chk_list']").attr("checked", $(this).attr("checked"))
+          if($("input[name='chk_list']").attr("checked")){
+            $("input[name='chk_list']").attr("checked", false)
+          }else{
+            $("input[name='chk_list']").attr("checked", true)
+        }
+
       },
       submit: function () {
         var me = this;
