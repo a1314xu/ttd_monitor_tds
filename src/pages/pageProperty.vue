@@ -16,24 +16,30 @@
             <label class="level">二级类目:</label>
             <div class="tag secondContainer">
               <div class="btn btn-default dis level2 blue" type="button">DOMready</div>
-              <div class="btn btn-default dis level2" type="button">JSError / PV</div>
+              <div class="btn btn-default dis level2" type="button">JSErrorPV</div>
               <div class="btn btn-default dis level2" type="button" v-if="tag1!=='Online'">Restful Failed</div>
             </div>
           </div>
           <div class="form-group">
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
-              <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
-                   :class="index==0?'blue':''"
-                   type="button" v-if="tag2=='JSError / PV'">{{item}}
+              <div v-if="　tag2　=='JSErrorPV'" class="111">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
+                     type="button">{{item}}
+                </div>
               </div>
-              <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
-                   :class="index==0?'blue':''"
-                   type="button" v-if="tag2=='Restful Failed'">{{item}}
+              <div v-if="　tag2　=='Restful Failed'" class="222">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
+                     type="button">{{item}}
+                </div>
               </div>
-              <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                   :class="index==0?'blue':''"
-                   type="button" v-if="tag2=='DOMready'">{{item}}
+              <div v-if= "tag2 === 'DOMready'"  class="333">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
+                     type="button">{{item}}
+                </div>
               </div>
             </div>
           </div>
@@ -56,9 +62,9 @@
                   <th>页面名称</th>
                   <th>Page ID</th>
                   <th v-if="tag2=='DOMready'">AVG</th>
-                  <th v-if="tag2=='JSError / PV'">PV</th>
-                  <th v-if="tag2=='JSError / PV'">JSError</th>
-                  <th v-if="tag2=='JSError / PV'">JSError/PV</th>
+                  <th v-if="tag2=='JSError/PV'">PV</th>
+                  <th v-if="tag2=='JSError/PV'">JSError</th>
+                  <th v-if="tag2=='JSError/PV'">JSError/PV</th>
                   <th v-if="tag2=='Restful Failed'">Restful Failed</th>
                   <th>开发组</th>
                   <th>是否核心页面</th>
@@ -74,7 +80,7 @@
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in pageList" v-if="tag2=='JSError / PV'">
+                <tr v-for="(item,index) in pageList" v-if="tag2=='JSError/PV'">
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -120,6 +126,7 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
+  window.pagePropertyDatas={}
   export default {
     name: 'pageProperty',
     components: {
@@ -131,8 +138,8 @@
         selectedNumber: "all",
         pageList: [],//每页存放的列表数据,14条
         pageType: 1,
-        tag1: "",
-        tag2: "DOMready",
+        tag1: "Hybrid",
+        tag2: "JSErrorPV",
         tag3: "",
         //开发组
         DomReadyList: [],
@@ -181,6 +188,10 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
+          console.log(me.tag2=='DOMready')
+          console.log(me.tag2=='JSError/PV')
+          console.log(me.tag2=='Restful Failed')
+          debugger
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -200,21 +211,37 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.8.85.36:8086/tds-web/reportApi/getPagePerformanceV2",
+          url: "http://10.32.212.27:12345/reportApi/getPagePerformanceV2",
           data: {
             pageType: me.pageType,
           },
           success: function (data) {
+              debugger
+            window.pagePropertyDatas.data=data
             me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
             me.jserrorDevGroupList = data.pagePerformanceList.jserrorDevGroupList
             me.restfulDevGroupList = data.pagePerformanceList.restfulDevGroupList
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
+            debugger
             me.dealData()
             me.clickThirdLevel()
+
           }
         });
+      },
+      /** 处理表格数据，给dataList重新赋值*/
+      dealData: function () {
+        var me = this
+        if (me.tag2 == 'DOMready') {
+          me.dataList = me.DomReadyList
+        } else if (me.tag2 == 'JSError/PV') {
+          me.dataList = me.jsErrorAndPVList
+        } else {
+          me.dataList = me.restfulFailedList
+        }
+        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
       /**主要用于筛选三级类目*/
       search: function () {
@@ -225,23 +252,14 @@
           if ((item.devGroup) == (me.tag3)) {
             temp.push(item)
           }
+          if (me.tag3 == '不限') {
+            temp = me.dataList
+          }
         })
         me.dataList = temp
-        debugger
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
-      /** 处理表格数据，给dataList重新赋值*/
-      dealData: function () {
-        var me = this
-        if (me.tag2 == 'DOMready') {
-          me.dataList = me.DomReadyList
-        } else if (me.tag2 == 'JSError / PV') {
-          me.dataList = me.jsErrorAndPVList
-        } else {
-          me.dataList = me.restfulFailedList
-        }
-        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
-      },
+
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
       sort: function () {
         var me = this

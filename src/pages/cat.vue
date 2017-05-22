@@ -35,16 +35,19 @@
           </div>
           <div class="row form-inline distance">
             <div class="form-group col-md-12">
-              <label for="appId">APP &nbsp;&nbsp; ID</label>
-              <input type="text" class="form-control input-sm" id="appId" placeholder="100000445" v-model="appId"
-                     @blur="showType">
-              <!--<div class="search-select">-->
-              <!--<ul>-->
-              <!--<li v-for="(item,index) in searchList" :key="item.label">-->
-              <!--{{item.label}}22-->
-              <!--</li>-->
-              <!--</ul>-->
-              <!--</div>-->
+              <div id="search-form">
+                <label for="search-input">APP &nbsp;&nbsp; ID</label>
+                <input type="text" class="form-control input-sm" id="search-input" placeholder="100000445"
+                       v-model="appId"
+                       @keydown="searchText" @blur="showType">
+              </div>
+              <!--智能搜索区域-->
+              <div class="suggest" id="search-suggest" style="display: none">
+                <ul id="search-result">
+                  <li>搜索结果1</li>
+                  <li>搜索结果2</li>
+                </ul>
+              </div>
               <label v-if='tips.appIdTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
             </div>
           </div>
@@ -116,7 +119,7 @@
                         <tr v-for="(typeValueItem,row) in item.typeValue">
                           <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
                                      name="chk_list"
-                                     v-model="checkedNames" ></td>
+                                     v-model="checkedNames"></td>
                           <td><label :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
                         </tbody>
@@ -146,6 +149,29 @@
 <style>
   #cat {
     overflow: hidden;
+  }
+
+  .suggest {
+    width: 168px;
+    background-color: white;
+    border: solid 1px gainsboro;
+  }
+
+  .suggest ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .suggest ul li {
+    padding: 5px;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+  }
+
+  .suggest ul li:hover {
+    color: #c12e2a;
   }
 
   .checkbox label {
@@ -183,6 +209,7 @@
     data: function () {
       return {
         taskName: "",
+        searchData: [],
         timeInterval: "1",
         startTime: "",
         appId: "",
@@ -193,7 +220,7 @@
         typeList: [],//接收返回的type
         tabsData: [],//接收返回的name,变量
         selectedList: [],//选中的type对应name
-        obj:{},
+        obj: {},
         dialogVisible: false,
         tips: {
           taskNameTip: false,//验证用
@@ -206,7 +233,7 @@
         showTab: false,
         selectedData: [],//联想功能的数据
         currentView: "",
-        nameData:[]
+        nameData: []
       }
     },
 
@@ -232,7 +259,39 @@
       gotodatasource: function () {
         app.$router.push("dataSource")
       },
-
+      /*** 智能提示框*/
+      searchText: function () {
+        var me = this;
+        $.ajax({
+          type: "get",
+          url: "http://10.8.85.36:8086/CatAPI/GetAppId",
+          data: {
+            appid: me.appId
+          },
+          dataType: "jsonp",
+          success: function (data) {
+            me.searchData = data;
+            var html = ''
+            for (var i = 0; i < me.searchData.length; i++) {
+              html += '<ul>'+me.searchData[i]+'</ul>'
+            }
+            $("#search-result").html(html)
+            $("#search-suggest").show().css({
+              top: $("#search-form").offset.top + $("#search-input").height(),
+              left: $("#search-input").offset.left,
+              position: "absolute"
+            })
+          }
+        });
+        $(document).click=function () {
+          $("#search-suggest").hide()
+        }
+        /**为多个通过js动态生成的html结构，添加事件时，使用事件代理*/
+        $(document).delegate('li','click',function () {
+//          me.showType()
+        })
+      },
+      /**输入appid，显示type*/
       showType: function () {
         var me = this;
         $.ajax({
@@ -266,10 +325,10 @@
         })
       },
       checkAll: function () {
-          if($("input[name='chk_list']").attr("checked")){
-            $("input[name='chk_list']").attr("checked", false)
-          }else{
-            $("input[name='chk_list']").attr("checked", true)
+        if ($("input[name='chk_list']").attr("checked")) {
+          $("input[name='chk_list']").attr("checked", false)
+        } else {
+          $("input[name='chk_list']").attr("checked", true)
         }
 
       },

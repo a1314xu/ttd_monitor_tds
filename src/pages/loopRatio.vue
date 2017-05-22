@@ -9,7 +9,7 @@
                    style="position: relative;left: 40px;top: 20px;">
               <caption style="text-align: left;font-size: 30px">OpenAPI耗时-环比率</caption>
               <thead>
-              <tr role="row" class="row-header">
+              <tr role="row" class="row-header" >
                 <th>业务名称</th>
                 <th>接口名</th>
                 <th>上上周均值</th>
@@ -64,9 +64,10 @@
         }
       },
       created: function () {
-        this.searchList()
-        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16- 1)
-
+//        this.searchList()
+//        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16- 1)
+        debugger
+        console.log(window.pagePropertyDatas.data);
       },
       methods: {
         searchList: function () {

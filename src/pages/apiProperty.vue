@@ -22,14 +22,23 @@
           <div class="form-group">
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
-              <div class="btn btn-default dis level3 " v-for="(item,index) in avgDevGroupList" type="button"
-                   :class="index==0?'blue':''" :value="item" v-if="tag2=='AVG'">{{item}}
+              <div v-if="tag2=='AVG'">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3 " v-for="(item,index) in avgDevGroupList" type="button"
+                     :value="item">{{item}}
+                </div>
               </div>
-              <div class="btn btn-default dis level3 " v-for="(item,index) in nineFiveDevGroupList" type="button"
-                   :class="index==0?'blue':''" :value="item" v-if="tag2=='95line'">{{item}}
+              <div v-if="tag2=='95line'">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3 " v-for="(item,index) in nineFiveDevGroupList" type="button"
+                     :value="item">{{item}}
+                </div>
               </div>
-              <div class="btn btn-default dis level3 " v-for="(item,index) in failureDevGroupList" type="button"
-                   :class="index==0?'blue':''" :value="item" v-if="tag2=='Failure%'">{{item}}
+              <div v-if="tag2=='Failure%'">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3 " v-for="(item,index) in failureDevGroupList" type="button"
+                     :value="item">{{item}}
+                </div>
               </div>
             </div>
           </div>
@@ -126,468 +135,13 @@
         dataList: [],
         selectedNumber: "all",//显示的条数
         //表格内容
-        avgList: [{
-            "bussinessName":"xsd",
-          "interfaceName":"sdfdf",
-          "avg":"ok",
-          "devGroup":"sdf",
-          "critical":"是"
-        }, {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"否"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"否"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sde",
-            "critical":"是"
-          }, {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"否"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          }, {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"否"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"否"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          }, {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"否"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          }, {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"否"
-          },
-          {
-            "bussinessName":"xsd",
-            "interfaceName":"sdfdf",
-            "avg":"ok",
-            "devGroup":"sdf",
-            "critical":"是"
-          },
-        ],
-        ninetyFiveLineList: [{
-            "bussinessName":"ddfs",
-          "interfaceName":"dsf",
-          "ninetyfiveLine":"d",
-          "devGroup":"dwqd",
-          "critical":"wewe",
-        },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dw",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "ninetyfiveLine":"d",
-            "devGroup":"dwqd",
-            "critical":"wewe",
-          },
-        ],
-        failurePercentList: [{
-          "bussinessName":"ddfs",
-          "interfaceName":"dsf",
-          "failPercent":"ewd",
-          "devGroup":"ff",
-          "critical":"wewe",
-        },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },{
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"ff",
-            "critical":"wewe",
-          },
-          {
-            "bussinessName":"ddfs",
-            "interfaceName":"dsf",
-            "failPercent":"ewd",
-            "devGroup":"f",
-            "critical":"wewe",
-          }
-
-          ],
+        avgList: [],
+        ninetyFiveLineList: [],
+        failurePercentList: [],
         //三级目录
-        avgDevGroupList: ["sdf","sde"],
-        nineFiveDevGroupList: ["dw","dwqd"],
-        failureDevGroupList: ["ff","f"]
+        avgDevGroupList: [],
+        nineFiveDevGroupList: [],
+        failureDevGroupList: [],
       }
     },
     created: function () {
@@ -616,7 +170,6 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
-          me.searchList()
         })
 
       },
@@ -630,6 +183,7 @@
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           //根据tag3筛选开发组，匹配三级目录
           me.search()
+
         })
       },
       /**页面一进来搜索所有数据*/
@@ -638,35 +192,21 @@
         $.ajax({
           type: "get",
 //          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
-          url:" http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
+          url: " http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
           data: {
             interfaceType: me.interfaceType,
           },
           success: function (data) {
-//            me.avgList = data.interfacePerformanceList.avgList;
-//            me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
-//            me.failurePercentList = data.interfacePerformanceList.failurePercentList
-//            me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
-//            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
-//            me.nineFiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
+            me.avgList = data.interfacePerformanceList.avgList;
+            me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
+            me.failurePercentList = data.interfacePerformanceList.failurePercentList
+            me.avgDevGroupList = data.interfacePerformanceList.avgDevGroupList
+            me.failureDevGroupList = data.interfacePerformanceList.failureDevGroupList
+            me.nineFiveDevGroupList = data.interfacePerformanceList.ninefiveDevGroupList
             me.dealData()
             me.clickThirdLevel()
           }
         });
-
-      },
-      /**主要用于筛选三级类目*/
-      search: function () {
-        var me = this
-        var temp = []
-        me.dealData()
-        me.dataList.forEach(function (item) {
-          if ((item.devGroup) == (me.tag3)) {
-            temp.push(item)
-          }
-        })
-        me.dataList = temp
-        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
       /** 处理表格数据，给dataList重新赋值*/
       dealData: function () {
@@ -680,6 +220,23 @@
         }
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
+      /**主要用于筛选三级类目*/
+      search: function () {
+        var me = this
+        var temp = []
+        me.dealData()
+        me.dataList.forEach(function (item) {
+          if ((item.devGroup) == (me.tag3)) {
+            temp.push(item)
+          }
+          if(me.tag3=='不限'){
+            temp=me.dataList
+          }
+        })
+        me.dataList = temp
+        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+      },
+
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
       sort: function () {
         var me = this
