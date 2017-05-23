@@ -15,30 +15,30 @@
           <div class="form-group ">
             <label class="level">二级类目:</label>
             <div class="tag secondContainer">
-              <div class="btn btn-default dis level2 blue" type="button">DOMready</div>
-              <div class="btn btn-default dis level2" type="button">JSErrorPV</div>
-              <div class="btn btn-default dis level2" type="button" v-if="tag1!=='Online'">Restful Failed</div>
+              <div class="btn btn-default dis level2 blue" type="button" value="DOMready">DOMready</div>
+              <div class="btn btn-default dis level2" type="button" value="JSError/PV">JSError/PV</div>
+              <div class="btn btn-default dis level2" type="button" v-if="tag1!=='Online'" value="Restful Failed">Restful Failed</div>
             </div>
           </div>
           <div class="form-group">
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
-              <div v-if="　tag2　=='JSErrorPV'" class="111">
-                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
-                <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
-                     type="button">{{item}}
-                </div>
-              </div>
-              <div v-if="　tag2　=='Restful Failed'" class="222">
-                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
-                <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
-                     type="button">{{item}}
-                </div>
-              </div>
-              <div v-if= "tag2 === 'DOMready'"  class="333">
+              <div v-if="tag2 =='DOMready'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                     type="button">{{item}}
+                     type="button" :value="item">{{item}}
+                </div>
+              </div>
+              <div v-if="tag2=='JSError/PV'">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
+                     type="button" :value="item">{{item}}
+                </div>
+              </div>
+              <div v-if="tag2=='Restful Failed'">
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
+                     type="button" :value="item">{{item}}
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
-  window.pagePropertyDatas={}
+//  window.pagePropertyDatas={}
   export default {
     name: 'pageProperty',
     components: {
@@ -135,16 +135,35 @@
     data: function () {
       return {
         currentPage: 1,//当前页
-        selectedNumber: "all",
+        selectedNumber: "all",//显示的条数
         pageList: [],//每页存放的列表数据,14条
         pageType: 1,
-        tag1: "Hybrid",
-        tag2: "JSErrorPV",
-        tag3: "",
+        tag1: "Hybrid",//一级类目选中的值
+        tag2: "DOMready",//二级类目选中的值
+        tag3: "",//三级类目选中的值
         //开发组
-        DomReadyList: [],
-        jsErrorAndPVList: [],
-        restfulFailedList: [],
+//        DomReadyList: [{"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"xxx","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"x","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"否"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
+//        ],
+//        jsErrorAndPVList: [{"channelName":"df","pageName":"sdf","pageId":"df","pv":"ds","jsError":"dds","errorPercent":"sd","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","pv":"ds","jsError":"dds","errorPercent":"sd","devGroup":"sd","critical":"是"},
+//          {"channelName":"df","pageName":"sdf","pageId":"df","pv":"ds","jsError":"dds","errorPercent":"sd","devGroup":"sd","critical":"是"},],
+//         restfulFailedList: [{"channelName":"df","pageName":"sdf","pageId":"df","failPercent":"ds","devGroup":"sd","critical":"是"},],
+        DomReadyList:[],
+        jsErrorAndPVList:[],
+        restfulFailedList:[],
         //按钮组
         domreadyDevGroupList: [],
         jserrorDevGroupList: [],
@@ -188,10 +207,7 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
-          console.log(me.tag2=='DOMready')
-          console.log(me.tag2=='JSError/PV')
-          console.log(me.tag2=='Restful Failed')
-          debugger
+          me.dealData()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -202,7 +218,7 @@
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
-          //筛选三级类目
+          //根据tag3筛选开发组，匹配三级目录
           me.search()
         })
       },
@@ -216,15 +232,13 @@
             pageType: me.pageType,
           },
           success: function (data) {
-              debugger
-            window.pagePropertyDatas.data=data
+//            window.pagePropertyDatas.data=data
             me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
             me.jserrorDevGroupList = data.pagePerformanceList.jserrorDevGroupList
             me.restfulDevGroupList = data.pagePerformanceList.restfulDevGroupList
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
-            debugger
             me.dealData()
             me.clickThirdLevel()
 
@@ -241,6 +255,7 @@
         } else {
           me.dataList = me.restfulFailedList
         }
+        console.log(me.dataList)
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
       /**主要用于筛选三级类目*/
@@ -249,11 +264,12 @@
         var temp = []
         me.dealData()
         me.dataList.forEach(function (item) {
-          if ((item.devGroup) == (me.tag3)) {
+            //devGroup多了一个空格
+          if ((item.devGroup.trim()) == (me.tag3)) {
             temp.push(item)
           }
-          if (me.tag3 == '不限') {
-            temp = me.dataList
+          if(me.tag3=='不限'){
+            temp=me.dataList
           }
         })
         me.dataList = temp

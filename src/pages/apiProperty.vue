@@ -119,6 +119,7 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
+  window.apiProperty={}
   export default {
     name: 'apiProperty',
     components: {
@@ -127,13 +128,12 @@
     data: function () {
       return {
         currentPage: 1,//当前页
+        selectedNumber: "all",//显示的条数
         pageList: [],//每页存放的列表数据,14条
         interfaceType: 1,
         tag1: "OpenAPI",//一级类目选中的值
         tag2: "AVG",//二级类目选中的值
         tag3: "",//三级类目选中的值
-        dataList: [],
-        selectedNumber: "all",//显示的条数
         //表格内容
         avgList: [],
         ninetyFiveLineList: [],
@@ -142,6 +142,9 @@
         avgDevGroupList: [],
         nineFiveDevGroupList: [],
         failureDevGroupList: [],
+
+        dataList: [],
+
       }
     },
     created: function () {
@@ -170,8 +173,10 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
-        })
+//          me.searchList()
+          me.dealData()
 
+        })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
        * 把点击三级事件放到这个方法，表格和三级目录可同时出现*/
@@ -197,6 +202,7 @@
             interfaceType: me.interfaceType,
           },
           success: function (data) {
+            window.apiProperty.data=data.interfacePerformanceList
             me.avgList = data.interfacePerformanceList.avgList;
             me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
             me.failurePercentList = data.interfacePerformanceList.failurePercentList

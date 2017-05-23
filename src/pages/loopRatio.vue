@@ -60,24 +60,23 @@
           currentPage: 1,//当前页
           pageList: [],//每页存放的列表数据,14条
           dataList: [],
+          avgList:[],
+          ninetyFiveLineList:[],
+          failurePercentList:[],
 
         }
       },
       created: function () {
-//        this.searchList()
-//        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16- 1)
-        debugger
-        console.log(window.pagePropertyDatas.data);
+        this.searchList()
+        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16- 1)
       },
       methods: {
         searchList: function () {
-          this.$http.get(
-            '',
-            {}
-          ).then(response => {
-
-          }, response => {
-          });
+          var me=this
+          me.avgList=window.apiProperty.data.avgList
+          me.ninetyFiveLineList=window.apiProperty.data.ninetyfiveLineList
+          me.failurePercentList=window.apiProperty.data.failurePercentList
+          debugger
         },
         handleCurrentChange: function (currentPage) {
           //当前页面变换
