@@ -26,7 +26,10 @@
               <div v-if="tag2 =='DOMready'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                     type="button" :value="item">{{item}}
+                     type="button" :value="item" :style="{color:grey}" v-if="tag3=='营销活动组(陈浩组)||海外玩乐(施程组)||海外通讯(施程组)'">{{item}}
+                </div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
+                     type="button" :value="item" v-if="tag3!=='营销活动组(陈浩组)||海外玩乐(施程组)||海外通讯(施程组)'">{{item}}
                 </div>
               </div>
               <div v-if="tag2=='JSError/PV'">
@@ -151,6 +154,7 @@
         restfulDevGroupList: [],
 
         dataList: [],
+        grey:'grey'
       }
     },
 
@@ -161,7 +165,7 @@
     },
     mounted: function () {
       var me = this
-      /**在mounted触发，因为created还没有渲染DOM*/
+      /**在mounted触发，待渲染DOM后方可取到dom值*/
       me.buttonToggle()
 
     },
@@ -188,7 +192,8 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
-          me.searchList()
+//          me.dealData()
+          me.clickThirdLevel()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -220,8 +225,8 @@
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
-            me.dealData()
-            me.clickThirdLevel()
+//            me.dealData()
+//            me.clickThirdLevel()
           }
         });
       },
@@ -287,7 +292,5 @@
     overflow: hidden;
   }
 
-  /*.red {*/
-  /*background: red !important;*/
-  /*}*/
+
 </style>

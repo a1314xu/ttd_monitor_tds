@@ -120,7 +120,7 @@
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
   window.apiProperty={}
-  export default {
+  var apiMix={
     name: 'apiProperty',
     components: {
       'v-navListApi': navListApi
@@ -132,7 +132,7 @@
         pageList: [],//每页存放的列表数据,14条
         interfaceType: 1,
         tag1: "OpenAPI",//一级类目选中的值
-        tag2: "AVG",//二级类目选中的值
+        tag2: "",//二级类目选中的值
         tag3: "",//三级类目选中的值
         //表格内容
         avgList: [],
@@ -173,8 +173,7 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
-          me.searchList()
-
+          me.dealData()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -224,6 +223,7 @@
           me.dataList = me.failurePercentList
         }
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+
       },
       /**主要用于筛选三级类目*/
       search: function () {
@@ -265,6 +265,7 @@
       }
     }
   }
+  export default apiMix
 </script>
 
 

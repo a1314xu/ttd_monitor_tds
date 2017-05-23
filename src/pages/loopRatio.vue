@@ -9,23 +9,43 @@
                    style="position: relative;left: 40px;top: 20px;">
               <caption style="text-align: left;font-size: 30px">OpenAPI耗时-环比率</caption>
               <thead>
-              <tr role="row" class="row-header" >
+              <tr role="row" class="row-header">
                 <th>业务名称</th>
                 <th>接口名</th>
-                <th>上上周均值</th>
-                <th>上周均值</th>
+                <th v-if="tag2=='AVG'">上上周AVG均值</th>
+                <th v-if="tag2=='AVG'">上周AVG均值</th>
+                <th v-if="tag2=='95line'">上上周95line均值</th>
+                <th v-if="tag2=='95line'">上周95line均值</th>
+                <th v-if="tag2=='Failure%'">上上周Failure%均值</th>
+                <th v-if="tag2=='Failure%'">上周Failure%均值</th>
                 <th>环比率</th>
                 <th>开发组</th>
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(item,index) in pageList">
-                <td>{{item.businessName}}</td>
+              <tr v-for="(item,index) in pageList" v-if="tag2=='AVG'">
+                <td>{{item.bussinessName}}</td>
                 <td>{{item.interfaceName}}</td>
-                <td>{{item.priorprioravg}}</td>
-                <td>{{item.prioravg}}</td>
-                <td>{{item.loopRatio}}</td>
-                <td>{{item.developGroup}}</td>
+                <td>{{item.beforeAvg}}</td>
+                <td>{{item.avg}}</td>
+                <td>{{item.hb}}</td>
+                <td>{{item.devGroup}}</td>
+              </tr>
+              <tr v-for="(item,index) in pageList" v-if="tag2=='95line'">
+                <td>{{item.bussinessName}}</td>
+                <td>{{item.interfaceName}}</td>
+                <td>{{item.beforeNinetyfiveLine}}</td>
+                <td>{{item.ninetyfiveLine}}</td>
+                <td>{{item.hb}}</td>
+                <td>{{item.devGroup}}</td>
+              </tr>
+              <tr v-for="(item,index) in pageList" v-if="tag2=='Failure%'">
+                <td>{{item.bussinessName}}</td>
+                <td>{{item.interfaceName}}</td>
+                <td>{{item.beforeFailPercent}}</td>
+                <td>{{item.failPercent}}</td>
+                <td>{{item.hb}}</td>
+                <td>{{item.devGroup}}</td>
               </tr>
               </tbody>
             </table>
@@ -50,47 +70,30 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
-    export default {
-        name: 'loopRatio',
-        components:{
-        'v-navListApi':navListApi
-      },
-      data: function () {
-        return {
-          currentPage: 1,//当前页
-          pageList: [],//每页存放的列表数据,14条
-          dataList: [],
-          avgList:[],
-          ninetyFiveLineList:[],
-          failurePercentList:[],
-
-        }
-      },
-      created: function () {
-        this.searchList()
-        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16- 1)
-      },
-      methods: {
-        searchList: function () {
-          var me=this
-          me.avgList=window.apiProperty.data.avgList
-          me.ninetyFiveLineList=window.apiProperty.data.ninetyfiveLineList
-          me.failurePercentList=window.apiProperty.data.failurePercentList
-          debugger
-        },
-        handleCurrentChange: function (currentPage) {
-          //当前页面变换
-          this.currentPage = currentPage
-          this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16 - 1)
-        }
-      }
-
+  import apiMix from './apiProperty.vue'
+  export default {
+    mixins: [apiMix],
+    name: 'loopRatio',
+    components: {
+      'v-navListApi': navListApi
+    },
+    data: function () {
+      return {}
+    },
+    created: function () {
+        debugger;
+        console.log(this)
+        console.log(this.tag2)
+    },
+    methods: {
     }
+
+  }
 </script>
 
 
 <style>
-  #loopRatio{
+  #loopRatio {
     overflow: hidden;
   }
 </style>
