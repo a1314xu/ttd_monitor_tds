@@ -81,12 +81,18 @@
       return {}
     },
     created: function () {
-        debugger;
-        console.log(this)
-        console.log(this.tag2)
+//        debugger;
+//        console.log(this.pageList)
+//        console.log(this.tag2)
     },
     methods: {
+    },
+    mounted:function(){
+//      debugger;
+//      console.log(this.pageList)
+//      console.log(this.tag2)
     }
+
 
   }
 </script>

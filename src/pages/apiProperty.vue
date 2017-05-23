@@ -132,7 +132,7 @@
         pageList: [],//每页存放的列表数据,14条
         interfaceType: 1,
         tag1: "OpenAPI",//一级类目选中的值
-        tag2: "",//二级类目选中的值
+        tag2: "AVG",//二级类目选中的值
         tag3: "",//三级类目选中的值
         //表格内容
         avgList: [],

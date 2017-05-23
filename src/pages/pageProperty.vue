@@ -15,15 +15,15 @@
           <div class="form-group ">
             <label class="level">二级类目:</label>
             <div class="tag secondContainer">
-              <div class="btn btn-default dis level2 blue" type="button" value="DOMready">DOMready</div>
-              <div class="btn btn-default dis level2" type="button" value="JSError/PV">JSError/PV</div>
-              <div class="btn btn-default dis level2" type="button" v-if="tag1!=='Online'" value="Restful Failed">Restful Failed</div>
+              <div class="btn btn-default dis level2 blue" type="button" value="DOMready" data-tag="DOMready">DOMready</div>
+              <div class="btn btn-default dis level2" type="button" value="JSError/PV" data-tag="JSError">JSError/PV</div>
+              <div class="btn btn-default dis level2" type="button" v-if="tag1!=='Online'" value="Restful Failed" data-tag="RestfulFailed">Restful Failed</div>
             </div>
           </div>
           <div class="form-group">
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
-              <div v-if="tag2 =='DOMready'">
+              <div v-show="tag2 =='DOMready'" class="1111">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
                      type="button" :value="item" :style="{color:grey}" v-if="tag3=='营销活动组(陈浩组)||海外玩乐(施程组)||海外通讯(施程组)'">{{item}}
@@ -32,13 +32,13 @@
                      type="button" :value="item" v-if="tag3!=='营销活动组(陈浩组)||海外玩乐(施程组)||海外通讯(施程组)'">{{item}}
                 </div>
               </div>
-              <div v-if="tag2=='JSError/PV'">
+              <div v-show="tag2=='JSError'" class="2222">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
                      type="button" :value="item">{{item}}
                 </div>
               </div>
-              <div v-if="tag2=='Restful Failed'">
+              <div v-show="tag2=='RestfulFailed'" class="333">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
                      type="button" :value="item">{{item}}
@@ -65,16 +65,16 @@
                   <th>页面名称</th>
                   <th>Page ID</th>
                   <th v-if="tag2=='DOMready'">AVG</th>
-                  <th v-if="tag2=='JSError/PV'">PV</th>
-                  <th v-if="tag2=='JSError/PV'">JSError</th>
-                  <th v-if="tag2=='JSError/PV'">JSError/PV</th>
-                  <th v-if="tag2=='Restful Failed'">Restful Failed</th>
+                  <th v-if="tag2=='JSError'">PV</th>
+                  <th v-if="tag2=='JSError'">JSError</th>
+                  <th v-if="tag2=='JSError'">JSError/PV</th>
+                  <th v-if="tag2=='RestfulFailed'">Restful Failed</th>
                   <th>开发组</th>
                   <th>是否核心页面</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in pageList" v-if="tag2='DOMready'">
+                <tr v-for="(item,index) in DomReadyList" v-if="tag2=='DOMready'">
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -83,7 +83,7 @@
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in pageList" v-if="tag2=='JSError/PV'">
+                <tr v-for="(item,index) in jsErrorAndPVList" v-if="tag2=='JSError'">
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -94,7 +94,7 @@
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in pageList" v-if="tag2=='Restful Failed'">
+                <tr v-for="(item,index) in restfulFailedList" v-if="tag2=='RestfulFailed'">
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -159,8 +159,8 @@
     },
 
     created: function () {
-      var me = this
-      me.searchList()
+//      var me = this
+//      me.searchList()
 
     },
     mounted: function () {
@@ -189,11 +189,14 @@
         me.searchList()
         /**点击二级类目*/
         $("div.level2").click(function (e) {
+          debugger;
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
-          me.tag2 = e.target.innerHTML
+//          me.tag2 = e.target.innerHTML
 //          me.dealData()
-          me.clickThirdLevel()
+          me.tag2=e.currentTarget.dataset.tag;
+           debugger;
+//          me.clickThirdLevel()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -219,13 +222,14 @@
           },
           success: function (data) {
 //            window.pagePropertyDatas.data=data
+              debugger;
             me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
             me.jserrorDevGroupList = data.pagePerformanceList.jserrorDevGroupList
             me.restfulDevGroupList = data.pagePerformanceList.restfulDevGroupList
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
-//            me.dealData()
+//             me.dealData()
 //            me.clickThirdLevel()
           }
         });
@@ -235,7 +239,7 @@
         var me = this
         if (me.tag2 == 'DOMready') {
           me.dataList = me.DomReadyList
-        } else if (me.tag2 == 'JSError/PV') {
+        } else if (me.tag2 == 'JSError') {
           me.dataList = me.jsErrorAndPVList
         } else {
           me.dataList = me.restfulFailedList
