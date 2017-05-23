@@ -7,8 +7,8 @@
           <div class="form-group">
             <label class="level">一级类目:</label>
             <div class="tag">
-              <div class="btn btn-default dis  level1 blue" type="button" value="1">Hybird</div>
-              <div class="btn btn-default dis  level1" type="button" value="2">H5</div>
+              <div class="btn btn-default dis level1 blue" type="button" value="1">Hybird</div>
+              <div class="btn btn-default dis level1" type="button" value="2">H5</div>
               <div class="btn btn-default dis level1" type="button" value="3">Online</div>
             </div>
           </div>
@@ -142,25 +142,6 @@
         tag2: "DOMready",//二级类目选中的值
         tag3: "",//三级类目选中的值
         //开发组
-//        DomReadyList: [{"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"xxx","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"x","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"否"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","avg":"ds","devGroup":"sd","critical":"是"},
-//        ],
-//        jsErrorAndPVList: [{"channelName":"df","pageName":"sdf","pageId":"df","pv":"ds","jsError":"dds","errorPercent":"sd","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","pv":"ds","jsError":"dds","errorPercent":"sd","devGroup":"sd","critical":"是"},
-//          {"channelName":"df","pageName":"sdf","pageId":"df","pv":"ds","jsError":"dds","errorPercent":"sd","devGroup":"sd","critical":"是"},],
-//         restfulFailedList: [{"channelName":"df","pageName":"sdf","pageId":"df","failPercent":"ds","devGroup":"sd","critical":"是"},],
         DomReadyList:[],
         jsErrorAndPVList:[],
         restfulFailedList:[],
@@ -207,7 +188,7 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
-          me.dealData()
+          me.searchList()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -241,7 +222,6 @@
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
             me.dealData()
             me.clickThirdLevel()
-
           }
         });
       },
@@ -255,7 +235,6 @@
         } else {
           me.dataList = me.restfulFailedList
         }
-        console.log(me.dataList)
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
       /**主要用于筛选三级类目*/

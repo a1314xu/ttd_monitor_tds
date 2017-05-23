@@ -35,17 +35,15 @@
           </div>
           <div class="row form-inline distance">
             <div class="form-group col-md-12">
-              <div id="search-form">
-                <label for="search-input">APP &nbsp;&nbsp; ID</label>
-                <input type="text" class="form-control input-sm" id="search-input" placeholder="100000445"
-                       v-model="appId"
-                       @keydown="searchText" @blur="showType">
-              </div>
+              <label for="search-input">APP &nbsp;&nbsp; ID</label>
+              <input type="text" class="form-control input-sm" id="search-input" placeholder="100000445"
+                     style="width: 460px;"
+                     v-model="appId"
+                     @keydown="searchAppId" >
               <!--智能搜索区域-->
               <div class="suggest" id="search-suggest" style="display: none">
                 <ul id="search-result">
-                  <li>搜索结果1</li>
-                  <li>搜索结果2</li>
+                    <li v-for="(item,index) in searchData" v-if="(item.appId).indexOf(appId)!==-1" @click="searchThis(item)">{{item.appId}}&nbsp;&nbsp;&nbsp;{{item.appCname}}</li>
                 </ul>
               </div>
               <label v-if='tips.appIdTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
@@ -152,26 +150,26 @@
   }
 
   .suggest {
-    width: 168px;
+    width: 460px;
     background-color: white;
-    border: solid 1px gainsboro;
+    border: solid 1px #999;
   }
 
   .suggest ul {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 3px;
+    cursor: pointer;
+
   }
 
   .suggest ul li {
-    padding: 5px;
     font-size: 14px;
-    line-height: 20px;
-    cursor: pointer;
+    line-height: 30px;
   }
 
   .suggest ul li:hover {
-    color: #c12e2a;
+    color: red
   }
 
   .checkbox label {
@@ -236,7 +234,9 @@
         nameData: []
       }
     },
-
+    created: function () {
+      var me = this
+    },
     // 观察和响应 Vue 实例上的数据变动，用来判断字段否为空
     watch: {
       taskName: function (val) {
@@ -259,41 +259,30 @@
       gotodatasource: function () {
         app.$router.push("dataSource")
       },
-      /*** 智能提示框*/
-      searchText: function () {
+      /*** 输入框输入字母 触发*/
+      searchAppId: function () {
         var me = this;
         $.ajax({
-          type: "get",
-          url: "http://10.8.85.36:8086/CatAPI/GetAppId",
+          type: "post",
+          url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
           data: {
             appid: me.appId
           },
-          dataType: "jsonp",
           success: function (data) {
-            me.searchData = data;
-            var html = ''
-            for (var i = 0; i < me.searchData.length; i++) {
-              html += '<ul>'+me.searchData[i]+'</ul>'
-            }
-            $("#search-result").html(html)
+            me.searchData = data.appIds;
             $("#search-suggest").show().css({
-              top: $("#search-form").offset.top + $("#search-input").height(),
-              left: $("#search-input").offset.left,
+              top: 30,
+              left: 120,
               position: "absolute"
             })
           }
         });
-        $(document).click=function () {
-          $("#search-suggest").hide()
-        }
-        /**为多个通过js动态生成的html结构，添加事件时，使用事件代理*/
-        $(document).delegate('li','click',function () {
-//          me.showType()
-        })
       },
-      /**输入appid，显示type*/
-      showType: function () {
-        var me = this;
+      /**根据appId搜索type */
+      searchThis:function (item) {
+        var me=this
+        me.appId=item.appId
+        $("#search-suggest").hide()
         $.ajax({
           type: "get",
           url: "http://10.8.85.36:8086/CatAPI/GetCatType",
@@ -306,7 +295,7 @@
             me.visible = true
           }
         });
-      },
+        },
       showName: function () {
         var me = this;
         $.ajax({

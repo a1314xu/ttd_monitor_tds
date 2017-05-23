@@ -173,8 +173,7 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
-//          me.searchList()
-          me.dealData()
+          me.searchList()
 
         })
       },
