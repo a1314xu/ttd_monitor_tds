@@ -74,7 +74,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in DomReadyList" v-if="tag2=='DOMready'">
+                <tr v-for="(item,index) in pageList" v-if="tag2=='DOMready'">
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -83,7 +83,7 @@
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in jsErrorAndPVList" v-if="tag2=='JSError'">
+                <tr v-for="(item,index) in pageList" v-if="tag2=='JSError'">
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -94,7 +94,7 @@
                   <td>{{item.devGroup}}</td>
                   <td>{{item.critical}}</td>
                 </tr>
-                <tr v-for="(item,index) in restfulFailedList" v-if="tag2=='RestfulFailed'">
+                <tr v-for="(item,index) in pageList" v-if="tag2=='RestfulFailed'">
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -229,7 +229,7 @@
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
-//             me.dealData()
+             me.dealData()
 //            me.clickThirdLevel()
           }
         });
