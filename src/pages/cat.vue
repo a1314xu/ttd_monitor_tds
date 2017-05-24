@@ -39,11 +39,13 @@
               <input type="text" class="form-control input-sm" id="search-input" placeholder="100000445"
                      style="width: 460px;"
                      v-model="appId"
-                     @keydown="searchAppId" >
+                     @keydown="searchAppId">
               <!--智能搜索区域-->
               <div class="suggest" id="search-suggest" style="display: none">
                 <ul id="search-result">
-                    <li v-for="(item,index) in searchData" v-if="(item.appId).indexOf(appId)!==-1" @click="searchThis(item)">{{item.appId}}&nbsp;&nbsp;&nbsp;{{item.appCname}}</li>
+                  <li v-for="(item,index) in searchData" v-if="(item.appId).indexOf(appId)!==-1"
+                      @click="searchThis(item)">{{item.appId}}&nbsp;&nbsp;&nbsp;{{item.appCname}}
+                  </li>
                 </ul>
               </div>
               <label v-if='tips.appIdTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
@@ -109,7 +111,7 @@
                       <table class="table table-bordered table-hover">
                         <thead>
                         <tr role="row" class="row-header">
-                          <th><input type="checkbox" id="check_all" @click="checkAll"></th>
+                          <th class="col-md-1"><input type="checkbox" id="check_all" @click="checkAll"></th>
                           <th>Name</th>
                         </tr>
                         </thead>
@@ -118,7 +120,7 @@
                           <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
                                      name="chk_list"
                                      v-model="checkedNames"></td>
-                          <td><label :for="index+'_'+row">{{typeValueItem}}</label></td>
+                          <td style="text-align: left;padding-left: 30px"><label :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
                         </tbody>
                       </table>
@@ -271,17 +273,18 @@
           success: function (data) {
             me.searchData = data.appIds;
             $("#search-suggest").show().css({
+              position: "absolute",
               top: 30,
               left: 120,
-              position: "absolute"
+              zIndex:100,
             })
           }
         });
       },
       /**根据appId搜索type */
-      searchThis:function (item) {
-        var me=this
-        me.appId=item.appId
+      searchThis: function (item) {
+        var me = this
+        me.appId = item.appId
         $("#search-suggest").hide()
         $.ajax({
           type: "get",
@@ -295,7 +298,7 @@
             me.visible = true
           }
         });
-        },
+      },
       showName: function () {
         var me = this;
         $.ajax({

@@ -7,7 +7,7 @@
           <div class="col-md-11">
             <table class="table table-bordered table-hover table-responsive "
                    style="position: relative;left: 40px;top: 20px;">
-              <caption style="text-align: left;font-size: 30px">Hybird耗时-同比率</caption>
+              <caption style="text-align: left;font-size: 30px">{{tag1}}-同比率</caption>
               <thead>
               <tr role="row" class="row-header">
                 <th>渠道名称</th>
@@ -75,6 +75,7 @@
         },
       data: function () {
         return {
+          tag1: "",
           tag2: "",
           tag3: "",
           currentPage: 1,//当前页
@@ -88,6 +89,7 @@
       },
       created: function () {
         var me = this
+        me.tag1 = window.pageProperty.tag1
         me.tag2 = window.pageProperty.tag2
         me.tag3 = window.pageProperty.tag3
         me.DomReadyList = window.pageProperty.data.avgList

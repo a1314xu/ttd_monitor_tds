@@ -7,7 +7,7 @@
           <div class="col-md-11">
             <table class="table table-bordered table-hover table-responsive "
                    style="position: relative;left: 40px;top: 20px;">
-              <caption style="text-align: left;font-size: 30px">Hybird耗时-环比率</caption>
+              <caption style="text-align: left;font-size: 30px" >{{tag1}}-环比率</caption>
               <thead>
               <tr role="row" class="row-header">
                 <th>渠道名称</th>
@@ -77,6 +77,7 @@
     },
     data: function () {
       return {
+        tag1: "",
         tag2: "",
         tag3: "",
         currentPage: 1,//当前页
@@ -90,9 +91,10 @@
     },
     created: function () {
       var me = this
-      window.pageProperty
+      me.tag1 = window.pageProperty.tag1
       me.tag2 = window.pageProperty.tag2
       me.tag3 = window.pageProperty.tag3
+      debugger
       me.DomReadyList = window.pageProperty.data.avgList
       me.jsErrorAndPVList = window.pageProperty.data.jsErrorAndPvDtoList
       me.restfulFailedList = window.pageProperty.data.restfulDtoList
@@ -119,7 +121,7 @@
         var temp = []
         if (me.tag3 == '不限') {
           temp = me.dataList
-        }else{
+        } else {
           me.dataList.forEach(function (item) {
             if ((item.devGroup.trim()) == (me.tag3)) {
               temp.push(item)
@@ -133,7 +135,7 @@
       handleCurrentChange: function (currentPage) {
         //当前页面变换
         this.currentPage = currentPage
-        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16 )
+        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16)
       }
     }
 
@@ -143,7 +145,7 @@
 
 
 <style>
-  #loopRatioPage{
+  #loopRatioPage {
     overflow: hidden;
   }
 </style>

@@ -55,23 +55,23 @@
                      style="position: relative;left: 40px;top: 20px;">
                 <thead>
                 <tr role="row" class="row-header">
-                  <th>
+                  <th class="col-md-1">
                     <select v-model="selectedNumber" @change="sort">
                       <option value=10>top10</option>
                       <option value=20>top20</option>
                       <option value="all">全部</option>
                     </select>
                   </th>
-                  <th>渠道名称</th>
-                  <th>页面名称</th>
-                  <th>Page ID</th>
-                  <th v-if="tag2=='DOMready'">AVG</th>
-                  <th v-if="tag2=='JSError'">PV</th>
-                  <th v-if="tag2=='JSError'">JSError</th>
-                  <th v-if="tag2=='JSError'">JSError/PV</th>
-                  <th v-if="tag2=='RestfulFailed'">Restful Failed</th>
-                  <th>开发组</th>
-                  <th>是否核心页面</th>
+                  <th class="col-md-2">渠道名称</th>
+                  <th class="col-md-2">页面名称</th>
+                  <th class="col-md-1">Page ID</th>
+                  <th class="col-md-1" v-if="tag2=='DOMready'">AVG</th>
+                  <th class="col-md-1" v-if="tag2=='JSError'">PV</th>
+                  <th class="col-md-1" v-if="tag2=='JSError'">JSError</th>
+                  <th class="col-md-1" v-if="tag2=='JSError'">JSError/PV</th>
+                  <th class="col-md-1" v-if="tag2=='RestfulFailed'">Restful Failed</th>
+                  <th class="col-md-2">开发组</th>
+                  <th class="col-md-1">是否核心页面</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,7 +82,8 @@
                   <td>{{item.pageId}}</td>
                   <td>{{item.avg}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='JSError'">
                   <td>{{index+1}}</td>
@@ -93,7 +94,8 @@
                   <td>{{item.jsError}}</td>
                   <td>{{item.errorPercent}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='RestfulFailed'">
                   <td>{{index+1}}</td>
@@ -102,7 +104,8 @@
                   <td>{{item.pageId}}</td>
                   <td>{{item. failPercent}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 </tbody>
               </table>
@@ -131,6 +134,7 @@
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
   window.pageProperty = {
+    tag1:"Hybrid",
     tag2: "DOMready",
     tag3:"不限",//设默认值
   }
@@ -142,7 +146,7 @@
     data: function () {
       return {
         currentPage: 1,//当前页
-        selectedNumber: "all",//显示的条数
+        selectedNumber: 10,//显示的条数
         pageList: [],//每页存放的列表数据,14条
         pageType: 1,
         tag1: "Hybrid",//一级类目选中的值
@@ -188,8 +192,10 @@
           } else {
             me.pageType = 3
           }
+          window.pageProperty.tag1 = me.tag1
         })
         me.searchList()
+
         /**点击二级类目*/
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
@@ -219,7 +225,9 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.32.212.27:12345/reportApi/getPagePerformanceV2",
+//          url: "http://10.32.212.27:12345/reportApi/getPagePerformanceV2",
+          url: "http://10.8.85.36:8086/tds-web/reportApi/getPagePerformanceV2",
+
           data: {
             pageType: me.pageType,
           },

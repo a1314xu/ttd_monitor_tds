@@ -32,7 +32,11 @@ export default new Router({
       name: 'home',
       component: home
     },
-
+    {
+      path: '/qualifyDailyReport',
+      name: 'qualifyDailyReport',
+      component: qualifyDailyReport
+    },
     {
       path: '/dataSource',
       name: 'dataSource',

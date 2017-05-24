@@ -7,7 +7,7 @@
           <div class="col-md-11">
             <table class="table table-bordered table-hover table-responsive "
                    style="position: relative;left: 40px;top: 20px;">
-              <caption style="text-align: left;font-size: 30px">OpenAPI耗时-同比率</caption>
+              <caption style="text-align: left;font-size: 30px">{{tag1}}-同比率</caption>
               <thead>
               <tr role="row" class="row-header">
                 <th>业务名称</th>
@@ -88,6 +88,7 @@
       },
       created: function () {
         var me = this
+        me.tag1= window.apiProperty.tag1
         me.tag2 = window.apiProperty.tag2
         me.tag3 = window.apiProperty.tag3
         me.avgList = window.apiProperty.data.avgList

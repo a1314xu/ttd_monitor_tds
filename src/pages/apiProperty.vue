@@ -51,30 +51,32 @@
                      style="position: relative;left: 40px;top: 20px;">
                 <thead>
                 <tr role="row" class="row-header">
-                  <th>
+                  <th class="col-md-1">
                     <select v-model="selectedNumber" @change="sort">
                       <option value=10>top10</option>
                       <option value=20>top20</option>
                       <option value="all">全部</option>
                     </select>
                   </th>
-                  <th>业务名称</th>
-                  <th>接口名</th>
-                  <th v-if="tag2=='AVG'">AVG</th>
-                  <th v-if="tag2=='95line'">95line</th>
-                  <th v-if="tag2=='Failure%'">Failure%</th>
-                  <th>开发组</th>
-                  <th>是否核心接口</th>
+                  <th class="col-md-3">业务名称</th>
+                  <th class="col-md-4">接口名</th>
+                  <th  class="col-md-1"v-if="tag2=='AVG'">AVG</th>
+                  <th class="col-md-1" v-if="tag2=='95line'">95line</th>
+                  <th class="col-md-1" v-if="tag2=='Failure%'">Failure%</th>
+                  <th class="col-md-2">开发组</th>
+                  <th class="col-md-1">是否核心接口</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='AVG'">
-                  <th>{{index+1}}</th>
+                  <th >{{index+1}}</th>
                   <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.avg}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
+
                 </tr>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='95line'">
                   <th>{{index+1}}</th>
@@ -82,7 +84,8 @@
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.ninetyfiveLine}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='Failure%'">
                   <th>{{index+1}}</th>
@@ -90,7 +93,8 @@
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.failPercent}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 </tbody>
               </table>
@@ -120,6 +124,7 @@
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
   window.apiProperty = {
+    tag1:"OpenAPI",
     tag2: "AVG",
     tag3:"不限",//设默认值
   }
@@ -131,7 +136,7 @@
     data: function () {
       return {
         currentPage: 1,//当前页
-        selectedNumber: "all",//显示的条数
+        selectedNumber: 10,//显示的条数
         pageList: [],//每页存放的列表数据,14条
         interfaceType: 1,
         tag1: "OpenAPI",//一级类目选中的值
@@ -169,6 +174,7 @@
           $(e.target).addClass('blue')
           me.tag1 = e.target.innerHTML
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
+          window.apiProperty.tag1 = me.tag1
         })
         me.searchList()
         /**点击二级类目*/
@@ -200,8 +206,8 @@
         var me = this;
         $.ajax({
           type: "get",
-//          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
-          url: " http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
+          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
+//          url: " http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
           data: {
             interfaceType: me.interfaceType,
           },
@@ -228,7 +234,7 @@
         } else {
           me.dataList = me.failurePercentList
         }
-        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
 
       },
       /**主要用于筛选三级类目*/
@@ -245,7 +251,7 @@
           }
         })
         me.dataList = temp
-        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
 
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
@@ -256,18 +262,18 @@
           me.pageList = me.dataList
         } else if (me.selectedNumber == 20) {
           me.dealData()
-          me.dataList = me.dataList.slice(0, 20)
-          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+          me.dataList = (me.dataList||[]).slice(0, 20)
+          me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
         } else {
           me.dealData()
-          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+          me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
         }
       },
       /**分页*/
       handleCurrentChange: function (currentPage) {
         //当前页面变换
         this.currentPage = currentPage
-        this.pageList = this.dataList.slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+        this.pageList = (this.dataList||[]).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
       }
     }
   }

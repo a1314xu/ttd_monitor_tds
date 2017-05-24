@@ -10,7 +10,6 @@
               <el-date-picker
                 v-model="queryDate"
                 type="date"
-                placeholder="选择日期"
                 :picker-options="pickerOptions0">
               </el-date-picker>
             </div>
@@ -181,7 +180,7 @@
         tabValue: "接口性能",
         currentPage: 1,//当前页
         pageList: [],//每页存放的列表数据,14条
-        queryDate: new Date().getTime() - 24 * 60 * 60 * 1000,
+        queryDate: new Date().getTime() - 24 * 60 * 60 * 1000,//默认值
         pickerOptions0: {
           disabledDate(time) {
             return time.getTime() < Date.now() - (8.64e7 + 7 * 24 * 60 * 60 * 1000);
@@ -489,7 +488,6 @@
             queryDate: me.queryDate.substr(0, 10),
           },
           success: function (data) {
-              debugger
             me.avgList = data.avgList;
             me.domreadyList = data.domreadyList
             me.jeList = data.jeList
