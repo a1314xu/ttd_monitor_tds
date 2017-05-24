@@ -111,8 +111,8 @@
         </div>
         <!--同比环比-->
         <div style="position: absolute;bottom: 110px;left: 300px;">
-          <router-link to="loopRatio">查看环比</router-link>&nbsp;&nbsp;
-          <router-link to="sameRatio">查看同比</router-link>
+          <router-link to="loopRatioPage">查看环比</router-link>&nbsp;&nbsp;
+          <router-link to="sameRatioPage">查看同比</router-link>
         </div>
         <div style="position: absolute;bottom: 110px;right: 110px;">
           <el-pagination
@@ -130,7 +130,10 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
-  //  window.pagePropertyDatas={}
+  window.pageProperty = {
+    tag2: "DOMready",
+    tag3:"不限",//设默认值
+  }
   export default {
     name: 'pageProperty',
     components: {
@@ -193,6 +196,8 @@
           $(e.target).addClass('blue')
           me.tag2 = e.currentTarget.dataset.tag
           me.dealData()
+          window.pageProperty.tag2 = me.tag2
+
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -205,6 +210,8 @@
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           //根据tag3筛选开发组，匹配三级目录
           me.search()
+          window.pageProperty.tag3 = me.tag3
+
         })
       },
       /**页面一进来搜索所有数据*/
@@ -217,7 +224,7 @@
             pageType: me.pageType,
           },
           success: function (data) {
-//            window.pagePropertyDatas.data=data
+            window.pageProperty.data = data.pagePerformanceList
             me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
             me.jserrorDevGroupList = data.pagePerformanceList.jserrorDevGroupList
             me.restfulDevGroupList = data.pagePerformanceList.restfulDevGroupList

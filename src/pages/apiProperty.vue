@@ -100,8 +100,8 @@
       </div>
       <!--同比环比-->
       <div style="position: absolute;bottom: 110px;left: 300px;">
-        <router-link to="loopRatio">查看环比</router-link>&nbsp;&nbsp;
-        <router-link to="sameRatio">查看同比</router-link>
+        <router-link to="loopRatioApi">查看环比</router-link>&nbsp;&nbsp;
+        <router-link to="sameRatioApi">查看同比</router-link>
       </div>
       <!--分页-->
       <div style="position: absolute;bottom: 110px;right: 110px;">
@@ -119,8 +119,11 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
-  window.apiProperty={}
-  var apiMix={
+  window.apiProperty = {
+    tag2: "AVG",
+    tag3:"不限",//设默认值
+  }
+  export default {
     name: 'apiProperty',
     components: {
       'v-navListApi': navListApi
@@ -174,6 +177,7 @@
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
           me.dealData()
+          window.apiProperty.tag2 = me.tag2
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -184,6 +188,8 @@
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
+          window.apiProperty.tag3 = me.tag3
+
           //根据tag3筛选开发组，匹配三级目录
           me.search()
 
@@ -200,7 +206,7 @@
             interfaceType: me.interfaceType,
           },
           success: function (data) {
-            window.apiProperty.data=data.interfacePerformanceList
+            window.apiProperty.data = data.interfacePerformanceList
             me.avgList = data.interfacePerformanceList.avgList;
             me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
             me.failurePercentList = data.interfacePerformanceList.failurePercentList
@@ -234,8 +240,8 @@
           if ((item.devGroup) == (me.tag3)) {
             temp.push(item)
           }
-          if(me.tag3=='不限'){
-            temp=me.dataList
+          if (me.tag3 == '不限') {
+            temp = me.dataList
           }
         })
         me.dataList = temp
@@ -265,7 +271,7 @@
       }
     }
   }
-  export default apiMix
+
 </script>
 
 

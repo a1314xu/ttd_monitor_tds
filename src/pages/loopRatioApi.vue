@@ -1,5 +1,5 @@
 <template>
-  <div id="loopRatio">
+  <div id="loopRatioApi">
     <v-navListApi></v-navListApi>
     <div>
       <div class="content">
@@ -70,27 +70,71 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
-  import apiMix from './apiProperty.vue'
   export default {
-    mixins: [apiMix],
-    name: 'loopRatio',
+    name: 'loopRatioApi',
     components: {
       'v-navListApi': navListApi
     },
     data: function () {
-      return {}
+      return {
+        tag2: "",
+        tag3: "",
+        currentPage: 1,//当前页
+        pageList: [],//每页存放的列表数据,14条
+
+        //表格内容
+        avgList: [],
+        ninetyFiveLineList: [],
+        failurePercentList: [],
+        dataList: []
+      }
     },
     created: function () {
-//        debugger;
-//        console.log(this.pageList)
-//        console.log(this.tag2)
+      var me = this
+      me.tag2 = window.apiProperty.tag2
+      me.tag3 = window.apiProperty.tag3
+      me.avgList = window.apiProperty.data.avgList
+      me.ninetyFiveLineList = window.apiProperty.data.ninetyfiveLineList
+      me.failurePercentList = window.apiProperty.data.failurePercentList
+      me.dealData()
     },
     methods: {
-    },
-    mounted:function(){
-//      debugger;
-//      console.log(this.pageList)
-//      console.log(this.tag2)
+      /** 处理表格数据，给dataList重新赋值*/
+      dealData: function () {
+        var me = this
+        if (me.tag2 == 'AVG') {
+          me.dataList = me.avgList
+        } else if (me.tag2 == '95line') {
+          me.dataList = me.ninetyFiveLineList
+        } else {
+          me.dataList = me.failurePercentList
+        }
+        me.pageList = me.dataList.slice((me.currentPage - 1) * 16, me.currentPage * 16)
+        me.search()
+
+      },
+      /**主要用于筛选三级类目*/
+      search: function () {
+        var me = this
+        var temp = []
+        if (me.tag3 == '不限') {
+          temp = me.dataList
+        }else{
+          me.dataList.forEach(function (item) {
+            if ((item.devGroup) == (me.tag3)) {
+              temp.push(item)
+            }
+          })
+        }
+        me.dataList = temp
+        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+      },
+      /**分页*/
+      handleCurrentChange: function (currentPage) {
+        //当前页面变换
+        this.currentPage = currentPage
+        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16 )
+      }
     }
 
 
@@ -99,7 +143,7 @@
 
 
 <style>
-  #loopRatio {
+  #loopRatioApi {
     overflow: hidden;
   }
 </style>

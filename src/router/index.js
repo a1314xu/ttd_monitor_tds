@@ -10,8 +10,10 @@ import listPage from '@/pages/listPage'
 import home from '@/pages/home'
 import apiProperty from '@/pages/apiProperty'
 import pageProperty from '@/pages/pageProperty'
-import loopRatio from '@/pages/loopRatio'
-import sameRatio from '@/pages/sameRatio'
+import loopRatioApi from '@/pages/loopRatioApi'
+import sameRatioApi from '@/pages/sameRatioApi'
+import loopRatioPage from '@/pages/loopRatioPage'
+import sameRatioPage from '@/pages/sameRatioPage'
 import locationDailyReport from '@/pages/locationDailyReport'
 import qualifyDailyReport from '@/pages/qualifyDailyReport'
 
@@ -77,14 +79,24 @@ export default new Router({
       component: pageProperty
     },
     {
-      path: '/loopRatio',
-      name: 'loopRatio',
-      component: loopRatio
+      path: '/loopRatioApi',
+      name: 'loopRatioApi',
+      component: loopRatioApi
     },
     {
-      path: '/sameRatio',
-      name: 'sameRatio',
-      component: sameRatio
+      path: '/sameRatioApi',
+      name: 'sameRatioApi',
+      component: sameRatioApi
+    },
+    {
+      path: '/loopRatioPage',
+      name: 'loopRatioPage',
+      component: loopRatioPage
+    },
+    {
+      path: '/sameRatioPage',
+      name: 'sameRatioPage',
+      component: sameRatioPage
     },
     {
       path: '/qualifyDailyReport',
