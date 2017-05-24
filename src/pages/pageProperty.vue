@@ -15,9 +15,13 @@
           <div class="form-group ">
             <label class="level">二级类目:</label>
             <div class="tag secondContainer">
-              <div class="btn btn-default dis level2 blue" type="button" value="DOMready" data-tag="DOMready">DOMready</div>
-              <div class="btn btn-default dis level2" type="button" value="JSError/PV" data-tag="JSError">JSError/PV</div>
-              <div class="btn btn-default dis level2" type="button" v-if="tag1!=='Online'" value="Restful Failed" data-tag="RestfulFailed">Restful Failed</div>
+              <div class="btn btn-default dis level2 blue" type="button" value="DOMready" data-tag="DOMready">DOMready
+              </div>
+              <div class="btn btn-default dis level2" type="button" value="JSError/PV" data-tag="JSError">JSError/PV
+              </div>
+              <div class="btn btn-default dis level2" type="button" v-if="tag1!=='Online'" value="Restful Failed"
+                   data-tag="RestfulFailed">Restful Failed
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -26,10 +30,7 @@
               <div v-show="tag2 =='DOMready'" class="1111">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                     type="button" :value="item" :style="{color:grey}" v-if="tag3=='营销活动组(陈浩组)||海外玩乐(施程组)||海外通讯(施程组)'">{{item}}
-                </div>
-                <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                     type="button" :value="item" v-if="tag3!=='营销活动组(陈浩组)||海外玩乐(施程组)||海外通讯(施程组)'">{{item}}
+                     type="button" :value="item" >{{item}}
                 </div>
               </div>
               <div v-show="tag2=='JSError'" class="2222">
@@ -129,7 +130,7 @@
 
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
-//  window.pagePropertyDatas={}
+  //  window.pagePropertyDatas={}
   export default {
     name: 'pageProperty',
     components: {
@@ -145,22 +146,21 @@
         tag2: "DOMready",//二级类目选中的值
         tag3: "",//三级类目选中的值
         //开发组
-        DomReadyList:[],
-        jsErrorAndPVList:[],
-        restfulFailedList:[],
+        DomReadyList: [],
+        jsErrorAndPVList: [],
+        restfulFailedList: [],
         //按钮组
         domreadyDevGroupList: [],
         jserrorDevGroupList: [],
         restfulDevGroupList: [],
 
         dataList: [],
-        grey:'grey'
       }
     },
 
     created: function () {
-//      var me = this
-//      me.searchList()
+      var me = this
+      me.searchList()
 
     },
     mounted: function () {
@@ -189,14 +189,10 @@
         me.searchList()
         /**点击二级类目*/
         $("div.level2").click(function (e) {
-          debugger;
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
-//          me.tag2 = e.target.innerHTML
-//          me.dealData()
-          me.tag2=e.currentTarget.dataset.tag;
-           debugger;
-//          me.clickThirdLevel()
+          me.tag2 = e.currentTarget.dataset.tag
+          me.dealData()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -222,15 +218,14 @@
           },
           success: function (data) {
 //            window.pagePropertyDatas.data=data
-              debugger;
             me.domreadyDevGroupList = data.pagePerformanceList.domreadyDevGroupList
             me.jserrorDevGroupList = data.pagePerformanceList.jserrorDevGroupList
             me.restfulDevGroupList = data.pagePerformanceList.restfulDevGroupList
             me.DomReadyList = data.pagePerformanceList.avgList
             me.jsErrorAndPVList = data.pagePerformanceList.jsErrorAndPvDtoList
             me.restfulFailedList = data.pagePerformanceList.restfulDtoList
-             me.dealData()
-//            me.clickThirdLevel()
+            me.dealData()
+            me.clickThirdLevel()
           }
         });
       },
@@ -252,12 +247,12 @@
         var temp = []
         me.dealData()
         me.dataList.forEach(function (item) {
-            //devGroup多了一个空格
+          //devGroup多了一个空格
           if ((item.devGroup.trim()) == (me.tag3)) {
             temp.push(item)
           }
-          if(me.tag3=='不限'){
-            temp=me.dataList
+          if (me.tag3 == '不限') {
+            temp = me.dataList
           }
         })
         me.dataList = temp
