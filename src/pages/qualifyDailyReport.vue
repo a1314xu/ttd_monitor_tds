@@ -178,7 +178,7 @@
     },
     data: function () {
       return {
-        tabValue:"接口性能",
+        tabValue: "接口性能",
         currentPage: 1,//当前页
         pageList: [],//每页存放的列表数据,14条
         queryDate: new Date().getTime() - 24 * 60 * 60 * 1000,
@@ -188,287 +188,291 @@
           }
         },
         dataList: [],
-        avgList: [{
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "否"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        }, {
-          "bussinessName": "xxx",
-          "interfaceName": "xsadada",
-          "avg": "vvv",
-          "devGroup": "sdsa",
-          "critical": "是"
-        },],
-        domreadyList: [{
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        },{
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        },{
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        },{
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        },{
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        }, {
-          "channelName": "sada",
-          "pageName": "dsfsdf",
-          "pageId": "sads",
-          "avg": "sss",
-          "devGroup": "sdd"
-        },{"channelName": "sada", "pageName": "dsfsdf", "pageId": "sads", "avg": "sss", "devGroup": "sdd"},],
-        jeList: [{
-          "channelName": "dd",
-          "pageName": "dsd",
-          "pageId": "fsdfs",
-          "pv": "22",
-          "jsError": "ff",
-          "errorPercent": "dfd",
-          "devGroup": "ds",
-          "critical": "是"
-        }]
+//        avgList: [{
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "否"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        }, {
+//          "bussinessName": "xxx",
+//          "interfaceName": "xsadada",
+//          "avg": "vvv",
+//          "devGroup": "sdsa",
+//          "critical": "是"
+//        },],
+//        domreadyList: [{
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {
+//          "channelName": "sada",
+//          "pageName": "dsfsdf",
+//          "pageId": "sads",
+//          "avg": "sss",
+//          "devGroup": "sdd"
+//        }, {"channelName": "sada", "pageName": "dsfsdf", "pageId": "sads", "avg": "sss", "devGroup": "sdd"},],
+//        jeList: [{
+//          "channelName": "dd",
+//          "pageName": "dsd",
+//          "pageId": "fsdfs",
+//          "pv": "22",
+//          "jsError": "ff",
+//          "errorPercent": "dfd",
+//          "devGroup": "ds",
+//          "critical": "是"
+//        }],
+        jeList:[],
+        domreadyList:[],
+        avgList:[]
+
       }
     },
     created: function () {
     },
-    mounted:function () {
+    mounted: function () {
       this.searchList()
     },
     methods: {
@@ -479,35 +483,37 @@
         me.queryDate = newDate.toISOString()
         $.ajax({
           type: "get",
-          url: "http://10.32.212.27:12345/reportApi/getQualityDailyReport",
+          url: "http://10.8.85.36:8086/tds-web/reportApi/getQualityDailyReport",
+//        url: "http://10.32.212.27:12345/reportApi/getQualityDailyReport",
           data: {
             queryDate: me.queryDate.substr(0, 10),
           },
           success: function (data) {
-//            me.avgList = data.avgList;
-//            me.domreadyList = data.domreadyList
-//            me.jeList = data.jeList
+              debugger
+            me.avgList = data.avgList;
+            me.domreadyList = data.domreadyList
+            me.jeList = data.jeList
             me.dealData()
 
           }
         });
       },
       /**判断处于哪个tab，展示对应表格数据*/
-      dealData:function () {
-        var me=this
+      dealData: function () {
+        var me = this
         $("#myTab a").click(function (e) {
-          me.tabValue=e.target.innerHTML
-          if(me.tabValue=='接口性能'){
-            me.dataList=me.avgList
-          }else if(me.tabValue=='页面DOMready'){
-              me.dataList=me.domreadyList
-          }else{
-              me.dataList=me.jeList
+          me.tabValue = e.target.innerHTML
+          if (me.tabValue == '接口性能') {
+            me.dataList = me.avgList
+          } else if (me.tabValue == '页面DOMready') {
+            me.dataList = me.domreadyList
+          } else {
+            me.dataList = me.jeList
           }
           me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
         })
-        if(me.tabValue=='接口性能'){
-          me.dataList=me.avgList
+        if (me.tabValue == '接口性能') {
+          me.dataList = me.avgList
           me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
 
         }
@@ -521,7 +527,7 @@
       handleCurrentChange: function (currentPage) {
         var me = this
         me.currentPage = currentPage
-        me.pageList = (this.dataList||[]).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+        me.pageList = (this.dataList || []).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
       }
     }
 
