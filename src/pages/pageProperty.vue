@@ -291,7 +291,14 @@
             }
           }
         })
-        temp=temp.slice(0, 10)
+
+        if(me.selectedNumber==10){
+          temp=temp.slice(0, 10)
+        }
+        else if(me.selectedNumber==20){
+          temp=temp.slice(0, 20)
+        }else{
+        }
         me.dataList = temp
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },

@@ -13,9 +13,9 @@
                 <th>渠道名称</th>
                 <th>页面名称</th>
                 <th>基准值</th>
-                <th v-if="tag2=='DOMready'">上上周DOMready均值</th>
-                <th v-if="tag2=='JSError'">上上周JSError均值</th>
-                <th v-if="tag2=='RestfulFailed'">上上周RestfulFailed均值</th>
+                <th v-if="tag2=='DOMready'">上周DOMready均值</th>
+                <th v-if="tag2=='JSError'">上周JSError均值</th>
+                <th v-if="tag2=='RestfulFailed'">上周RestfulFailed均值</th>
                 <th>同比率</th>
                 <th>开发组</th>
               </tr>
@@ -25,7 +25,7 @@
                 <td>{{item.channelName}}</td>
                 <td>{{item.pageName}}</td>
                 <td>{{item.baseAvg}}</td>
-                <td>{{item.beforeAvg}}</td>
+                <td>{{item.avg}}</td>
                 <td>{{item.tb}}</td>
                 <td>{{item.devGroup}}</td>
               </tr>
@@ -33,7 +33,7 @@
                 <td>{{item.channelName}}</td>
                 <td>{{item.pageName}}</td>
                 <td>{{item.basePv}}</td>
-                <td>{{item.beforePv}}</td>
+                <td>{{item.jsError}}</td>
                 <td>{{item.tb}}</td>
                 <td>{{item.devGroup}}</td>
               </tr>
@@ -41,7 +41,7 @@
                 <td>{{item.channelName}}</td>
                 <td>{{item.pageName}}</td>
                 <td>{{item.baseTotal}}</td>
-                <td>{{item.beforeSuccess}}</td>
+                <td>{{item.total}}</td>
                 <td>{{item.tb}}</td>
                 <td>{{item.devGroup}}</td>
               </tr>

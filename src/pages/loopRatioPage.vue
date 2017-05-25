@@ -94,7 +94,6 @@
       me.tag1 = window.pageProperty.tag1
       me.tag2 = window.pageProperty.tag2
       me.tag3 = window.pageProperty.tag3
-      debugger
       me.DomReadyList = window.pageProperty.data.avgList
       me.jsErrorAndPVList = window.pageProperty.data.jsErrorAndPvDtoList
       me.restfulFailedList = window.pageProperty.data.restfulDtoList

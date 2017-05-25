@@ -23,7 +23,7 @@
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
               <div v-if="tag2=='AVG'">
-                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory" >不限</div>
                 <div class="btn btn-default dis level3 " v-for="(item,index) in avgDevGroupList" type="button"
                      :value="item" v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
@@ -127,6 +127,7 @@
     tag1: "OpenAPI",
     tag2: "AVG",
     tag3: "不限",//设默认值
+    selectedNumber:10
   }
   export default {
     name: 'apiProperty',
@@ -252,7 +253,14 @@
             temp = me.dataList
           }
         })
-        temp=temp.slice(0, 10)
+
+        if(me.selectedNumber==10){
+          temp=temp.slice(0, 10)
+        }
+        else if(me.selectedNumber==20){
+          temp=temp.slice(0, 20)
+        }else{
+        }
         me.dataList = temp
         me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
@@ -260,6 +268,8 @@
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
       sort: function () {
         var me = this
+        window.apiProperty.selectedNumber=me.selectedNumber
+        debugger
         if (me.selectedNumber == 10) {
           me.dataList = me.dataList.slice(0, 10)
           me.pageList = me.dataList

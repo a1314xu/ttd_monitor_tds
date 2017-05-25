@@ -87,13 +87,14 @@
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in  pageList ">
-                  <td>{{index}+1}</td>
+                  <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
                   <td>{{item.pageId}}</td>
                   <td>{{item.avg}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 </tbody>
               </table>
@@ -101,8 +102,9 @@
               <div style="margin-top: 20px">
                 <!--基准值-->
                 <div style="float:left;">
-                  基准值：H5 ≥ 1600ms, Hybrid ≥ 400ms,海外玩乐_Hybrid ≥ 1600ms, Online ≥ 1800ms
-                </div>
+                  H5 ≥ 1600ms,营销H5 ≥ 1800ms
+                  Hybrid ≥ 400ms,营销Hybrid ≥ 1600ms,海外玩乐Hybrid ≥ 1600m
+                  Online ≥ 1800ms                </div>
                 <!--分页-->
                 <div style="float: right;margin-right: 40px">
                   <el-pagination
@@ -132,7 +134,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in pageList">
-                  <td>{{index}+1}</td>
+                  <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
                   <td>{{item.pageId}}</td>
@@ -140,7 +142,8 @@
                   <td>{{item.jsError}}</td>
                   <td>{{item.errorPercent}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 </tbody>
               </table>
@@ -148,7 +151,9 @@
               <div style="margin-top: 20px">
                 <!--基准值-->
                 <div style="float:left;">
-                  基准值：H5 ≥ 3%, Hybrid ≥ 1%,Online待定
+                  H5 ≥ 3%,营销H5 ≥ 4%
+                  Hybrid ≥ 1%,营销Hybrid ≥ 2%
+                  Online ≥ 10%,营销Online ≥ 4%
                 </div>
                 <!--分页-->
                 <div style="float: right;margin-right: 40px">

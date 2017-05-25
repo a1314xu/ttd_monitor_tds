@@ -13,9 +13,9 @@
                 <th>业务名称</th>
                 <th>接口名</th>
                 <th>基准值</th>
-                <th v-if="tag2=='AVG'">上上周AVG均值</th>
-                <th v-if="tag2=='95line'">上上周95line均值</th>
-                <th v-if="tag2=='Failure%'">上上周Failure%均值</th>
+                <th v-if="tag2=='AVG'">上周AVG均值</th>
+                <th v-if="tag2=='95line'">上周95line均值</th>
+                <th v-if="tag2=='Failure%'">上周Failure%均值</th>
                 <th>同比率</th>
                 <th>开发组</th>
               </tr>
@@ -25,7 +25,7 @@
                 <td>{{item.bussinessName}}</td>
                 <td>{{item.interfaceName}}</td>
                 <td>{{item.baseAvg}}</td>
-                <td>{{item.beforeAvg}}</td>
+                <td>{{item.avg}}</td>
                 <td>{{item.tb}}</td>
                 <td>{{item.devGroup}}</td>
               </tr>
@@ -33,7 +33,7 @@
                 <td>{{item.bussinessName}}</td>
                 <td>{{item.interfaceName}}</td>
                 <td>{{item.baseNinetyfiveLine}}</td>
-                <td>{{item.beforeNinetyfiveLine}}</td>
+                <td>{{item.ninetyfiveLine}}</td>
                 <td>{{item.tb}}</td>
                 <td>{{item.devGroup}}</td>
               </tr>
@@ -41,7 +41,7 @@
                 <td>{{item.bussinessName}}</td>
                 <td>{{item.interfaceName}}</td>
                 <td>{{item.baseFailPercent}}</td>
-                <td>{{item.beforeFailPercent}}</td>
+                <td>{{item.failPercent}}</td>
                 <td>{{item.tb}}</td>
                 <td>{{item.devGroup}}</td>
               </tr>

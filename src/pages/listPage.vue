@@ -330,7 +330,7 @@
               type: "post",
               url: "http://10.8.85.36:8086/CatAPI/OperateCatJob",
               data: {
-                id: item.id,
+                jobId: item.id,
                 option: item.isplay == 1 ? 'pause' : 'start'
               },
               dataType: "jsonp",
