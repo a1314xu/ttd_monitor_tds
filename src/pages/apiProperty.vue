@@ -60,7 +60,7 @@
                   </th>
                   <th class="col-md-3">业务名称</th>
                   <th class="col-md-4">接口名</th>
-                  <th  class="col-md-1"v-if="tag2=='AVG'">AVG</th>
+                  <th class="col-md-1" v-if="tag2=='AVG'">AVG</th>
                   <th class="col-md-1" v-if="tag2=='95line'">95line</th>
                   <th class="col-md-1" v-if="tag2=='Failure%'">Failure%</th>
                   <th class="col-md-2">开发组</th>
@@ -69,7 +69,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in pageList" v-if="tag2=='AVG'">
-                  <th >{{index+1}}</th>
+                  <th>{{index+1}}</th>
                   <td>{{item.bussinessName}}</td>
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.avg}}</td>
@@ -114,7 +114,7 @@
           :current-page="currentPage"
           :page-size="13"
           layout="total, prev, pager, next"
-          :total="dataList.length"><!--total是总的数据条数-->
+          :total="(dataList||[]).length"><!--total是总的数据条数-->
         </el-pagination>
       </div>
     </div>
@@ -124,9 +124,9 @@
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
   window.apiProperty = {
-    tag1:"OpenAPI",
+    tag1: "OpenAPI",
     tag2: "AVG",
-    tag3:"不限",//设默认值
+    tag3: "不限",//设默认值
   }
   export default {
     name: 'apiProperty',
@@ -141,7 +141,7 @@
         interfaceType: 1,
         tag1: "OpenAPI",//一级类目选中的值
         tag2: "AVG",//二级类目选中的值
-        tag3: "",//三级类目选中的值
+        tag3: "不限",//三级类目选中的值
         //表格内容
         avgList: [],
         ninetyFiveLineList: [],
@@ -164,6 +164,7 @@
       var me = this
       /**在mounted触发，因为created还没有渲染DOM*/
       me.buttonToggle()
+
     },
     methods: {
       buttonToggle: function () {
@@ -175,8 +176,12 @@
           me.tag1 = e.target.innerHTML
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
           window.apiProperty.tag1 = me.tag1
+          me.searchList()
+          me.searchList()
+
         })
-        me.searchList()
+        me.searchList()// 写上这句三级类目才能切换？
+
         /**点击二级类目*/
         $("div.level2").click(function (e) {
           $("div .level2 ").removeClass('blue')
@@ -184,10 +189,9 @@
           me.tag2 = e.target.innerHTML
           me.dealData()
           window.apiProperty.tag2 = me.tag2
+          me.search()
         })
       },
-      /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
-       * 把点击三级事件放到这个方法，表格和三级目录可同时出现*/
       clickThirdLevel: function () {
         var me = this
         $("div.level3").click(function (e) {
@@ -195,7 +199,6 @@
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           window.apiProperty.tag3 = me.tag3
-
           //根据tag3筛选开发组，匹配三级目录
           me.search()
 
@@ -206,12 +209,13 @@
         var me = this;
         $.ajax({
           type: "get",
-          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
-//          url: " http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
+//          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
+          url: " http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
           data: {
             interfaceType: me.interfaceType,
           },
           success: function (data) {
+
             window.apiProperty.data = data.interfacePerformanceList
             me.avgList = data.interfacePerformanceList.avgList;
             me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
@@ -234,8 +238,7 @@
         } else {
           me.dataList = me.failurePercentList
         }
-        me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
-
+        me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
       /**主要用于筛选三级类目*/
       search: function () {
@@ -251,7 +254,7 @@
           }
         })
         me.dataList = temp
-        me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
 
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
@@ -262,18 +265,18 @@
           me.pageList = me.dataList
         } else if (me.selectedNumber == 20) {
           me.dealData()
-          me.dataList = (me.dataList||[]).slice(0, 20)
-          me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+          me.dataList = (me.dataList || []).slice(0, 20)
+          me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
         } else {
           me.dealData()
-          me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+          me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
         }
       },
       /**分页*/
       handleCurrentChange: function (currentPage) {
         //当前页面变换
         this.currentPage = currentPage
-        this.pageList = (this.dataList||[]).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+        this.pageList = (this.dataList || []).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
       }
     }
   }

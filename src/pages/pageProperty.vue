@@ -193,6 +193,8 @@
             me.pageType = 3
           }
           window.pageProperty.tag1 = me.tag1
+          me.searchList()
+          me.searchList()
         })
         me.searchList()
 
@@ -203,6 +205,7 @@
           me.tag2 = e.currentTarget.dataset.tag
           me.dealData()
           window.pageProperty.tag2 = me.tag2
+          me.search()
 
         })
       },
