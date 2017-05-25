@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div id="apiProperty">
     <div class="main">
       <v-navListApi></v-navListApi>
@@ -25,19 +25,19 @@
               <div v-if="tag2=='AVG'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3 " v-for="(item,index) in avgDevGroupList" type="button"
-                     :value="item">{{item}}
+                     :value="item" v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
               </div>
               <div v-if="tag2=='95line'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3 " v-for="(item,index) in nineFiveDevGroupList" type="button"
-                     :value="item">{{item}}
+                     :value="item" v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
               </div>
               <div v-if="tag2=='Failure%'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3 " v-for="(item,index) in failureDevGroupList" type="button"
-                     :value="item">{{item}}
+                     :value="item" v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
               </div>
             </div>
@@ -196,7 +196,6 @@
         var me = this
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
-          $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           window.apiProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录

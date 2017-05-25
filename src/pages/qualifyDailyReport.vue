@@ -49,7 +49,8 @@
                   <td>{{item.interfaceName}}</td>
                   <td>{{item.avg}}</td>
                   <td>{{item.devGroup}}</td>
-                  <td>{{item.critical}}</td>
+                  <td v-if="item.critical==true">是</td>
+                  <td v-if="item.critical==false">否</td>
                 </tr>
                 </tbody>
               </table>
@@ -100,7 +101,7 @@
               <div style="margin-top: 20px">
                 <!--基准值-->
                 <div style="float:left;">
-                  基准值：H5 ≥ 1600ms, Hybrid ≥ 400ms,海外玩乐_Hybrid ≥ 1600ms,Online待定
+                  基准值：H5 ≥ 1600ms, Hybrid ≥ 400ms,海外玩乐_Hybrid ≥ 1600ms, Online ≥ 1800ms
                 </div>
                 <!--分页-->
                 <div style="float: right;margin-right: 40px">

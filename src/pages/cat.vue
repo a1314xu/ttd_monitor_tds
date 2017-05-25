@@ -111,7 +111,9 @@
                       <table class="table table-bordered table-hover">
                         <thead>
                         <tr role="row" class="row-header">
-                          <th class="col-md-1"><input type="checkbox" id="check_all" @click="checkAll"></th>
+                          <th class="col-md-1"><input type="checkbox" id="check_all"
+                                                      @click="chooseOrClear(chk_list)">
+                          </th>
                           <th>Name</th>
                         </tr>
                         </thead>
@@ -120,7 +122,8 @@
                           <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
                                      name="chk_list"
                                      v-model="checkedNames"></td>
-                          <td style="text-align: left;padding-left: 30px"><label :for="index+'_'+row">{{typeValueItem}}</label></td>
+                          <td style="text-align: left;padding-left: 30px"><label
+                            :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
                         </tbody>
                       </table>
@@ -171,7 +174,7 @@
   }
 
   .suggest ul li:hover {
-    color: red
+    color: red;
   }
 
   .checkbox label {
@@ -276,7 +279,7 @@
               position: "absolute",
               top: 30,
               left: 120,
-              zIndex:100,
+              zIndex: 100,
             })
           }
         });
@@ -316,13 +319,38 @@
           }
         })
       },
-      checkAll: function () {
-        if ($("input[name='chk_list']").attr("checked")) {
-          $("input[name='chk_list']").attr("checked", false)
+//      checkAll: function () {
+//        if ($("input[name='chk_list']").attr("checked")) {
+//          $("input[name='chk_list']").attr("checked", false)
+//        } else {
+//          $("input[name='chk_list']").attr("checked", true)
+//        }
+//
+//      },
+      chooseOrClear:function (name) {
+        if(this.checked==true) {
+            checkAll(name);
         } else {
-          $("input[name='chk_list']").attr("checked", true)
+            clearAll(name);
         }
-
+      },
+      checkAll: function (name) {
+        var el = document.getElementsByTagName('input');
+        var len = el.length;
+        for (var i = 0; i < len; i++) {
+          if ((el[i].type == "checkbox") && (el[i].name == name)) {
+            el[i].checked = true;
+          }
+        }
+      },
+      clearAll: function () {
+        var el = document.getElementsByTagName('input');
+        var len = el.length;
+        for (var i = 0; i < len; i++) {
+          if ((el[i].type == "checkbox") && (el[i].name == name)) {
+            el[i].checked = false;
+          }
+        }
       },
       submit: function () {
         var me = this;

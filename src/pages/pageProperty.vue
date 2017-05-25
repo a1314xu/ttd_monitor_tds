@@ -30,28 +30,34 @@
               <div v-show="tag2 =='DOMready'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'">{{item}}
+                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'"
+                     v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'">{{item}}
+                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'"
+                     v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
               </div>
               <div v-show="tag2=='JSError'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
-                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'">{{item}}
+                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'"
+                     v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
-                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'">{{item}}
+                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'"
+                     v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
               </div>
               <div v-show="tag2=='RestfulFailed'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
-                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'">{{item}}
+                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'"
+                     v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
-                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'">{{item}}
+                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'"
+                     v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
               </div>
             </div>
@@ -74,7 +80,7 @@
                   <th class="col-md-2">渠道名称</th>
                   <th class="col-md-2">页面名称</th>
                   <th class="col-md-1">Page ID</th>
-                  <th class="col-md-1" v-if="tag2=='DOMready'">AVG</th>
+                  <th class="col-md-1" v-if="tag2=='DOMready'">DOMready</th>
                   <th class="col-md-1" v-if="tag2=='JSError'">PV</th>
                   <th class="col-md-1" v-if="tag2=='JSError'">JSError</th>
                   <th class="col-md-1" v-if="tag2=='JSError'">JSError/PV</th>
@@ -214,7 +220,7 @@
           me.dealData()
           window.pageProperty.tag2 = me.tag2
           me.search()
-          me.clickThirdLevel()
+//          me.clickThirdLevel()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -223,7 +229,7 @@
         var me = this
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
-          $(e.target).addClass('blue')
+//          $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           window.pageProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
