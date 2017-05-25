@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div id="pageProperty">
     <div class="main">
       <v-navListApi></v-navListApi>
@@ -27,22 +27,31 @@
           <div class="form-group">
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
-              <div v-show="tag2 =='DOMready'" class="1111">
+              <div v-show="tag2 =='DOMready'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
-                     type="button" :value="item" >{{item}}
+                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'">{{item}}
+                </div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
+                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'">{{item}}
                 </div>
               </div>
-              <div v-show="tag2=='JSError'" class="2222">
+              <div v-show="tag2=='JSError'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
-                     type="button" :value="item">{{item}}
+                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'">{{item}}
+                </div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in jserrorDevGroupList"
+                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'">{{item}}
                 </div>
               </div>
-              <div v-show="tag2=='RestfulFailed'" class="333">
+              <div v-show="tag2=='RestfulFailed'">
                 <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
-                     type="button" :value="item">{{item}}
+                     type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'">{{item}}
+                </div>
+                <div class="btn btn-default dis level3" v-for="(item,index) in restfulDevGroupList"
+                     type="button" :value="item" v-if="item!=='营销活动组(陈浩组)'&&item!=='海外玩乐(施程组)'&&item!=='海外通讯(施程组)'">{{item}}
                 </div>
               </div>
             </div>
@@ -85,7 +94,7 @@
                   <td v-if="item.critical==true">是</td>
                   <td v-if="item.critical==false">否</td>
                 </tr>
-                <tr v-for="(item,index) in pageList" v-if="tag2=='JSError'">
+                <tr v-for="(item,index) in pageList" v-if="tag2=='JSError'" >
                   <td>{{index+1}}</td>
                   <td>{{item.channelName}}</td>
                   <td>{{item.pageName}}</td>
@@ -151,7 +160,7 @@
         pageType: 1,
         tag1: "Hybrid",//一级类目选中的值
         tag2: "DOMready",//二级类目选中的值
-        tag3: "",//三级类目选中的值
+        tag3: "不限",//三级类目选中的值
         //开发组
         DomReadyList: [],
         jsErrorAndPVList: [],
@@ -160,7 +169,7 @@
         domreadyDevGroupList: [],
         jserrorDevGroupList: [],
         restfulDevGroupList: [],
-
+        grey:"gainsboro",
         dataList: [],
       }
     },
@@ -174,7 +183,6 @@
       var me = this
       /**在mounted触发，待渲染DOM后方可取到dom值*/
       me.buttonToggle()
-
     },
 
     methods: {
@@ -206,7 +214,7 @@
           me.dealData()
           window.pageProperty.tag2 = me.tag2
           me.search()
-
+          me.clickThirdLevel()
         })
       },
       /**点击三级类目,点击不渲染样式是因为searchList方法没有执行完，没有取到元素的值
@@ -217,11 +225,12 @@
           $("div .level3 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
+          window.pageProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
           me.search()
-          window.pageProperty.tag3 = me.tag3
-
         })
+        me.search()//页面进来的时候默认显示10条
+
       },
       /**页面一进来搜索所有数据*/
       searchList: function () {
@@ -269,10 +278,14 @@
           if ((item.devGroup.trim()) == (me.tag3)) {
             temp.push(item)
           }
+
           if (me.tag3 == '不限') {
-            temp = me.dataList
+            if(item.devGroup.trim() !=='海外玩乐(施程组)'&&item.devGroup.trim() !=='海外通讯(施程组)'&&item.devGroup.trim() !=='营销活动组(陈浩组)'){
+              temp.push(item)
+            }
           }
         })
+        temp=temp.slice(0, 10)
         me.dataList = temp
         me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },

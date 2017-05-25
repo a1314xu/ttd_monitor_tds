@@ -201,21 +201,21 @@
           window.apiProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
           me.search()
-
         })
+        me.search()//页面进来的时候默认显示10条
+
       },
       /**页面一进来搜索所有数据*/
       searchList: function () {
         var me = this;
         $.ajax({
           type: "get",
-//          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
-          url: " http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
+          url: "http://10.8.85.36:8086/tds-web/reportApi/getInterfacePerformanceV2",
+//          url: " http://10.32.212.27:12345/reportApi/getInterfacePerformanceV2",
           data: {
             interfaceType: me.interfaceType,
           },
           success: function (data) {
-
             window.apiProperty.data = data.interfacePerformanceList
             me.avgList = data.interfacePerformanceList.avgList;
             me.ninetyFiveLineList = data.interfacePerformanceList.ninetyfiveLineList
@@ -253,6 +253,7 @@
             temp = me.dataList
           }
         })
+        temp=temp.slice(0, 10)
         me.dataList = temp
         me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
       },
