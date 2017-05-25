@@ -28,7 +28,7 @@
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
               <div v-show="tag2 =='DOMready'">
-                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory"  >不限</div>
                 <div class="btn btn-default dis level3" v-for="(item,index) in domreadyDevGroupList"
                      type="button" :value="item" v-bind:style="{backgroundColor:grey}" v-if="item=='营销活动组(陈浩组)'||item=='海外玩乐(施程组)'||item=='海外通讯(施程组)'"
                      v-bind:class="item==tag3?'blue':''">{{item}}
@@ -229,7 +229,6 @@
         var me = this
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
-//          $(e.target).addClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
           window.pageProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
