@@ -112,7 +112,7 @@
                         <thead>
                         <tr role="row" class="row-header">
                           <th class="col-md-1"><input type="checkbox" id="check_all"
-                                                      @click="chooseOrClear(chk_list)">
+                                                      @click="checkAll()">
                           </th>
                           <th>Name</th>
                         </tr>
@@ -319,39 +319,39 @@
           }
         })
       },
-//      checkAll: function () {
-//        if ($("input[name='chk_list']").attr("checked")) {
-//          $("input[name='chk_list']").attr("checked", false)
-//        } else {
-//          $("input[name='chk_list']").attr("checked", true)
-//        }
-//
-//      },
-      chooseOrClear:function (name) {
-        if(this.checked==true) {
-            checkAll(name);
+      checkAll: function () {
+        if ($("input[name='chk_list']").attr("checked")) {
+          $("input[name='chk_list']").attr("checked", false)
         } else {
-            clearAll(name);
+          $("input[name='chk_list']").attr("checked", true)
         }
+
       },
-      checkAll: function (name) {
-        var el = document.getElementsByTagName('input');
-        var len = el.length;
-        for (var i = 0; i < len; i++) {
-          if ((el[i].type == "checkbox") && (el[i].name == name)) {
-            el[i].checked = true;
-          }
-        }
-      },
-      clearAll: function () {
-        var el = document.getElementsByTagName('input');
-        var len = el.length;
-        for (var i = 0; i < len; i++) {
-          if ((el[i].type == "checkbox") && (el[i].name == name)) {
-            el[i].checked = false;
-          }
-        }
-      },
+//      chooseOrClear:function (name) {
+//        if(this.checked==true) {
+//            checkAll(name);
+//        } else {
+//            clearAll(name);
+//        }
+//      },
+//      checkAll: function (name) {
+//        var el = document.getElementsByTagName('input');
+//        var len = el.length;
+//        for (var i = 0; i < len; i++) {
+//          if ((el[i].type == "checkbox") && (el[i].name == name)) {
+//            el[i].checked = true;
+//          }
+//        }
+//      },
+//      clearAll: function () {
+//        var el = document.getElementsByTagName('input');
+//        var len = el.length;
+//        for (var i = 0; i < len; i++) {
+//          if ((el[i].type == "checkbox") && (el[i].name == name)) {
+//            el[i].checked = false;
+//          }
+//        }
+//      },
       submit: function () {
         var me = this;
         if (me.taskName.length === 0) {

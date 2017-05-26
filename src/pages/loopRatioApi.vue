@@ -99,6 +99,8 @@
       me.ninetyFiveLineList = window.apiProperty.data.ninetyfiveLineList
       me.failurePercentList = window.apiProperty.data.failurePercentList
       me.dealData()
+      debugger
+
     },
     methods: {
       /** 处理表格数据，给dataList重新赋值*/

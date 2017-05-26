@@ -67,7 +67,7 @@
           <div class="row">
             <div class="col-md-11">
               <table class="table table-bordered table-hover table-responsive "
-                     style="position: relative;left: 40px;top: 20px;">
+                     style="position: relative;left: 40px;top: 20px;width: 1400px;">
                 <thead>
                 <tr role="row" class="row-header">
                   <th class="col-md-1">
@@ -230,6 +230,9 @@
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
+          if(me.tag3=='不限'){
+            $(e.target).addClass('blue')
+          }
           window.pageProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
           me.search()
@@ -308,12 +311,15 @@
         if (me.selectedNumber == 10) {
           me.dataList = me.dataList.slice(0, 10)
           me.pageList = me.dataList
+          me.search()
         } else if (me.selectedNumber == 20) {
           me.dealData()
+          me.search()
           me.dataList = me.dataList.slice(0, 20)
           me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
         } else {
           me.dealData()
+          me.search()
           me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
         }
       },

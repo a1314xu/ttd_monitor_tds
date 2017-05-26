@@ -23,7 +23,7 @@
             <label class="level">三级类目:</label>
             <div class="tag thirdContainer">
               <div v-if="tag2=='AVG'">
-                <div class="btn btn-default dis level3 blue" type="button" value="allCategory" >不限</div>
+                <div class="btn btn-default dis level3 blue" type="button" value="allCategory">不限</div>
                 <div class="btn btn-default dis level3 " v-for="(item,index) in avgDevGroupList" type="button"
                      :value="item" v-bind:class="item==tag3?'blue':''">{{item}}
                 </div>
@@ -48,7 +48,7 @@
           <div class="row">
             <div class="col-md-11">
               <table class="table table-bordered table-hover table-responsive "
-                     style="position: relative;left: 40px;top: 20px;">
+                     style="position: relative;left: 40px;top: 20px;width: 1400px;">
                 <thead>
                 <tr role="row" class="row-header">
                   <th class="col-md-1">
@@ -58,13 +58,13 @@
                       <option value="all">全部</option>
                     </select>
                   </th>
-                  <th class="col-md-3">业务名称</th>
-                  <th class="col-md-4">接口名</th>
-                  <th class="col-md-1" v-if="tag2=='AVG'">AVG</th>
-                  <th class="col-md-1" v-if="tag2=='95line'">95line</th>
-                  <th class="col-md-1" v-if="tag2=='Failure%'">Failure%</th>
-                  <th class="col-md-2">开发组</th>
-                  <th class="col-md-1">是否核心接口</th>
+                  <th>业务名称</th>
+                  <th>接口名</th>
+                  <th v-if="tag2=='AVG'">AVG</th>
+                  <th v-if="tag2=='95line'">95line</th>
+                  <th v-if="tag2=='Failure%'">Failure%</th>
+                  <th>开发组</th>
+                  <th>是否核心接口</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -127,7 +127,7 @@
     tag1: "OpenAPI",
     tag2: "AVG",
     tag3: "不限",//设默认值
-    selectedNumber:10
+    selectedNumber: 10
   }
   export default {
     name: 'apiProperty',
@@ -160,6 +160,29 @@
       var me = this
       me.searchList()
 
+//      if (window.history && window.history.pushState) {
+//
+//        $(window).on('popstate', function() {
+//
+//          window.apiProperty.tag1 ="OpenAPI";
+//          window.apiProperty.tag2 ="AVG";
+//          window.apiProperty.tag3 ="不限";
+//
+//          var hashLocation = location.hash;
+//          var hashSplit = hashLocation.split("#!/");
+//          var hashName = hashSplit[1];
+//
+//          if (hashName !== '') {
+//            var hash = window.location.hash;
+//            if (hash === '') {
+//              //alert('後退按鈕點擊');
+//            }
+//          }
+//        });
+//
+//       //window.history.pushState('forward', null, './#forward');
+//      }
+
     },
     mounted: function () {
       var me = this
@@ -168,6 +191,9 @@
 
     },
     methods: {
+//      getJumpUrl:function(){
+//          return "?tag1="+window.apiProperty.tag1+"&tag2="+window.apiProperty.tag2+"&tag3="+window.apiProperty.tag3;
+//      },
       buttonToggle: function () {
         var me = this;
         /**点击一级类目*/
@@ -178,7 +204,7 @@
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
           window.apiProperty.tag1 = me.tag1
           me.searchList()
-          me.searchList()
+          //me.searchList()
 
         })
         me.searchList()// 写上这句三级类目才能切换？
@@ -191,6 +217,8 @@
           me.dealData()
           window.apiProperty.tag2 = me.tag2
           me.search()
+
+          me.searchList();//todo !方法交叉需要改
         })
       },
       clickThirdLevel: function () {
@@ -198,6 +226,9 @@
         $("div.level3").click(function (e) {
           $("div .level3 ").removeClass('blue')
           me.tag3 = e.target.innerHTML.replace(/[\r\n]/g, "").trim()
+          if (me.tag3 == '不限') {
+            $(e.target).addClass('blue')
+          }
           window.apiProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
           me.search()
@@ -254,31 +285,34 @@
           }
         })
 
-        if(me.selectedNumber==10){
-          temp=temp.slice(0, 10)
+        if (me.selectedNumber == 10) {
+          temp = temp.slice(0, 10)
         }
-        else if(me.selectedNumber==20){
-          temp=temp.slice(0, 20)
-        }else{
+        else if (me.selectedNumber == 20) {
+          temp = temp.slice(0, 20)
+        } else {
         }
         me.dataList = temp
         me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+
       },
 
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
       sort: function () {
         var me = this
-        window.apiProperty.selectedNumber=me.selectedNumber
-        debugger
+        window.apiProperty.selectedNumber = me.selectedNumber
         if (me.selectedNumber == 10) {
+            me.search()
           me.dataList = me.dataList.slice(0, 10)
           me.pageList = me.dataList
         } else if (me.selectedNumber == 20) {
           me.dealData()
+          me.search()
           me.dataList = (me.dataList || []).slice(0, 20)
           me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
         } else {
           me.dealData()
+          me.search()
           me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
         }
       },

@@ -10,15 +10,16 @@
               <el-date-picker
                 v-model="queryDate"
                 type="date"
+                @change="searchList()"
                 :picker-options="pickerOptions0">
               </el-date-picker>
             </div>
           </div>
         </div>
         <!--tab区域-->
-        <div id="myTab" class="col-md-11" style="position: relative;left: 20px;top: 40px;">
+        <div id="myTab" class="col-md-11" style="position: relative;left: 20px;top: 40px;width:1400px;">
           <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
+          <ul class="nav nav-tabs" role="tablist" >
             <li role="presentation" class="active"><a href="#apiProperty" aria-controls="home" role="tab"
                                                       data-toggle="tab">接口性能</a></li>
             <li role="presentation"><a href="#domReady" aria-controls="profile" role="tab"
@@ -31,7 +32,7 @@
           <!-- Tab panes -->
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="apiProperty">
-              <table class="table table-bordered table-hover table-responsive">
+              <table class="table table-bordered table-hover table-responsive" >
                 <thead>
                 <tr>
                   <th>#</th>
@@ -104,7 +105,8 @@
                 <div style="float:left;">
                   H5 ≥ 1600ms,营销H5 ≥ 1800ms
                   Hybrid ≥ 400ms,营销Hybrid ≥ 1600ms,海外玩乐Hybrid ≥ 1600m
-                  Online ≥ 1800ms                </div>
+                  Online ≥ 1800ms
+                </div>
                 <!--分页-->
                 <div style="float: right;margin-right: 40px">
                   <el-pagination
@@ -189,13 +191,13 @@
         queryDate: new Date().getTime() - 24 * 60 * 60 * 1000,//默认值
         pickerOptions0: {
           disabledDate(time) {
-            return time.getTime()>Date.now() ||time.getTime() < Date.now() - (8.64e7 + 7 * 24 * 60 * 60 * 1000) ;
+            return time.getTime() > (Date.now() - 24 * 60 * 60 * 1000) || time.getTime() < Date.now() - (8.64e7 + 7 * 24 * 60 * 60 * 1000);
           }
         },
         dataList: [],
-        jeList:[],
-        domreadyList:[],
-        avgList:[]
+        jeList: [],
+        domreadyList: [],
+        avgList: []
 
       }
     },
@@ -205,59 +207,108 @@
       this.searchList()
     },
     methods: {
-      searchList: function () {
-        var me = this;
-        var newDate = new Date()
-        newDate.setTime(me.queryDate)
-        me.queryDate = newDate.toISOString()
-        $.ajax({
-          type: "get",
-          url: "http://10.8.85.36:8086/tds-web/reportApi/getQualityDailyReport",
-//        url: "http://10.32.212.27:12345/reportApi/getQualityDailyReport",
-          data: {
-            queryDate: me.queryDate.substr(0, 10),
-          },
-          success: function (data) {
-            me.avgList = data.avgList;
-            me.domreadyList = data.domreadyList
-            me.jeList = data.jeList
-            me.dealData()
 
+    searchList: function () {
+      var me = this;
+      Date.prototype.Format = function(fmt)
+      {
+        var o = {
+          "M+" : this.getMonth()+1, //月份
+          "d+" : this.getDate(),//日
+          "h+" : this.getHours(), //小时
+          "m+" : this.getMinutes(), //分
+          "s+" : this.getSeconds(), //秒
+          "q+" : Math.floor((this.getMonth()+3)/3),//季度
+          "S": this.getMilliseconds() //毫秒
+        };
+        if(/(y+)/.test(fmt)) {
+          fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        }
+        for(var k in o){
+          if(new RegExp("("+ k +")").test(fmt)){
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
           }
-        });
-      },
-      /**判断处于哪个tab，展示对应表格数据*/
-      dealData: function () {
-        var me = this
-        $("#myTab a").click(function (e) {
-          me.tabValue = e.target.innerHTML
-          if (me.tabValue == '接口性能') {
-            me.dataList = me.avgList
-          } else if (me.tabValue == '页面DOMready') {
-            me.dataList = me.domreadyList
+        }
+        return fmt;
+      }
+
+      var newDate = new Date()
+      newDate.setTime(me.queryDate)
+      me.queryDate = newDate.Format("yyyy-MM-dd")
+      $.ajax({
+        type: "get",
+        url: "http://10.8.85.36:8086/tds-web/reportApi/getQualityDailyReport",
+        data: {
+          queryDate: me.queryDate.substr(0, 10),
+        },
+        success: function (data) {
+          if (data.avg !== null) {
+            me.avgList = data.avgList
           } else {
-            me.dataList = me.jeList
+            me.avgList = []
           }
-          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
-        })
+          if (data.domreadyList !== null) {
+            me.domreadyList = data.domreadyList
+          } else {
+            me.domreadyList = []
+          }
+
+          if (data.jeList !== null) {
+            me.jeList = data.jeList
+          } else {
+            me.jeList = []
+          }
+          me.dealData()
+        }
+      })
+    },
+    /**判断处于哪个tab，展示对应表格数据*/
+    dealData: function () {
+      var me = this
+      $("#myTab a").click(function (e) {
+        me.tabValue = e.target.innerHTML
         if (me.tabValue == '接口性能') {
           me.dataList = me.avgList
-          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
-
+        } else if (me.tabValue == '页面DOMready') {
+          me.dataList = me.domreadyList
+        } else {
+          me.dataList = me.jeList
         }
+        me.pageList = (me.dataList ).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+      })
 
-      },
-      /**
-       /*
-       * 分页事件
-       * @param currentPage
-       */
-      handleCurrentChange: function (currentPage) {
-        var me = this
-        me.currentPage = currentPage
-        me.pageList = (this.dataList || []).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+      if (me.tabValue == '接口性能') {
+          if(null == me.avgList)
+          {
+            me.avgList = [];
+          }
+        me.dataList = me.avgList
+        me.pageList = (me.dataList||[] ).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+
+
       }
+      if (me.tabValue == '页面DOMready') {
+        me.dataList = me.domreadyList
+        me.pageList = (me.dataList ).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+
+      }
+      if (me.tabValue == '页面JS错误率') {
+        me.dataList = me.jeList
+        me.pageList = (me.dataList ).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+
+      }
+    },
+    /**
+     /*
+     * 分页事件
+     * @param currentPage
+     */
+    handleCurrentChange: function (currentPage) {
+      var me = this
+      me.currentPage = currentPage
+      me.pageList = (this.dataList ).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
     }
+  }
 
   }
 
