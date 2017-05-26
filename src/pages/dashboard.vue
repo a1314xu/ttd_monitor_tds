@@ -15,7 +15,7 @@
               <label>间隔时间</label>
               <select class=" input-sm" v-model="info.timeInterval">
                 <option value="1">1分钟</option>
-                <option value="5" >5分钟</option>
+                <option value="5">5分钟</option>
                 <option value="10">10分钟</option>
                 <option value="60">1小时</option>
                 <option value="1440">1天</option>
@@ -132,12 +132,12 @@
           <el-form-item label="小组">
             <el-select v-model="form.group" placeholder="请选择">
               <el-option label="不限" value="0"></el-option>
-              <el-option label="无线二组" value="无线二组"></el-option>
-              <el-option label="无线三组" value="无线三组"></el-option>
-              <el-option label="营销网站组" value="营销网站组"></el-option>
-              <el-option label="营销活动组" value="营销活动组"></el-option>
-              <el-option label="停车组" value="停车组"></el-option>
-              <el-option label="商品组" value="商品组"></el-option>
+              <el-option label="无线二组(刘良组)" value="无线二组(刘良组)"></el-option>
+              <el-option label="无线三组(叶子组)" value="无线三组(叶子组)"></el-option>
+              <el-option label="营销活动组(陈浩组)" value="营销活动组(陈浩组)"></el-option>
+              <el-option label="营销网站组(永川组)" value="营销网站组(永川组)"></el-option>
+              <el-option label="海外玩乐(施程组)" value="海外玩乐(施程组)"></el-option>
+              <el-option label="海外通讯(施程组)" value="海外通讯(施程组)"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -341,8 +341,6 @@
     },
     created: function () {
       var me = this
-
-
     },
     methods: {
       todatasource: function () {
@@ -356,8 +354,6 @@
       showPageIdDialog: function () {
         var me = this
         me.dialogPageIdVisible = true
-        me.form.channelName="0"
-        me.form.group="0"
         $.ajax({
           type: "post",
           url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
@@ -374,8 +370,6 @@
       showAppIdDialog: function () {
         var me = this
         me.dialogAppIdVisible = true
-        me.form.group2="0"
-        me.form.owner2="0"
         $.ajax({
           type: "post",
           url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
@@ -408,15 +402,58 @@
         var temp = []//存放匹配到的每行
         var searchText = me.form.channelName + me.form.group//输入框的文字
         if (searchText == '00') {
-          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
-        } else {
-          me.pageIdList.forEach(function (item) {
-            if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
-              temp.push(item)
+          me.showPageIdDialog()
+        }else if(searchText.charAt(0)=='0'){//第一个输入框选择不限
+          $.ajax({
+            type: "post",
+            url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
+            data: {},
+            success: function (data) {
+              me.pageIdList = data.pageIds
+              me.pageIdList.forEach(function (item) {
+                if ((item.team).indexOf(searchText.substr(1,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                  temp.push(item)
+                }
+              })
+              me.pageIdList = temp
+              me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
             }
           })
-          me.pageIdList = temp
-          me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+        } else if(searchText.charAt(searchText.length-1)=='0'){
+          $.ajax({
+            type: "post",
+            url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
+            data: {},
+            success: function (data) {
+              me.pageIdList = data.pageIds
+              me.pageIdList.forEach(function (item) {
+                if ((item.type).indexOf(searchText.substr(0,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                  temp.push(item)
+                }
+              })
+              me.pageIdList = temp
+              me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+            }
+          })
+        }else {
+          //需要重新获取全部数据，被覆盖了
+          $.ajax({
+            type: "post",
+            url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
+            data: {},
+            success: function (data) {
+              me.pageIdList = data.pageIds
+              me.pageIdList.forEach(function (item) {
+                if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                  temp.push(item)
+                }
+              })
+              me.pageIdList = temp
+              me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+            }
+          })
+
+
         }
       },
       /**
@@ -427,17 +464,86 @@
         var temp = []//存放匹配到的每行
         var searchText = me.form.owner2 + me.form.group2//输入框的文字
         if (searchText == '00') {
-          me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          me.showAppIdDialog()
         } else {
-          me.appIdList.forEach(function (item) {
-            if (( item.owner + item.team ).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
-              temp.push(item)
+          //需要重新获取全部数据，被覆盖了
+          $.ajax({
+            type: "post",
+            url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
+            data: {},
+            success: function (data) {
+              me.appIdList = data.appIds
+              me.appIdList.forEach(function (item) {
+                if ((item.type + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                  temp.push(item)
+                }
+              })
+              me.appIdList = temp
+              me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
             }
-          })
-          me.appIdList = temp
-          me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+          });
         }
       },
+      search2: function () {
+        var me = this
+        var temp = []//存放匹配到的每行
+        var searchText = me.form.owner2 + me.form.group2//输入框的文字
+        if (searchText == '00') {
+          me.showAppIdDialog()
+        }else if(searchText.charAt(0)=='0'){//第一个输入框选择不限
+          $.ajax({
+            type: "post",
+            url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
+            data: {},
+            success: function (data) {
+              me.appIdList = data.appIds
+              me.appIdList.forEach(function (item) {
+                if ((item.team).indexOf(searchText.substr(1,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                  temp.push(item)
+                }
+              })
+              me.appIdList = temp
+              me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+            }
+          })
+        } else if(searchText.charAt(searchText.length-1)=='0'){
+          $.ajax({
+            type: "post",
+            url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
+            data: {},
+            success: function (data) {
+              me.appIdList = data.appIds
+              me.appIdList.forEach(function (item) {
+                if ((item.owner).indexOf(searchText.substr(0,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                  temp.push(item)
+                }
+              })
+              me.appIdList = temp
+              me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+            }
+          })
+        }else {
+          //需要重新获取全部数据，被覆盖了
+          $.ajax({
+            type: "post",
+            url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
+            data: {},
+            success: function (data) {
+              me.appIdList = data.appIds
+              me.appIdList.forEach(function (item) {
+                if ((item.owner + item.team).indexOf(searchText) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                  temp.push(item)
+                }
+              })
+              me.appIdList = temp
+              me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
+            }
+          })
+
+
+        }
+      },
+
       /**
        * 处理弹框里分页
        * @param currentPage
