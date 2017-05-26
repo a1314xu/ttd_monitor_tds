@@ -12,11 +12,14 @@
 <script>
   import header from './components/header/header.vue'
   import footer from './components/footer/footer.vue'
+//  import navListApi from './components/sidebar/navListApi.vue'
+
   export default {
     name: 'app',
     components:{
         'v-header':header,
-        'v-footer':footer
+        'v-footer':footer,
+//      'v-navListApi': navListApi
     }
 
   }

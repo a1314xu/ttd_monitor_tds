@@ -5,9 +5,8 @@
         <template slot="title">
           <router-link to="dataSource">数据源</router-link>
         </template>
-        <el-menu-item-group>
           <el-menu-item index="1-1">
-            <router-link to="CAT">CAT</router-link>
+            <router-link to="CAT" >CAT</router-link>
           </el-menu-item>
           <el-menu-item index="1-2">
             <router-link to="Dashboard">Dashboard</router-link>
@@ -15,7 +14,6 @@
           <el-menu-item index="1-3">
             <router-link to="listPage">任务列表</router-link>
           </el-menu-item>
-        </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="2">
         <router-link to="">图表</router-link>

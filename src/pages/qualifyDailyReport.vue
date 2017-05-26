@@ -1,7 +1,7 @@
 <template>
   <div id="playDailyReport">
     <div class="main">
-      <v-navListApi></v-navListApi>
+      <!--<v-navListApi></v-navListApi>-->
       <div class="content">
         <div class="content-top">
           <div class="form-group">
@@ -16,7 +16,7 @@
           </div>
         </div>
         <!--tab区域-->
-        <div id="myTab" class="col-md-11" style="position: relative;left: 20px;top: 60px;">
+        <div id="myTab" class="col-md-11" style="position: relative;left: 20px;top: 40px;">
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#apiProperty" aria-controls="home" role="tab"
@@ -156,7 +156,7 @@
                   Online ≥ 10%,营销Online ≥ 4%
                 </div>
                 <!--分页-->
-                <div style="float: right;margin-right: 40px">
+                <div style="float: right;margin-right: 40px;z-index: 100;">
                   <el-pagination
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
@@ -189,7 +189,7 @@
         queryDate: new Date().getTime() - 24 * 60 * 60 * 1000,//默认值
         pickerOptions0: {
           disabledDate(time) {
-            return time.getTime() < Date.now() - (8.64e7 + 7 * 24 * 60 * 60 * 1000);
+            return time.getTime()>Date.now() ||time.getTime() < Date.now() - (8.64e7 + 7 * 24 * 60 * 60 * 1000) ;
           }
         },
         dataList: [],

@@ -1,6 +1,6 @@
 <template>
   <div id="locationDailyReport">
-    <v-navListApi></v-navListApi>
+    <!--<v-navListApi></v-navListApi>-->
     <div class="content">
       <div class="row">
         <div class="col-md-11">

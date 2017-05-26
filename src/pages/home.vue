@@ -48,7 +48,7 @@
             <div class="col-md-3 col-sm-6">
               <div class="panel">
                 <img src="../assets/u47.png">
-                <h2>报表平台</h2>
+               <h2>报表平台</h2>
                 <router-link to="apiProperty" style="width: 100%;" >接口性能大盘</router-link>
                 <router-link to="pageProperty" style="width: 100%;">页面性能大盘</router-link>
                 <router-link to="qualifyDailyReport" style="width: 100%;">玩乐日报</router-link>

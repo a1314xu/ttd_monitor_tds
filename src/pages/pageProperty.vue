@@ -1,7 +1,7 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div id="pageProperty">
     <div class="main">
-      <v-navListApi></v-navListApi>
+      <!--<v-navListApi></v-navListApi>-->
       <div class="content">
         <div class="content-top">
           <div class="form-group">

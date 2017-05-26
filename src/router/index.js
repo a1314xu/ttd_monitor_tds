@@ -16,6 +16,8 @@ import loopRatioPage from '@/pages/loopRatioPage'
 import sameRatioPage from '@/pages/sameRatioPage'
 import locationDailyReport from '@/pages/locationDailyReport'
 import qualifyDailyReport from '@/pages/qualifyDailyReport'
+import reportPlatform from '@/pages/reportPlatform'
+
 
 
 Vue.use(Router)
@@ -33,10 +35,32 @@ export default new Router({
       component: home
     },
     {
-      path: '/qualifyDailyReport',
-      name: 'qualifyDailyReport',
-      component: qualifyDailyReport
+      path: '/reportPlatform',
+      name: 'reportPlatform',
+      component: reportPlatform,
+      children: [
+        {
+          path: '/apiProperty',
+          name: 'apiProperty',
+          component: apiProperty,
+        },{
+          path: '/pageProperty',
+          name: 'pageProperty',
+          component: pageProperty,
+        },
+        {
+          path: '/qualifyDailyReport',
+          name: 'qualifyDailyReport',
+          component: qualifyDailyReport,
+        },
+        {
+          path: '/locationDailyReport',
+          name: 'locationDailyReport',
+          component: locationDailyReport,
+        },
+        ]
     },
+
     {
       path: '/dataSource',
       name: 'dataSource',
@@ -73,16 +97,6 @@ export default new Router({
       component: listPage
     },
     {
-      path: '/apiProperty',
-      name: 'apiProperty',
-      component: apiProperty
-    },
-    {
-      path: '/pageProperty',
-      name: 'pageProperty',
-      component: pageProperty
-    },
-    {
       path: '/loopRatioApi',
       name: 'loopRatioApi',
       component: loopRatioApi
@@ -102,15 +116,6 @@ export default new Router({
       name: 'sameRatioPage',
       component: sameRatioPage
     },
-    {
-      path: '/qualifyDailyReport',
-      name: 'qualifyDailyReport',
-      component: qualifyDailyReport
-    },
-    {
-      path: '/locationDailyReport',
-      name: 'locationDailyReport',
-      component: locationDailyReport
-    }
+
   ]
 })
