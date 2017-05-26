@@ -2,7 +2,7 @@
   <div id="cat">
     <div class="main">
       <!--左侧导航栏-->
-      <v-navList index="1"></v-navList>
+      <!--<v-navList index="1"></v-navList>-->
       <!--内容区域-->
       <div class="content">
         <form class="form" style="position:relative;top: 20px; left: 40px;">

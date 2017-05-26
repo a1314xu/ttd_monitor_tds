@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <header-component/>
-    <div>this is warnrule </div>
-    <other-component/>
+  <div id="warnRule">
+    <div>待开发... </div>
   </div>
 </template>
 <style>

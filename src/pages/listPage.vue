@@ -1,7 +1,7 @@
 <template>
   <div id="listPage">
     <div class="main">
-      <v-navList></v-navList>
+      <!--<v-navList></v-navList>-->
 
       <!--列表-->
       <div class="content">

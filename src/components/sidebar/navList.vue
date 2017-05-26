@@ -1,29 +1,20 @@
 <template>
-  <div id="leftNav" >
-    <el-menu default-active="1" class="el-menu-vertical-demo leftNav " v-bind:style="{ height: screenHeight +'px'}" :default-openeds=openeds >
-      <el-submenu index="1">
-        <template slot="title">
-          <router-link to="dataSource">数据源</router-link>
+  <div class="leftNav" >
+    <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" unique-opened router v-bind:style="{ height: screenHeight +'px'}">
+      <template v-for="item in items">
+        <template v-if="item.subs">
+          <el-submenu :index="item.index">
+            <template slot="title"><i :class="item.icon"></i>{{ item.title }}</template>
+            <el-menu-item v-for="(subItem,i) in item.subs" :key="i" :index="subItem.index">{{ subItem.title }}
+            </el-menu-item>
+          </el-submenu>
         </template>
-          <el-menu-item index="1-1">
-            <router-link to="CAT" >CAT</router-link>
+        <template v-else>
+          <el-menu-item :index="item.index">
+            <i :class="item.icon"></i>{{ item.title }}
           </el-menu-item>
-          <el-menu-item index="1-2">
-            <router-link to="Dashboard">Dashboard</router-link>
-          </el-menu-item>
-          <el-menu-item index="1-3">
-            <router-link to="listPage">任务列表</router-link>
-          </el-menu-item>
-      </el-submenu>
-      <el-menu-item index="2">
-        <router-link to="">图表</router-link>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <router-link to="">看板</router-link>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <router-link to="">告警规则</router-link>
-      </el-menu-item>
+        </template>
+      </template>
     </el-menu>
   </div>
 </template>
@@ -34,8 +25,45 @@
     data: function () {
         return {
           screenHeight:$(window).height()-150,
-          openeds:['1']
+          items: [
+            {
+              icon: '',
+              index: 'dataSource',
+              title: '数据源',
+              subs: [
+                {
+                  index: 'CAT',
+                  title: 'CAT'
+                },
+                {
+                  index: 'Dashboard',
+                  title: 'Dashboard'
+                },
+                {
+                  index: 'listPage',
+                  title: '任务列表'
+                }
+              ]
+            },
+            {
+              icon: '',
+              index: 'graphy',
+              title: '图表',
+            },
+            {
+              icon: '',
+              index: 'board',
+              title: '看板',
+            },
+            {
+              icon: '',
+              index: 'warnRule',
+              title: '告警规则',
+            }
+
+          ]
         }
+
     }
   }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard">
     <div class="main">
-      <v-navList></v-navList>
+      <!--<v-navList></v-navList>-->
       <div class="content">
         <form class="form" style="position:relative;top: 20px; left: 40px;">
           <div class="row form-inline distance">

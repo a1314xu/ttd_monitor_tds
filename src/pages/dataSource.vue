@@ -1,7 +1,7 @@
 <template>
   <div id="dataSource">
     <div class="main">
-      <v-navList></v-navList>
+      <!--<v-navList></v-navList>-->
       <div class="content">
         <div class="firstContent">
           <h1>开始配置一个数据源任务</h1><br>
@@ -79,7 +79,7 @@
   .content {
     float: left;
     width: 87%;
-    height:100%
+    height:800px
   }
 </style>
 <script>

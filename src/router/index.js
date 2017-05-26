@@ -17,6 +17,7 @@ import sameRatioPage from '@/pages/sameRatioPage'
 import locationDailyReport from '@/pages/locationDailyReport'
 import qualifyDailyReport from '@/pages/qualifyDailyReport'
 import reportPlatform from '@/pages/reportPlatform'
+import toolPlatform from '@/pages/toolPlatform'
 
 
 
@@ -60,42 +61,49 @@ export default new Router({
         },
         ]
     },
+    {
+      path: '/toolPlatform',
+      name: 'toolPlatform',
+      component: toolPlatform,
+      children:[
+        {
+          path: '/dataSource',
+          name: 'dataSource',
+          component: dataSource,
+        },
+        {
+          path: '/graphy',
+          name: 'graphy',
+          component: graphy
+        },
+        {
+          path: '/board',
+          name: 'board',
+          component: board
+        },
+        {
+          path: '/warnRule',
+          name: 'warnRule',
+          component: warnRule
+        },
+        {
+          path: '/CAT',
+          name: 'cat',
+          component: cat
+        },
+        {
+          path: '/Dashboard',
+          name: 'dashboard',
+          component: dashboard
+        },
+        {
+          path: '/listPage',
+          name: 'listPage',
+          component: listPage
+        },
+      ]
+    },
 
-    {
-      path: '/dataSource',
-      name: 'dataSource',
-      component: dataSource,
-    },
-    {
-      path: '/graphy',
-      name: 'graphy',
-      component: graphy
-    },
-    {
-      path: '/board',
-      name: 'board',
-      component: board
-    },
-    {
-      path: '/warnRule',
-      name: 'warnRule',
-      component: warnRule
-    },
-    {
-      path: '/CAT',
-      name: 'cat',
-      component: cat
-    },
-    {
-      path: '/Dashboard',
-      name: 'dashboard',
-      component: dashboard
-    },
-    {
-      path: '/listPage',
-      name: 'listPage',
-      component: listPage
-    },
     {
       path: '/loopRatioApi',
       name: 'loopRatioApi',

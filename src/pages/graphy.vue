@@ -1,6 +1,6 @@
 <template>
   <div id="graphy">
-graphy
+待开发...
   </div>
 </template>
 <style>

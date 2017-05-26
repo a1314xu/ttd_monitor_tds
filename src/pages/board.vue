@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <header-component/>
-        <div>this is board template </div>
-        <other-component/>
+    <div id="board">
+        <div>待开发... </div>
     </div>
 </template>
 <style>

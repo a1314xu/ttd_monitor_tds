@@ -60,7 +60,7 @@
           :current-page="currentPage"
           :page-size="16"
           layout="total, prev, pager, next"
-          :total="dataList.length"><!--total是总的数据条数-->
+          :total="(dataList||[]).length"><!--total是总的数据条数-->
         </el-pagination>
       </div>
     </div>
@@ -95,7 +95,6 @@
       me.tag2 = window.apiProperty.tag2
       me.tag3 = window.apiProperty.tag3
       me.selectedNumber=window.apiProperty.selectedNumber
-      debugger
       me.avgList = window.apiProperty.data.avgList
       me.ninetyFiveLineList = window.apiProperty.data.ninetyfiveLineList
       me.failurePercentList = window.apiProperty.data.failurePercentList
@@ -112,7 +111,7 @@
         } else {
           me.dataList = me.failurePercentList
         }
-        me.pageList = me.dataList.slice((me.currentPage - 1) * 16, me.currentPage * 16)
+        me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 16, me.currentPage * 16)
         me.search()
 
       },
@@ -143,7 +142,7 @@
       handleCurrentChange: function (currentPage) {
         //当前页面变换
         this.currentPage = currentPage
-        this.pageList = this.dataList.slice((this.currentPage - 1) * 16, this.currentPage * 16 )
+        this.pageList = (this.dataList||[]).slice((this.currentPage - 1) * 16, this.currentPage * 16 )
       }
     }
 
