@@ -319,18 +319,11 @@
         })
       },
       checkAll: function () {
-        var me=this
         if ($("input[name='chk_list']").attr("checked")) {
-          // 取消全选
-          $("input[name='chk_list]:checked").attr("checked",false)
-//          me.checkedNames=[]
-          debugger
+          $("input[name='chk_list']").attr("checked", false)
         } else {
-            //全选
-//          debugger
           $("input[name='chk_list']").attr("checked", true)
         }
-
       },
       submit: function () {
         var me = this;
