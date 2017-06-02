@@ -122,8 +122,7 @@
                           <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
                                      name="chk_list"
                                      v-model="checkedNames"></td>
-                          <td style="text-align: left;padding-left: 30px"><label
-                            :for="index+'_'+row">{{typeValueItem}}</label></td>
+                          <td style="text-align: left;padding-left: 30px"><label :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
                         </tbody>
                       </table>
@@ -320,38 +319,19 @@
         })
       },
       checkAll: function () {
+        var me=this
         if ($("input[name='chk_list']").attr("checked")) {
-          $("input[name='chk_list']").attr("checked", false)
+          // 取消全选
+          $("input[name='chk_list]:checked").attr("checked",false)
+//          me.checkedNames=[]
+          debugger
         } else {
+            //全选
+//          debugger
           $("input[name='chk_list']").attr("checked", true)
         }
 
       },
-//      chooseOrClear:function (name) {
-//        if(this.checked==true) {
-//            checkAll(name);
-//        } else {
-//            clearAll(name);
-//        }
-//      },
-//      checkAll: function (name) {
-//        var el = document.getElementsByTagName('input');
-//        var len = el.length;
-//        for (var i = 0; i < len; i++) {
-//          if ((el[i].type == "checkbox") && (el[i].name == name)) {
-//            el[i].checked = true;
-//          }
-//        }
-//      },
-//      clearAll: function () {
-//        var el = document.getElementsByTagName('input');
-//        var len = el.length;
-//        for (var i = 0; i < len; i++) {
-//          if ((el[i].type == "checkbox") && (el[i].name == name)) {
-//            el[i].checked = false;
-//          }
-//        }
-//      },
       submit: function () {
         var me = this;
         if (me.taskName.length === 0) {
@@ -385,7 +365,6 @@
             traditional: true,
             dataType: "jsonp",
             success: function (data) {
-                debugger
               if (data[0].code == 0) {
                 me.dialogVisible = true
               } else {

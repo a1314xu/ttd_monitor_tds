@@ -312,7 +312,7 @@
 
   .level {
     float: left;
-    margin-right: 10px;
+    margin-right: -20px;
     margin-top: 5px;
 
   }
