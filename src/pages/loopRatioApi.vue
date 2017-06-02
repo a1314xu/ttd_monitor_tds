@@ -77,6 +77,7 @@
     },
     data: function () {
       return {
+        tag1:"",
         tag2: "",
         tag3: "",
         currentPage: 1,//当前页
@@ -99,8 +100,6 @@
       me.ninetyFiveLineList = window.apiProperty.data.ninetyfiveLineList
       me.failurePercentList = window.apiProperty.data.failurePercentList
       me.dealData()
-      debugger
-
     },
     methods: {
       /** 处理表格数据，给dataList重新赋值*/
@@ -113,6 +112,7 @@
         } else {
           me.dataList = me.failurePercentList
         }
+//        sessionStorage.setItem("dataList",me.dataList)
         me.pageList = (me.dataList||[]).slice((me.currentPage - 1) * 16, me.currentPage * 16)
         me.search()
 
@@ -120,7 +120,6 @@
       search: function () {
         var me = this
         var temp = []
-        me.dealData()
         me.dataList.forEach(function (item) {
           if ((item.devGroup) == (me.tag3)) {
             temp.push(item)
@@ -134,11 +133,16 @@
           temp=temp.slice(0, 10)
         }
         else if(me.selectedNumber==20){
-          temp=temp.slice(0, 20)
+            if(temp.length>20){
+              temp=temp.slice(0, 20)
+            }else{
+                temp=temp
+            }
         }else{
+            temp=temp
         }
         me.dataList = temp
-        me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 16, me.currentPage * 16)
       },
       /**分页*/
       handleCurrentChange: function (currentPage) {

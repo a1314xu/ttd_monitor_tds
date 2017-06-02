@@ -7,7 +7,7 @@
           <div class="col-md-11">
             <table class="table table-bordered table-hover table-responsive "
                    style="position: relative;left: 40px;top: 20px;">
-              <caption style="text-align: left;font-size: 30px" >{{tag1}}-环比率</caption>
+              <caption style="text-align: left;font-size: 30px">{{tag1}}-环比率</caption>
               <thead>
               <tr role="row" class="row-header">
                 <th>渠道名称</th>
@@ -81,6 +81,7 @@
         tag2: "",
         tag3: "",
         currentPage: 1,//当前页
+        selectedNumber: "",
         pageList: [],//每页存放的列表数据,14条
         //表格内容
         DomReadyList: [],
@@ -94,6 +95,7 @@
       me.tag1 = window.pageProperty.tag1
       me.tag2 = window.pageProperty.tag2
       me.tag3 = window.pageProperty.tag3
+      me.selectedNumber = window.pageProperty.selectedNumber
       me.DomReadyList = window.pageProperty.data.avgList
       me.jsErrorAndPVList = window.pageProperty.data.jsErrorAndPvDtoList
       me.restfulFailedList = window.pageProperty.data.restfulDtoList
@@ -118,17 +120,31 @@
       search: function () {
         var me = this
         var temp = []
-        if (me.tag3 == '不限') {
-          temp = me.dataList
-        } else {
-          me.dataList.forEach(function (item) {
-            if ((item.devGroup.trim()) == (me.tag3)) {
+        me.dataList.forEach(function (item) {
+          if ((item.devGroup.trim()) == (me.tag3)) {
+            temp.push(item)
+          }
+          if (me.tag3 == '不限') {
+            if (item.devGroup.trim() !== '海外玩乐(施程组)' && item.devGroup.trim() !== '海外通讯(施程组)' && item.devGroup.trim() !== '营销活动组(陈浩组)') {
               temp.push(item)
             }
-          })
+          }
+        })
+
+        if (me.selectedNumber == 10) {
+          temp = temp.slice(0, 10)
+        }
+        else if (me.selectedNumber == 20) {
+          if (temp.length > 20) {
+            temp = temp.slice(0, 20)
+          } else {
+            temp = temp
+          }
+        } else {
+          temp = temp
         }
         me.dataList = temp
-        me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+        me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 16, me.currentPage * 16)
       },
       /**分页*/
       handleCurrentChange: function (currentPage) {

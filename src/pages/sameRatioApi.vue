@@ -75,9 +75,11 @@
         },
       data: function () {
         return {
+          tag1:"",
           tag2: "",
           tag3: "",
           currentPage: 1,//当前页
+          selectedNumber:"",
           pageList: [],//每页存放的列表数据,14条
           //表格内容
           avgList: [],
@@ -91,6 +93,7 @@
         me.tag1= window.apiProperty.tag1
         me.tag2 = window.apiProperty.tag2
         me.tag3 = window.apiProperty.tag3
+        me.selectedNumber=window.apiProperty.selectedNumber
         me.avgList = window.apiProperty.data.avgList
         me.ninetyFiveLineList = window.apiProperty.data.ninetyfiveLineList
         me.failurePercentList = window.apiProperty.data.failurePercentList
@@ -115,17 +118,29 @@
         search: function () {
           var me = this
           var temp = []
-          if (me.tag3 == '不限') {
-            temp = me.dataList
+          me.dataList.forEach(function (item) {
+            if ((item.devGroup) == (me.tag3)) {
+              temp.push(item)
+            }
+            if (me.tag3 == '不限') {
+              temp = me.dataList
+            }
+          })
+
+          if(me.selectedNumber==10){
+            temp=temp.slice(0, 10)
+          }
+          else if(me.selectedNumber==20){
+            if(temp.length>20){
+              temp=temp.slice(0, 20)
+            }else{
+              temp=temp
+            }
           }else{
-            me.dataList.forEach(function (item) {
-              if ((item.devGroup) == (me.tag3)) {
-                temp.push(item)
-              }
-            })
+            temp=temp
           }
           me.dataList = temp
-          me.pageList = me.dataList.slice((me.currentPage - 1) * 13, me.currentPage * 13)
+          me.pageList = (me.dataList || []).slice((me.currentPage - 1) * 16, me.currentPage * 16)
         },
         /**分页*/
         handleCurrentChange: function (currentPage) {

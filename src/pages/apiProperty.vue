@@ -124,16 +124,9 @@
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
   window.apiProperty = {
-    tag1: "OpenAPI",
-    tag2: "AVG",
-    tag3: "不限",//设默认值
-    selectedNumber: 10
   }
   export default {
     name: 'apiProperty',
-    components: {
-      'v-navListApi': navListApi
-    },
     data: function () {
       return {
         currentPage: 1,//当前页
@@ -159,30 +152,10 @@
     created: function () {
       var me = this
       me.searchList()
-
-//      if (window.history && window.history.pushState) {
-//
-//        $(window).on('popstate', function() {
-//
-//          window.apiProperty.tag1 ="OpenAPI";
-//          window.apiProperty.tag2 ="AVG";
-//          window.apiProperty.tag3 ="不限";
-//
-//          var hashLocation = location.hash;
-//          var hashSplit = hashLocation.split("#!/");
-//          var hashName = hashSplit[1];
-//
-//          if (hashName !== '') {
-//            var hash = window.location.hash;
-//            if (hash === '') {
-//              //alert('後退按鈕點擊');
-//            }
-//          }
-//        });
-//
-//       //window.history.pushState('forward', null, './#forward');
-//      }
-
+      window.apiProperty.tag1 = me.tag1
+      window.apiProperty.tag2 = me.tag2
+      window.apiProperty.tag3 = me.tag3
+      window.apiProperty.selectedNumber=me.selectedNumber
     },
     mounted: function () {
       var me = this
@@ -191,9 +164,6 @@
 
     },
     methods: {
-//      getJumpUrl:function(){
-//          return "?tag1="+window.apiProperty.tag1+"&tag2="+window.apiProperty.tag2+"&tag3="+window.apiProperty.tag3;
-//      },
       buttonToggle: function () {
         var me = this;
         /**点击一级类目*/
@@ -204,8 +174,6 @@
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
           window.apiProperty.tag1 = me.tag1
           me.searchList()
-          //me.searchList()
-
         })
         me.searchList()// 写上这句三级类目才能切换？
 
@@ -302,7 +270,7 @@
         var me = this
         window.apiProperty.selectedNumber = me.selectedNumber
         if (me.selectedNumber == 10) {
-            me.search()
+          me.search()
           me.dataList = me.dataList.slice(0, 10)
           me.pageList = me.dataList
         } else if (me.selectedNumber == 20) {

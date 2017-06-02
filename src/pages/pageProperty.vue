@@ -149,9 +149,6 @@
 <script>
   import navListApi from '../components/sidebar/navListApi.vue'
   window.pageProperty = {
-    tag1:"Hybrid",
-    tag2: "DOMready",
-    tag3:"不限",//设默认值
   }
   export default {
     name: 'pageProperty',
@@ -183,6 +180,10 @@
     created: function () {
       var me = this
       me.searchList()
+      window.pageProperty.tag1 = me.tag1
+      window.pageProperty.tag2 = me.tag2
+      window.pageProperty.tag3 = me.tag3
+      window.pageProperty.selectedNumber=me.selectedNumber
 
     },
     mounted: function () {
@@ -308,6 +309,7 @@
       /**排序查找前10条，前20条,调用dealData将dataList赋值*/
       sort: function () {
         var me = this
+        window.pageProperty.selectedNumber = me.selectedNumber
         if (me.selectedNumber == 10) {
           me.dataList = me.dataList.slice(0, 10)
           me.pageList = me.dataList
