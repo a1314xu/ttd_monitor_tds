@@ -354,6 +354,9 @@
       showPageIdDialog: function () {
         var me = this
         me.dialogPageIdVisible = true
+        me.form.channelName="0"
+        me.form.group="0"
+        me.currentPage=1
         $.ajax({
           type: "post",
           url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
@@ -370,6 +373,9 @@
       showAppIdDialog: function () {
         var me = this
         me.dialogAppIdVisible = true
+        me.form.owner2="0"
+        me.form.group2="0"
+        me.currentPage=1
         $.ajax({
           type: "post",
           url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
@@ -399,6 +405,7 @@
        */
       search: function () {
         var me = this
+        me.currentPage=1
         var temp = []//存放匹配到的每行
         var searchText = me.form.channelName + me.form.group//输入框的文字
         if (searchText == '00') {
@@ -461,6 +468,7 @@
        */
       search2: function () {
         var me = this
+        me.currentPage=1
         var temp = []//存放匹配到的每行
         var searchText = me.form.owner2 + me.form.group2//输入框的文字
         if (searchText == '00') {
@@ -486,6 +494,7 @@
       },
       search2: function () {
         var me = this
+        me.currentPage=1
         var temp = []//存放匹配到的每行
         var searchText = me.form.owner2 + me.form.group2//输入框的文字
         if (searchText == '00') {

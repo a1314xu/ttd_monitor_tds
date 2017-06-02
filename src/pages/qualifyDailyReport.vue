@@ -59,7 +59,7 @@
               <div style="margin-top: 20px">
                 <!--基准值-->
                 <div style="float:left;">
-                  基准值：OpenAPI ≥ 200ms,Restful ≥ 400ms
+                  基准值:OpenAPI ≥ 200ms<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restful ≥ 400ms
                 </div>
                 <!--分页-->
                 <div style="float: right;margin-right: 40px">
@@ -103,8 +103,9 @@
               <div style="margin-top: 20px">
                 <!--基准值-->
                 <div style="float:left;">
-                  H5 ≥ 1600ms,营销H5 ≥ 1800ms
-                  Hybrid ≥ 400ms,营销Hybrid ≥ 1600ms,海外玩乐Hybrid ≥ 1600m
+                  基准值:
+                  H5 ≥ 1600ms;营销H5 ≥ 1800ms<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Hybrid ≥ 400ms;营销Hybrid ≥ 1600ms;海外玩乐Hybrid ≥ 1600m<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   Online ≥ 1800ms
                 </div>
                 <!--分页-->
@@ -153,9 +154,10 @@
               <div style="margin-top: 20px">
                 <!--基准值-->
                 <div style="float:left;">
-                  H5 ≥ 3%,营销H5 ≥ 4%
-                  Hybrid ≥ 1%,营销Hybrid ≥ 2%
-                  Online ≥ 10%,营销Online ≥ 4%
+                  基准值:
+                  H5 ≥ 3%;营销H5 ≥ 4%<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Hybrid ≥ 1%;营销Hybrid ≥ 2%<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Online ≥ 10%;营销Online ≥ 4%
                 </div>
                 <!--分页-->
                 <div style="float: right;margin-right: 40px;z-index: 100;">
@@ -266,6 +268,7 @@
     dealData: function () {
       var me = this
       $("#myTab a").click(function (e) {
+          me.currentPage=1
         me.tabValue = e.target.innerHTML
         if (me.tabValue == '接口性能') {
           me.dataList = me.avgList
@@ -306,7 +309,7 @@
     handleCurrentChange: function (currentPage) {
       var me = this
       me.currentPage = currentPage
-      me.pageList = (this.dataList ).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+      me.pageList = (this.dataList ).slice((this.currentPage - 1) * 13, this.currentPage * 13 )
     }
   }
 

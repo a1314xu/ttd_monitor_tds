@@ -196,7 +196,7 @@
   }
 
   .foot button {
-    margin-top: 70px;
+    margin-top: 40px;
     margin-right: 80px;
     margin-left: 40px;
   }
@@ -385,6 +385,7 @@
             traditional: true,
             dataType: "jsonp",
             success: function (data) {
+                debugger
               if (data[0].code == 0) {
                 me.dialogVisible = true
               } else {

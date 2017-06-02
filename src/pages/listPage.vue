@@ -6,7 +6,7 @@
       <!--列表-->
       <div class="content">
         <div class="row">
-          <div class="col-md-11">
+          <div class="col-md-12">
             <table class="table table-bordered table-hover table-responsive "
                    style="position: relative;left: 40px;top: 20px;">
               <caption style="text-align: left;font-size: 30px">任务列表页</caption>
@@ -330,8 +330,8 @@
               type: "post",
               url: "http://10.8.85.36:8086/CatAPI/OperateCatJob",
               data: {
-                jobId: item.id,
-                option: item.isplay == 1 ? 'pause' : 'start'
+                id: item.id,
+                option: item.isplay == 1 ? 'delete' : 'start'
               },
               dataType: "jsonp",
               success: function (data) {
@@ -362,12 +362,13 @@
               type: "post",
               url: "http://10.8.85.36:8086/DashboardAPI/servlet/PauseDashboard",
               data: {
-                id: item.id,
+                jobId: item.id,
                 isPlay: item.isplay == 1 ? 0 : 1
               },
               dataType: "jsonp",
               success: function (data) {
-                if (data.code == 0) {
+                debugger
+                if (data.message.code == 0) {
                   if (item.isplay == 1) {
                     me.$message({
                       type: 'success',
