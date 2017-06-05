@@ -7,30 +7,47 @@
       <div class="content">
         <form class="form" style="position:relative;top: 20px; left: 40px;">
           <div class="row form-inline distance">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
               <label for="taskName">任务名称</label>
               <input type="text" class="form-control input-sm" id="taskName" placeholder="简单的说明一下" v-model="taskName">
               <label v-if='tips.taskNameTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
             </div>
-            <!--<div class="form-group col-md-3">-->
-            <!--<label>开始时间</label>-->
-            <!--<el-date-picker-->
-            <!--v-model="startTime"-->
-            <!--type="datetime"-->
-            <!--placeholder="选择日期"-->
-            <!--size="small"-->
-            <!--:picker-options="pickerOptions0">-->
-            <!--</el-date-picker>-->
-            <!--</div>-->
+            <div class="form-group col-md-5">
+              <label>开始时间</label>
+              <el-date-picker
+                style="z-index: 100"
+                v-model="startTime"
+                type="datetime"
+                :picker-options="pickerOptions0"
+                format="yyyy-MM-dd HH:mm"
+                placeholder="">
+              </el-date-picker>
+            </div>
             <div class="form-group col-md-3">
               <label>间隔时间</label>
-              <select class=" input-sm" v-model="timeInterval">
-                <option value="1" selected>1分钟</option>
-                <option value="10">10分钟</option>
-                <option value="60">1小时</option>
-                <option value="1440 ">1天</option>
-                <option value="10080">1周</option>
-              </select>
+              <template v-if="intervalDays>7">
+                <select class=" input-sm" v-model="timeInterval" style="width: 100px">
+                  <option value="1440">1天</option>
+                  <option value="10080">1周</option>
+                </select>
+              </template>
+              <template v-if="intervalDays<=7&&intervalDays>0">
+                <select class=" input-sm" v-model="timeInterval" style="width: 100px">
+                  <option value="60">1小时</option>
+                  <option value="1440">1天</option>
+                  <option value="10080">1周</option>
+                </select>
+              </template>
+              <template v-if="intervalDays==0">
+                <select class=" input-sm" v-model="timeInterval" style="width: 100px">
+                  <option value="1">1分钟</option>
+                  <option value="10">5分钟</option>
+                  <option value="10">10分钟</option>
+                  <option value="60">1小时</option>
+                  <option value="1440">1天</option>
+                  <option value="10080">1周</option>
+                </select>
+              </template>
             </div>
           </div>
           <div class="row form-inline distance">
@@ -122,7 +139,8 @@
                           <td><input type="checkbox" :id="index+'_'+row" :value="item.type+'@@'+typeValueItem"
                                      name="chk_list"
                                      v-model="checkedNames"></td>
-                          <td style="text-align: left;padding-left: 30px"><label :for="index+'_'+row">{{typeValueItem}}</label></td>
+                          <td style="text-align: left;padding-left: 30px"><label
+                            :for="index+'_'+row">{{typeValueItem}}</label></td>
                         </tr>
                         </tbody>
                       </table>
@@ -213,7 +231,12 @@
         taskName: "",
         searchData: [],
         timeInterval: "1",
-        startTime: "",
+        startTime: new Date().getTime(),
+        pickerOptions0: {
+          disabledDate(time) {
+            return time.getTime() > Date.now() || time.getTime() < Date.now() - 30 * 24 * 60 * 60 * 1000;
+          }
+        },
         appId: "",
         jobId: "",//修改的时候需要加上
         checkedTags: [],//选中的tag
@@ -237,6 +260,12 @@
         currentView: "",
         nameData: []
       }
+    },
+    computed: {
+      //判断间隔时间是否大于7天
+      intervalDays: function () {
+        return Math.floor((new Date() - this.startTime) / (1000 * 60 * 60 * 24))
+      },
     },
     created: function () {
       var me = this

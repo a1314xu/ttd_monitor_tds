@@ -2,13 +2,7 @@
   <div class="top">
   <ul>
     <li><!--vlh凌桦--><span class="glyphicon glyphicon-cog" style="margin-left: 5px;font-size: 16px"></span></li>
-    <li class="" data-toggle="dropdown" >平台<span class="caret"></span>
-      <select class="dropdown-menu">
-        <option><a href="#">监控平台</a></option>
-        <option><a href="#">测试平台</a></option>
-        <option><a href="#">工具平台</a></option>
-        <option><a href="#">报表平台 </a></option>
-      </select>
+    <li style="zIndex: 100">
     </li>
     <li><router-link to="home" >主页</router-link>
     </li>

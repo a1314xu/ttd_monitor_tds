@@ -42,7 +42,7 @@
                 <router-link to="dataSource">数据源</router-link>
                 <a style="color: #9d9d9d">图表</a><br>
                 <a style="color: #9d9d9d">看板</a>
-                <a style="color: #9d9d9d">告警规则</a>
+                <router-link to="warnRule">告警规则</router-link>
               </div>
             </div>
             <div class="col-md-3 col-sm-6">

@@ -5,26 +5,52 @@
       <div class="content">
         <form class="form" style="position:relative;top: 20px; left: 40px;">
           <div class="row form-inline distance">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
               <label for="taskName">任务名称</label>
               <input type="text" class="form-control input-sm" id="taskName" placeholder="简单的说明一下"
                      v-model="info.taskName">
               <label v-if='taskNameTip' class="validate" style="color: red;font-size: 8px">*不能为空</label>
             </div>
+            <div class="form-group col-md-5">
+              <label>开始时间</label>
+              <el-date-picker
+                v-model="startTime"
+                style="z-index: 100"
+                type="datetime"
+                format="yyyy-MM-dd HH:mm"
+                :picker-options="pickerOptions0"
+                placeholder="">
+              </el-date-picker>
+            </div>
             <div class="form-group col-md-3">
               <label>间隔时间</label>
-              <select class=" input-sm" v-model="info.timeInterval">
-                <option value="1">1分钟</option>
-                <option value="5">5分钟</option>
-                <option value="10">10分钟</option>
-                <option value="60">1小时</option>
-                <option value="1440">1天</option>
-                <option value="10080">1周</option>
-              </select>
+              <template v-if="intervalDays>7">
+                <select class=" input-sm" v-model="timeInterval"  style="width: 100px">
+                  <option value="1440" >1天</option>
+                  <option value="10080">1周</option>
+                </select>
+              </template>
+              <template v-if="intervalDays<=7&&intervalDays>0" >
+                <select class=" input-sm" v-model="timeInterval"  style="width: 100px">
+                  <option value="60">1小时</option>
+                  <option value="1440" >1天</option>
+                  <option value="10080">1周</option>
+                </select>
+              </template>
+              <template v-if="intervalDays==0">
+                <select class=" input-sm" v-model="timeInterval"  style="width: 100px">
+                  <option value="1">1分钟</option>
+                  <option value="10">5分钟</option>
+                  <option value="10">10分钟</option>
+                  <option value="60">1小时</option>
+                  <option value="1440" >1天</option>
+                  <option value="10080">1周</option>
+                </select>
+              </template>
             </div>
           </div>
           <div class="row form-inline distance">
-            <div class="form-group col-md-3 ">
+            <div class="form-group col-md-4 ">
               <label>环境</label>
               <select class=" input-sm" v-model="info.environment">
                 <option value="PROD">PROD</option>
@@ -33,7 +59,7 @@
                 <option value="LPT">LPT</option>
               </select>
             </div>
-            <div class="form-group col-md-3 ">
+            <div class="form-group col-md-4 ">
               <label>聚合方式</label>
               <select class=" input-sm" v-model="info.gatherMethod">
                 <option value="SUM">SUM</option>
@@ -294,7 +320,6 @@
       return {
         info: {
           taskName: "",
-          timeInterval: "1",
           environment: "PROD",
           gatherMethod: "SUM",
           metricName: "",
@@ -307,7 +332,13 @@
           group2: "0",
           owner2: "0",
         },
-
+        startTime: new Date().getTime(),
+        timeInterval: "1",
+        pickerOptions0: {
+          disabledDate(time) {
+            return time.getTime() > Date.now()||time.getTime()<Date.now()-30*24*60*60*1000;
+          }
+        },
         pageIdList: [],//pageId所有数据
         pageIdData: [],//pageId每页数据
         appIdData: [],//appId每页数据
@@ -325,7 +356,12 @@
         multipleSelection2: []
       }
     },
-    watch: {
+    computed:{
+      //判断间隔时间是否大于7天
+      intervalDays:function () {
+        return Math.floor((new Date()-this.startTime)/(1000*60*60*24))
+      }
+    },    watch: {
       taskName: function (val) {
         val.length == 0 ? this.taskNameTip = true : this.taskNameTip = false
       },
@@ -354,9 +390,9 @@
       showPageIdDialog: function () {
         var me = this
         me.dialogPageIdVisible = true
-        me.form.channelName="0"
-        me.form.group="0"
-        me.currentPage=1
+        me.form.channelName = "0"
+        me.form.group = "0"
+        me.currentPage = 1
         $.ajax({
           type: "post",
           url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
@@ -373,9 +409,9 @@
       showAppIdDialog: function () {
         var me = this
         me.dialogAppIdVisible = true
-        me.form.owner2="0"
-        me.form.group2="0"
-        me.currentPage=1
+        me.form.owner2 = "0"
+        me.form.group2 = "0"
+        me.currentPage = 1
         $.ajax({
           type: "post",
           url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
@@ -405,12 +441,12 @@
        */
       search: function () {
         var me = this
-        me.currentPage=1
+        me.currentPage = 1
         var temp = []//存放匹配到的每行
         var searchText = me.form.channelName + me.form.group//输入框的文字
         if (searchText == '00') {
           me.showPageIdDialog()
-        }else if(searchText.charAt(0)=='0'){//第一个输入框选择不限
+        } else if (searchText.charAt(0) == '0') {//第一个输入框选择不限
           $.ajax({
             type: "post",
             url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
@@ -418,7 +454,7 @@
             success: function (data) {
               me.pageIdList = data.pageIds
               me.pageIdList.forEach(function (item) {
-                if ((item.team).indexOf(searchText.substr(1,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                if ((item.team).indexOf(searchText.substr(1, searchText.length - 1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
                   temp.push(item)
                 }
               })
@@ -426,7 +462,7 @@
               me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
             }
           })
-        } else if(searchText.charAt(searchText.length-1)=='0'){
+        } else if (searchText.charAt(searchText.length - 1) == '0') {
           $.ajax({
             type: "post",
             url: "http://10.8.85.36:8086/tds-web/info/getAllPageId",
@@ -434,7 +470,7 @@
             success: function (data) {
               me.pageIdList = data.pageIds
               me.pageIdList.forEach(function (item) {
-                if ((item.type).indexOf(searchText.substr(0,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                if ((item.type).indexOf(searchText.substr(0, searchText.length - 1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
                   temp.push(item)
                 }
               })
@@ -442,7 +478,7 @@
               me.pageIdData = me.pageIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
             }
           })
-        }else {
+        } else {
           //需要重新获取全部数据，被覆盖了
           $.ajax({
             type: "post",
@@ -468,7 +504,7 @@
        */
       search2: function () {
         var me = this
-        me.currentPage=1
+        me.currentPage = 1
         var temp = []//存放匹配到的每行
         var searchText = me.form.owner2 + me.form.group2//输入框的文字
         if (searchText == '00') {
@@ -494,12 +530,12 @@
       },
       search2: function () {
         var me = this
-        me.currentPage=1
+        me.currentPage = 1
         var temp = []//存放匹配到的每行
         var searchText = me.form.owner2 + me.form.group2//输入框的文字
         if (searchText == '00') {
           me.showAppIdDialog()
-        }else if(searchText.charAt(0)=='0'){//第一个输入框选择不限
+        } else if (searchText.charAt(0) == '0') {//第一个输入框选择不限
           $.ajax({
             type: "post",
             url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
@@ -507,7 +543,7 @@
             success: function (data) {
               me.appIdList = data.appIds
               me.appIdList.forEach(function (item) {
-                if ((item.team).indexOf(searchText.substr(1,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                if ((item.team).indexOf(searchText.substr(1, searchText.length - 1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
                   temp.push(item)
                 }
               })
@@ -515,7 +551,7 @@
               me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
             }
           })
-        } else if(searchText.charAt(searchText.length-1)=='0'){
+        } else if (searchText.charAt(searchText.length - 1) == '0') {
           $.ajax({
             type: "post",
             url: "http://10.8.85.36:8086/tds-web/info/getAllAppId",
@@ -523,7 +559,7 @@
             success: function (data) {
               me.appIdList = data.appIds
               me.appIdList.forEach(function (item) {
-                if ((item.owner).indexOf(searchText.substr(0,searchText.length-1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
+                if ((item.owner).indexOf(searchText.substr(0, searchText.length - 1)) !== -1) {//匹配，则把此条数据放入待显示的数组内
                   temp.push(item)
                 }
               })
@@ -531,7 +567,7 @@
               me.appIdData = me.appIdList.slice((me.currentPage - 1) * 11, me.currentPage * 11 - 1)
             }
           })
-        }else {
+        } else {
           //需要重新获取全部数据，被覆盖了
           $.ajax({
             type: "post",
