@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <p>技术支持</p>
+    <div><a href="mailto:WLJSYFQA_ZDH@Ctrip.com">技术支持</a></div>
   </div>
 </template>
 
@@ -15,18 +15,26 @@
   .footer {
     position: absolute;
     bottom: 0;
-    height: 80px;
+    height: 70px;
     width:100%;
     background-color: #336699;
-    line-height: 80px;
+    line-height: 70px;
     overflow: hidden;
     /*clear: both;*/
 
   }
 
-  .footer p {
+  .footer div {
+    /*display: block;*/
     text-align: center;
+
+  }
+  .footer a{
     color: white;
     font-size:20px;
+  }
+  .footer a:link,hover,active,visited{
+    text-decoration: none;
+    color: white;
   }
 </style>

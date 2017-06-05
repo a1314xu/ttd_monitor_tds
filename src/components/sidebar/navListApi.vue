@@ -24,7 +24,7 @@
     name: 'navList',
     data: function () {
       return {
-        screenHeight:$(window).height()-150,
+        screenHeight:$(window).height()-100,
         items: [
           {
             icon: '',
