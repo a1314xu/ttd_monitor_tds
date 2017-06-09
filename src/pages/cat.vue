@@ -353,7 +353,7 @@
         checkAll: function (tabsData, index) {
             var me=this
             var type = tabsData[index].type;
-            var clearChooseitem = function () {
+            var clearChooseitemOfThisTab = function () {
                 var temp=[];
                 for (var i = 0; i < me.checkedNames.length; i++) {
                     var item = me.checkedNames[i];
@@ -362,6 +362,13 @@
                     }
                 }
                 me.checkedNames=temp;
+            };
+            var addAllItemOfThisTab=function () {
+                var list = tabsData[index].typeValue;
+                for (var i = 0; i < list.length; i++) {
+                    var value = type + '@@' + list[i];
+                    me.checkedNames.push(value);
+                }
             };
 
             // tab所有是选中 还是去掉
@@ -374,14 +381,10 @@
             }
 
             if (!isChecked) { // 反选，去掉已选部分
-                clearChooseitem();
+                clearChooseitemOfThisTab();
             } else {  // 选择所有
-                clearChooseitem();
-                var list = tabsData[index].typeValue;
-                for (var i = 0; i < list.length; i++) {
-                    var value = type + '@@' + list[i];
-                    this.checkedNames.push(value);
-                }
+                clearChooseitemOfThisTab();
+                addAllItemOfThisTab();
             }
         },
       submit: function () {
