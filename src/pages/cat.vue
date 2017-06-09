@@ -128,9 +128,10 @@
                       <table class="table table-bordered table-hover">
                         <thead>
                         <tr role="row" class="row-header">
-                          <th class="col-md-1"><input type="checkbox" id="check_all"
-                                                      @click="checkAll()">
-                          </th>
+                          <th class="col-md-1"><input type="checkbox"  :id="'check_all_'+index"
+                                                      :value="index"
+                                                      @click="checkAll(tabsData,index)"
+                                                      v-model="allCheckModel"></th>
                           <th>Name</th>
                         </tr>
                         </thead>
@@ -242,6 +243,7 @@
         checkedTags: [],//选中的tag
         checkedTypes: [],//选中的type
         checkedNames: [],//选中的name
+        allCheckModel:[],
         typeList: [],//接收返回的type
         tabsData: [],//接收返回的name,变量
         selectedList: [],//选中的type对应name
@@ -347,13 +349,41 @@
           }
         })
       },
-      checkAll: function () {
-        if ($("input[name='chk_list']").attr("checked")) {
-          $("input[name='chk_list']").attr("checked", false)
-        } else {
-          $("input[name='chk_list']").attr("checked", true)
-        }
-      },
+
+        checkAll: function (tabsData, index) {
+            var me=this
+            var type = tabsData[index].type;
+            var clearChooseitem = function () {
+                var temp=[];
+                for (var i = 0; i < me.checkedNames.length; i++) {
+                    var item = me.checkedNames[i];
+                    if (item.indexOf(type) < 0) {
+                        temp.push(item);
+                    }
+                }
+                me.checkedNames=temp;
+            };
+
+            // tab所有是选中 还是去掉
+            var isChecked = false;
+            for (var i = 0; i < this.allCheckModel.length; i++) {
+                if (this.allCheckModel[i] == index) {
+                    isChecked = true;
+                    break;
+                }
+            }
+
+            if (!isChecked) { // 反选，去掉已选部分
+                clearChooseitem();
+            } else {  // 选择所有
+                clearChooseitem();
+                var list = tabsData[index].typeValue;
+                for (var i = 0; i < list.length; i++) {
+                    var value = type + '@@' + list[i];
+                    this.checkedNames.push(value);
+                }
+            }
+        },
       submit: function () {
         var me = this;
         if (me.taskName.length === 0) {
