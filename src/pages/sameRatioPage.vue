@@ -47,12 +47,12 @@
               </tr>
               </tbody>
             </table>
-
+            <div style="position: absolute;bottom: -255px;left: 110px;">注：基准值为3个月前第三周数据，每个月更新一次</div>
           </div>
         </div>
       </div>
       <!--分页-->
-      <div style="position: absolute;bottom: 110px;right: 110px;">
+      <div style="position: absolute;bottom: 150px;right: 110px;">
         <el-pagination
           @current-change="handleCurrentChange"
           :current-page="currentPage"

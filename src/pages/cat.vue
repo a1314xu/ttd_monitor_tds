@@ -375,7 +375,9 @@
           //当判断元素不为空时，提交请求
           $.ajax({
             type: "get",
-            url: "http://10.8.85.36:8086/CatAPI/AddCatJob",
+//            url: "http://10.8.85.36:8086/CatAPI/AddCatJob",
+            url: "http://10.32.213.122:8086/CatAPI/AddCatJob",
+
             data: {
               taskName: me.taskName,
               timeInterval: me.timeInterval,

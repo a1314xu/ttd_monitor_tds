@@ -200,6 +200,7 @@
           $("div .level1 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag1 = e.target.innerHTML
+          me.currentPage=1
           if (me.tag1 == 'Hybird') {
             me.pageType = 1
           } else if (me.tag1 == 'H5') {
@@ -218,6 +219,7 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.currentTarget.dataset.tag
+          me.currentPage=1
           me.dealData()
           window.pageProperty.tag2 = me.tag2
           me.search()
@@ -234,6 +236,7 @@
           if(me.tag3=='不限'){
             $(e.target).addClass('blue')
           }
+          me.currentPage=1
           window.pageProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
           me.search()

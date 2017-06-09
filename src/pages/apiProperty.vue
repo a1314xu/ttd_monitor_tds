@@ -173,6 +173,7 @@
           me.tag1 = e.target.innerHTML
           me.tag1 == "OpenAPI" ? me.interfaceType = 1 : me.interfaceType = 2
           window.apiProperty.tag1 = me.tag1
+          me.currentPage=1
           me.searchList()
         })
         me.searchList()// 写上这句三级类目才能切换？
@@ -182,6 +183,7 @@
           $("div .level2 ").removeClass('blue')
           $(e.target).addClass('blue')
           me.tag2 = e.target.innerHTML
+          me.currentPage=1
           me.dealData()
           window.apiProperty.tag2 = me.tag2
           me.search()
@@ -197,6 +199,7 @@
           if (me.tag3 == '不限') {
             $(e.target).addClass('blue')
           }
+          me.currentPage=1
           window.apiProperty.tag3 = me.tag3
           //根据tag3筛选开发组，匹配三级目录
           me.search()
@@ -288,7 +291,7 @@
       handleCurrentChange: function (currentPage) {
         //当前页面变换
         this.currentPage = currentPage
-        this.pageList = (this.dataList || []).slice((this.currentPage - 1) * 13, this.currentPage * 13 - 1)
+        this.pageList = (this.dataList || []).slice((this.currentPage - 1) * 13, this.currentPage * 13 )
       }
     }
   }
